@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>{{TITULO}}</title>
+	<link href="public/css/bootstrap.css" rel='stylesheet' type='text/css' />
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="public/js/jquery.min.js"></script>
+	<script src="public/js/bootstrap.min.js"></script>
+	<!-- Custom Theme files -->
+	<link href="public/css/style.css" rel='stylesheet' type='text/css' />
+	<link href="public/css/menu.css" rel='stylesheet' type='text/css' />
+
+	<link href="public/css/jquery.dataTables.min.css">
+
+	<!-- Custom Theme files -->
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<!--webfont-->
+	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900' rel='stylesheet' type='text/css'>
+
+	<script type="text/javascript">
+            $(document).ready(function () {
+                $('#horizontalTab').easyResponsiveTabs({
+                    type: 'default', //Types: default, vertical, accordion           
+                    width: 'auto', //auto or any width like 600px
+                    fit: true   // 100% fit in a container
+                });
+            });
+        </script>
+</head>
+
+<body>
+	<!----- start-header---->
+	<div class="wrapper">
+		<!----start-header---->
+		<div class="header">
+			<div class="container header_top">
+				<div align="right">
+				</div>
+				<div class="logo">
+					<a href="index.php"><img src="public/images/logo.png" alt=""></a>
+
+				</div>
+				{{SESION}}
+			</div>
+
+			<!-- Contenido de la pagina web -->
+			{{CONTENT}}
+			<!--        -->
+			<div class="container footer">
+				<div class="footer_top">
+				
+				</div>
+				<div class="footer_bottom">
+					<div class="copy">
+						<p>Omar Contreras - omararturo15@hotmail.com</p>
+						<p>Gabriel Contreras-</p>
+						<p>Ender Ortega - enderortega18@gmail.com</p>
+					</div>
+					<ul class="social">
+						<div class="copy">
+							<div class="row">
+								<div class="col-md-8" align="right"><br>
+									<p><a href="http://www.ufps.edu.co" target="_blank"> Ing de sistemas. UFPS &copy; 2017 </a></p>
+								</div>
+								<div class="col-md-4" align="right">
+									<p>
+										<a href="http://www.ufps.edu.co" target="_blank"> <img class="img-responsive" src="public/images/logo_ufps.png" /></a>
+									</p>
+								</div>
+							</div>
+						</div>
+					</ul>
+					<div class="clearfix"> </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="public/js/jquery.dataTables.min.js"></script>
+	<script>
+	
+	if(document.querySelectorAll("#example").length == 1) {
+	$(document).ready(function() {
+    // Setup - add a text input to each footer cell
+   
+    // DataTable
+    var table = $('#example').DataTable(
+                {
+                "language": {
+                    "lengthMenu": "Mostrando _MENU_ resultados por pagina",
+                    "zeroRecords": "No encontrado",
+                    "info": "Mostrando pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "No disponible",
+                    "infoFiltered": "(filtrado de _MAX_ registros)",
+                    "search": "Buscar: ",
+                    "paginate": {
+                        "first":      "Primero",
+                        "last":       "Ultimo",
+                        "next":       "Siguiente",
+                        "previous":   "Anterior"
+                    }
+                }
+            });
+         $('#example tfoot th').each( function () {
+                var title = $(this).text();
+                $(this).html( '<div align="center"> <input type="text" class="form-control" placeholder="Buscar por '+title+'" /></div>' );
+         } );
+
+         table.columns().every( function () {
+        var that = this;
+ 
+        $( 'input', this.footer() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+        $('#example tbody').on( 'click', 'tr', function () {
+                if ( $(this).hasClass('active') ) {
+                    $(this).removeClass('active');
+                }else {
+                    table.$('tr.active').removeClass('active');
+                    $(this).toggleClass('active');
+                    var data = table.row('.active').data();
+                    document.getElementById("id").value = data[0];
+                }
+        } );
+   
+    });
+    }
+</script>
+
+	<script src="public/js/easyResponsiveTabs.js" type="text/javascript"></script>
+
+	<script type="text/javascript">
+            $(document).ready(function () {
+                $('#horizontalTab').easyResponsiveTabs({
+                    type: 'default', //Types: default, vertical, accordion           
+                    width: 'auto', //auto or any width like 600px
+                    fit: true   // 100% fit in a container
+                });
+            });
+        </script>
+
+</body>
+
+</html>

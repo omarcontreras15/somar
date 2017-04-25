@@ -1,0 +1,1409 @@
+<script>
+    $(document).ready(function () {
+
+        var navListItems = $('div.setup-panel div button'),
+            allWells = $('.setup-content'),
+            allNextBtn = $('.nextBtn');
+
+        allWells.hide();
+
+        navListItems.click(function (e) {
+            e.preventDefault();
+            var $target = $($(this).attr('href')),
+                $item = $(this);
+
+            if (!$item.hasClass('disabled')) {
+                navListItems.removeClass('btn-primary').addClass('btn-default');
+                $item.addClass('btn-primary');
+                allWells.hide();
+                $target.show();
+                $target.find('input:eq(0)').focus();
+            }
+        });
+
+        allNextBtn.click(function(){
+            var curStep = $(this).closest(".setup-content"),
+                curStepBtn = curStep.attr("id"),
+                nextStepWizard = $('div.setup-panel div button[href="#' + curStepBtn + '"]').parent().next().children("button"),
+                curInputs = curStep.find("input[type='text'],input[type='url']"),
+                isValid = true;
+            $('body,html').animate({scrollTop : 400}, 500);
+
+            $(".form-group").removeClass("has-error");
+            for(var i=0; i<curInputs.length; i++){
+                if (!curInputs[i].validity.valid){
+                    isValid = false;
+                    $(curInputs[i]).closest(".form-group").addClass("has-error");
+                }
+            }
+
+            if (isValid)
+                nextStepWizard.removeAttr('disabled').trigger('click');
+        });
+
+        $('div.setup-panel div button.btn-primary').trigger('click');
+    });
+
+</script>
+
+
+<script language="JavaScript">
+<!--
+function uncheckRadio(rbutton) {
+rbutton.checked=(rbutton.checked)?false:true;
+}
+//-->
+</script>
+
+<div class="container banner">
+	<section class="title-section">
+		<h1 class="title-header">
+			Agregar Nuevos Productos </h1>
+		<ul class="breadcrumb breadcrumb__t">
+			<li><a href="index.php">Inicio</a></li>
+			<li class="active">Agregar Nuevos Productos </li>
+		</ul>
+	</section>
+</div>
+<div class='container contact'>
+
+	<div id="titulo">
+		<h2><strong>DIAGNÓSTICO DE LA EMPRESA<strong></h2>
+        <h4><strong>Programa de Fortalecimiento Empresarial<strong></h4>
+    </div>
+        <br>
+            <hr>
+                <div class="row">
+                    <div class="col-md-12"><strong><br>ASESOR: </strong>{{ASESOR}}</div>
+	<div class="col-md-12"><strong>FECHA:</strong> <span id="dia"></span>/<span id="mes">
+                        </span>/<span id="anio"></span></div>
+</div>
+<hr>
+<div class="container container-fixed">
+	<div class="stepwizard">
+		<div class="stepwizard-row setup-panel">
+			<div class="stepwizard-step">
+				<button href="#step-1" type="button" class="btn btn-primary btn-circle">1</button>
+				<p>Paso 1</p>
+			</div>
+			<div class="stepwizard-step">
+				<button href="#step-2" type="button" class="btn btn-default btn-circle" disabled>2</button>
+				<p>Paso 2</p>
+			</div>
+			<div class="stepwizard-step">
+				<button href="#step-3" type="button" class="btn btn-default btn-circle" disabled>3</button>
+				<p>Paso 3</p>
+			</div>
+			<div class="stepwizard-step">
+				<button href="#step-4" type="button" class="btn btn-default btn-circle" disabled>4</button>
+				<p>Paso 4</p>
+			</div>
+			<div class="stepwizard-step">
+				<button href="#step-5" type="button" class="btn btn-default btn-circle" disabled>5</button>
+				<p>Paso 5</p>
+			</div>
+			<div class="stepwizard-step">
+				<button href="#step-6" type="button" class="btn btn-default btn-circle" disabled>6</button>
+				<p>Paso 6</p>
+			</div>
+			<div class="stepwizard-step">
+				<button href="#step-7" type="button" class="btn btn-default btn-circle" disabled>7</button>
+				<p>Paso 7</p>
+			</div>
+			<div class="stepwizard-step">
+				<button href="#step-8" type="button" class="btn btn-default btn-circle" disabled>8</button>
+				<p>Paso 8</p>
+			</div>
+
+		</div>
+	</div>
+	<hr>
+	<form role="form" method="post" action="index.php" style="margin-right:50px">
+		<input type="hidden" name="mode" value="procesar-add-diag-empresa">
+		<input type="hidden" name="asesor" value="{{ASESOR}}">
+		<input type="hidden" name="nit_empresa" value="{{nit_empresa}}">
+		<div class="row setup-content" id="step-1">
+			<div class="col-xs-12">
+				<div class="col-md-12">
+					<h3 style="color:#579526">INFORMACIÓN LA EMPRESA</h3>
+					<hr>
+					<br>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-2"><label>Nombre comercial de la empresa:</label></div>
+							<div class="col-md-4"><input type="text" class="form-control" name="Nombre" value="{{emp_nombre}}" disabled></div>
+							<div class="col-md-2"><label>Razón social:</label></div>
+							<div class="col-md-4"><input type="text" class="form-control" name="RazonS" value="{{emp_razons}}" disabled></div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-md-2"><label>Nombre de contacto:</label></div>
+							<div class="col-md-4"><input type="text" name="nombre_contacto" class="form-control" value="{{cl_nombre}}" disabled></div>
+
+
+							<div class="col-md-3"><label>Posicion en la empresa:</label></div>
+							<div class="col-md-3"><select class="form-control" name="posicion_empresa">
+                                                <option value="dueño">Legal</option>
+                                                <option value="dueño">Dueño</option>
+                                                <option value="socio">Socio</option>
+                                                <option value="otro">Otro</option>
+                                                </select></div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-md-2"><label>Numeros de telefono:</label></div>
+							<div class="col-md-4"><input type="text" name="Telefono" class="form-control" value="{{emp_telefono}}" disabled></div>
+							<div class="col-md-2"><label>Teléfono móvil:</label></div>
+							<div class="col-md-4"><input type="text" class="form-control" name="Celular" value="{{emp_celular}}" disabled></div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-md-2"><label>Tiempo de operación:</label></div>
+							<div class="col-md-4"><input type="text" name="tiempo_operacion" class="form-control" min="0"></div>
+							<div class="col-md-2"><label>¿Cuáles son sus productos y/o servicios?</label></div>
+							<div class="col-md-4"><textarea type="text-area" rows="3" class="form-control" name="productos" disabled>{{emp_servicios}}</textarea></div>
+						</div>
+					</div>
+					<button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Guardar y continuar</button>
+					<br><br><br><br>
+				</div>
+			</div>
+		</div>
+		<!-- -->
+		<div class="row setup-content" id="step-2">
+			<div class="col-xs-12">
+				<div class="col-md-12">
+					<!-- -->
+					<h3 style="color:#579526">SITUACIÓN ACTUAL DE LA EMPRESA</h3>
+					<hr>
+					<div class="row">
+						<div class="col-md-12">
+							<label>1. INDIQUE EN CUÁL DE LOS SIGUIENTES SECTORES SE UBICA SU EMPRESA</label><br>
+							<div class="form-group">
+								<select class="form-control" id="sel1" name="sector">
+                                               <option>Agrícola/agroindustrial</option>
+                                               <option>Sector servicios (Turismo, transporte, mantenimiento, software, diseño, etc.)</option>
+                                               <option>Manufactura (Confecciones, Calzado/Marroquinería, química, etc.)</option>
+                                               <option>Comercio</option>
+                                           </select>
+							</div>
+							<label>2. INDIQUE CÓMO ADMINISTRA SU EMPRESA</label><br>
+							<ol>
+								<label>1. La empresa establece planes a largo plazo  </label>
+								<label>¿Cuales?</label><input name="planes_largoplazo" class="form-control" type="text" placeholder="Ingrese el campo"
+								/>
+								<br>
+								<label>2. La empresa ha definido:  </label>
+								<ul>
+									<div class="row">
+										<div class="checkbox">
+
+											<div class="col-md-3"><label>Su Vision  </label></div>
+											<div class="col-md-3">
+												<label><input type="radio"  class=" icheck-default" value="Si"checked name="vision">Si</label>
+												<label><input type="radio"  class=" icheck-default" value="No" name="vision">No</label>
+											</div><br>
+										</div>
+										<div class="checkbox">
+											<div class="col-md-3"><label>Su Mision  </label></div>
+											<div class="col-md-3">
+												<label><input type="radio"  class=" icheck-default" value="Si" checked name="mision">Si</label>
+												<label><input type="radio"  class=" icheck-default" value="No" name="mision">No</label></div><br>
+										</div>
+										<div class="checkbox">
+											<div class="col-md-3"><label>Sus objetivos  </label></div>
+											<div class="col-md-3">
+												<label><input type="radio"  class=" icheck-default" value="Si" checked name="objetivos">Si</label>
+												<label><input type="radio"  class=" icheck-default" value="No" name="objetivos">No</label></div><br>
+										</div>
+										<div class="checkbox">
+											<div class="col-md-3"><label>Su estrategias  </label></div>
+											<div class="col-md-3">
+												<label><input type="radio"  class=" icheck-default" value="Si" checked name="estrategias">Si</label>
+												<label><input type="radio"  class=" icheck-default" value="No" name="estrategias">No</label></div><br>
+										</div>
+										<div class="checkbox">
+											<div class="col-md-3"><label>Plan de accion  </label></div>
+											<div class="col-md-3">
+												<label><input type="radio"  class=" icheck-default" value="Si" checked name="plan_accion">Si</label>
+												<label><input type="radio"  class=" icheck-default" value="No" name="plan_accion">No</label></div><br>
+										</div>
+
+									</div>
+								</ul>
+								<label>3. La empresa ha definido valores </label>
+								<label>¿Cuales?</label><input name="valores" type="text" class="form-control" placeholder="Ingrese la informacion"
+								/>
+								<br>
+								<br>
+								<label>4. Mencione los tres objetivos principales de su empresa en el largo plazo(+ de 3años): </label>
+								<br>
+								<textarea class="form-control" rows="2" name="nombre_objetivos" placeholder="Ingrese la información"></textarea>
+								<br>
+								<label>5. Diga los principales recursos, capacidades y competencias que posee la empresa:  </label>
+								<br>
+								<textarea class="form-control" rows="2" name="recursos" placeholder="Ingrese la información"></textarea>
+								<br>
+								<label>6. Mencione cuáles son las mayores debilidades que posee la empresa:</label><br>
+								<textarea class="form-control" rows="2" name="debilidades" placeholder="Ingrese la información"></textarea>
+								<br>
+								<label>7. Diga cuál (s) oportunidades que le ofrece actualmente el mercado: </label><br>
+								<textarea class="form-control" rows="2" name="oportunidades" placeholder="Ingrese la información"></textarea>
+								<br>
+								<label>8. Diga cuál (s) son los mayores obstáculos que hoy encuentra en el mercado: </label
+                                        <br>
+                                               <textarea class="form-control" rows="2" name="obstaculos" placeholder="Ingrese la información"></textarea>
+                                        <br>
+                                               <label>9. Mencione la Ventaja que ofrece la empresa y que es percibida por el cliente:</label>
+								<br>
+								<textarea class="form-control" rows="2" name="ventaja_cliente" placeholder="Ingrese la información"></textarea>
+								<br>
+								<label>10. Ventaja que ofrece la competencia en relación a la empresa:</label><br>
+								<textarea class="form-control" rows="2" name="ventaja_empresa" placeholder="Ingrese la información"></textarea>
+							</ol>
+							<br>
+						</div>
+					</div>
+
+					<!-- -->
+					<button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Guardar y continuar</button>
+					<br><br>
+					<br>
+				</div>
+			</div>
+		</div>
+		<!-- -->
+
+		<!-- -->
+		<div class="row setup-content" id="step-3">
+			<div class="col-xs-12">
+				<div class="col-md-12">
+					<!-- -->
+
+					<div class="row">
+
+						<hr>
+						<h3 style="color:#579526">PLANEACIÓN</h3>
+						<hr>
+
+						<label>1. La empresa elabora planes: </label><br>
+						<div class="form-group">
+							<select class="form-control" id="sel1" name="tipo_planes">
+                                                    <option>Semanales</option>
+                                                    <option>Mensuales</option>
+                                                    <option>Trimestrales</option>
+                                                    <option>Semestrales</option>
+                                                    <option>Anuales</option>
+                                                    <option>Largo plazo</option>
+                                                </select>
+						</div>
+						<table>
+							<tr>
+								<td><label>2. La gerencia dedica tiempo a la planeación  </label>
+								</td>
+								<td>
+								</td>
+								<br>
+							</tr>
+							<tr>
+								<td>
+									<ol>
+										<p>Horas a la semana</p><input name="tiempo_planeacion" type="number" style="width:120px" class="form-control" />
+										<br>
+									</ol>
+								</td>
+								<td>
+
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>3. La gerencia permite la participación de sus empleados en el proceso de planeación. </label>
+								</td>
+								<td>
+									<input type="radio" name="participacion_empleados" value="Si" checked> Si
+									<input type="radio" name="participacion_empleados" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<br><label>4. Los empleados conocen los objetivos y planes de la empresa. </label>
+								</td>
+								<td>
+									<input type="radio" name="empleados_conocen" value="Si" checked> Si
+									<input type="radio" name="empleados_conocen" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>5. La empresa establece estrategias, planes de acción que conduzcan al crecimiento</label>
+								</td>
+								<td>
+									<input type="radio" name="estrategias_crecimiento" value="Si" checked> Si
+									<input type="radio" name="estrategias_crecimiento" value="No"> No
+								</td>
+							</tr>
+						</table>
+						<hr>
+						<h3 style="color:#579526">ORGANIZACIÓN</h3>
+						<hr>
+						<table>
+							<tr>
+								<td>
+									<label>1. La empresa tiene el organigrama (cargos definidos y manuales de funciones) documentados y actualizados. </label>
+								</td>
+								<td>
+									<input type="radio" name="organigrama" value="Si" checked> Si
+									<input type="radio" name="organigrama" value="Mas o menos"> Mas o menos
+									<input type="radio" name="organigrama" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>2. Los procesos de la empresa ha sido documentados.</label>
+								</td>
+								<td>
+									<input type="radio" name="procesos_documentados" value="Si" checked> Si
+									<input type="radio" name="procesos_documentados" value="Mas o menos"> Mas o menos
+									<input type="radio" name="procesos_documentados" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>3. Se evalúan los procesos para eliminar los ineficaces e incluir aquellos que sean necesarios.</label>
+								</td>
+								<td>
+									<input type="radio" name="procesos_evaluacion" value="Si" checked> Si
+									<input type="radio" name="procesos_evaluacion" value="Mas o menos"> Mas o menos
+									<input type="radio" name="procesos_evaluacion" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>4. La empresa procura automatizar/modernizar todos los procesos.</label>
+								</td>
+								<td>
+									<input type="radio" name="procesos_automatizar" value="Si" checked> Si
+									<input type="radio" name="procesos_automatizar" value="Mas o menos"> Mas o menos
+									<input type="radio" name="procesos_automatizar" value="No"> No
+								</td>
+							</tr>
+						</table>
+						<hr>
+						<h3 style="color:#579526">DIRECCION/LIDERAZGO</h3>
+						<hr>
+						<table>
+							<tr>
+								<td>
+									<label>1. La gerencia obtiene el máximo compromiso de sus colaboradores. </label>
+								</td>
+								<td>
+									<input type="radio" name="max_colaboradores" value="Si" checked> Si
+									<input type="radio" name="max_colaboradores" value="Mas o menos"> Mas o menos
+									<input type="radio" name="max_colaboradores" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>2. La gerencia trabaja por un clima laboral adecuado.</label>
+								</td>
+								<td>
+									<input type="radio" name="clima_laboral" value="Si" checked> Si
+									<input type="radio" name="clima_laboral" value="Mas o menos"> Mas o menos
+									<input type="radio" name="clima_laboral" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>3. La gerencia motiva a los empleados a innovar, trabajar en equipo y mejorar el desempeño.</label>
+								</td>
+								<td>
+									<input type="radio" name="motivacion_empleados" value="Si" checked> Si
+									<input type="radio" name="motivacion_empleados" value="Mas o menos"> Mas o menos
+									<input type="radio" name="motivacion_empleados" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>4. Las decisiones se toman, unilateralmente:.</label>
+								</td>
+								<td>
+									<input type="radio" name="toma_desiciones" value="Si" checked> Si
+									<input type="radio" name="toma_desiciones" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<ol>
+										<label>En concenso:</label>
+									</ol>
+								</td>
+								<td>
+									<input type="radio" name="en_concenso" value="Si" checked> Si
+									<input type="radio" name="en_concenso" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>5. La gerencia define acciones concretas buscando mejorar sus resultados.</label>
+								</td>
+								<td>
+									<input type="radio" name="define_acciones" value="Si" checked> Si
+									<input type="radio" name="define_acciones" value="Mas o menos"> Mas o menos
+									<input type="radio" name="define_acciones" value="No"> No
+								</td>
+							</tr>
+						</table>
+						<hr>
+					</div>
+
+					<!-- -->
+					<br>
+					<button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Guardar y continuar</button>
+					<br><br>
+					<br>
+				</div>
+			</div>
+		</div>
+		<!-- -->
+
+		<!-- -->
+		<div class="row setup-content" id="step-4">
+			<div class="col-xs-12">
+				<div class="col-md-12">
+					<div class="row">
+
+						<h3 style="color:#579526">CONTROL</h3>
+						<hr>
+
+						<table>
+							<tr>
+								<td>
+									<label>1. La empresa cuenta con un sistema de control</label>
+								</td>
+								<td>
+									<input type="radio" name="sistema_control" value="Si" checked> Si
+									<input type="radio" name="sistema_control" value="Mas o menos"> Mas o menos
+									<input type="radio" name="sistema_control" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>2. La empresa compara lo planeado con lo ejecutado, analiza los resultados y se corrige oportunamente las fallas.</label>
+								</td>
+								<td>
+									<input type="radio" name="comparar_planeado_eje" value="Si" checked> Si
+									<input type="radio" name="comparar_planeado_eje" value="Mas o menos"> Mas o menos
+									<input type="radio" name="comparar_planeado_eje" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>3. La empresa usa indicadores clave de desempeño/ rendimiento para medir la eficacia.</label>
+								</td>
+								<td>
+									<input type="radio" name="clave_desempenio" value="Si" checked> Si
+									<input type="radio" name="clave_desempenio" value="Mas o menos"> Mas o menos
+									<input type="radio" name="clave_desempenio" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>4. Monitorea los indicadores y hace seguimiento de los resultados de las estrategias.</label>
+								</td>
+								<td>
+									<input type="radio" name="seguimiento_indicadores" value="Si" checked> Si
+									<input type="radio" name="seguimiento_indicadores" value="No"> No
+								</td>
+							</tr>
+						</table>
+
+						<hr>
+						<h3 style="color:#579526">RECURSOS HUMANOS</h3>
+						<hr>
+
+						<table>
+							<tr>
+								<td>
+									<label>1. La empresa contrata directamente al personal.</label>
+								</td>
+								<td>
+									<input type="radio" name="contrata_direc_personal" value="Si" checked> Si
+									<input type="radio" name="contrata_direc_personal" value="No"> No
+								</td>
+
+							</tr>
+							<tr>
+								<td>
+									<label>2. Se combina la forma de contratar (incluyendo trabajos temporales y ocasionales).</label>
+								</td>
+								<td>
+									<input type="radio" name="combina_forma_contratar" value="Si" checked> Si
+									<input type="radio" name="combina_forma_contratar" value="Mas o menos"> Mas o menos
+									<input type="radio" name="combina_forma_contratar" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>3. La empresa ha establecido procesos de Selección, Contratación, Inducción, Entrenamiento..</label>
+								</td>
+								<td>
+									<input type="radio" name="procesos_establecidos" value="Si" checked> Si
+									<input type="radio" name="procesos_establecidos" value="Mas o menos"> Mas o menos
+									<input type="radio" name="procesos_establecidos" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>4. La empresa ha establecido recompensas, sanciones, ascensos.</label>
+								</td>
+								<td>
+									<input type="radio" name="recompensas_establecidas" value="Si" checked> Si
+									<input type="radio" name="recompensas_establecidas" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>5. Cuántas personas laboran en la empresa:</label>
+								</td>
+								<td>
+									<input name="num_empleados" style="text-aling:rigth" class="form-control" type="number" placeholder="Ingrese el campo" />
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>6. El número de empleados es suficiente para cubrir las necesidades de la empresa.</label>
+								</td>
+								<td>
+									<input type="radio" name="empleados_necesarios" value="Si" checked> Si
+									<input type="radio" name="empleados_necesarios" value="No"> No
+								</td>
+							</tr>
+
+						</table>
+						<hr>
+						<h3 style="color:#579526">MERCADEO / COMERCIAL</h3>
+						<hr>
+
+						<table>
+							<tr>
+								<td>
+									<label>1. Existe un departamento de mercadeo y ventas?</label>
+								</td>
+								<td>
+									<input type="radio" name="depto_mercadeo_ventas" value="Si" checked> Si
+									<input type="radio" name="depto_mercadeo_ventas" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>2. El mensaje de marketing (promesa de valor) es claro, audaz, veraz y despierta interés cuando se transmite..</label>
+								</td>
+								<td>
+									<input type="radio" name="msj_marketing_claro" value="Si" checked> Si
+									<input type="radio" name="msj_marketing_claro" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>3. La gerencia dedica mínimo el 50% del tiempo al marketing y difusión.</label>
+								</td>
+								<td>
+									<input type="radio" name="dedica_tiempo_marketing" value="Si" checked> Si
+									<input type="radio" name="dedica_tiempo_marketing" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<ol>
+										<label>o delega: </label>
+									</ol>
+								</td>
+								<td>
+									<input type="radio" name="delega_tiempo" value="Si" checked> Si
+									<input type="radio" name="delega_tiempo" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>4. La empresa tiene un plan de mercadeo y ventas para los próximos 12 meses</label>
+								</td>
+								<td>
+									<input type="radio" name="plan_mercadeo" value="Si" checked> Si
+									<input type="radio" name="plan_mercadeo" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<ol>
+										<label>- Lo implementa</label>
+									</ol>
+								</td>
+								<td>
+									<input type="radio" name="implementa_plan" value="Si" checked> Si
+									<input type="radio" name="implementa_plan" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<br><label>5. La empresa tiene un cronograma de marketing y presupuesto destinado para ello.</label>
+								</td>
+								<td>
+									<input type="radio" name="cronograma_marketing" value="Si" checked> Si
+									<input type="radio" name="cronograma_marketing" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>6. Ha definido el perfil y características del cliente ideal y ha desarrollado servicios y material de marketing <br> &nbsp &nbsp &nbsp dirigidos directamente a él.</label>
+								</td>
+								<td>
+									<input type="radio" name="perfil_cliente" value="Si" checked> Si
+									<input type="radio" name="perfil_cliente" value="No"> No
+									<td>
+							</tr>
+							<tr>
+								<td>
+									<label>7. La empresa ha clasificado los clientes activos y potenciales.</label>
+								</td>
+								<td>
+									<input type="radio" name="clasificacion_cliente" value="Si" checked> Si
+									<input type="radio" name="clasificacion_cliente" value="No"> No
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>8. La página web hace parte del ciclo de ventas.</label>
+								</td>
+								<td>
+									<select class="form-control" id="exampleSelect1" name="web_ventas">
+                                                      <option>Si</option>
+                                                      <option>Mas o menos</option>
+                                                      <option>No</option>
+                                                      <option>No tiene Web</option>
+                                                    </select>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>9. Usa la mejor tecnología para hacer seguimiento a clientes y ventas (CRM, etc.)</label>
+								</td>
+								<td>
+									<input type="radio" name="tecnologia_seguimiento" value="Si" checked> Si
+									<input type="radio" name="tecnologia_seguimiento" value="Mas o menos"> Mas o menos
+									<input type="radio" name="tecnologia_seguimiento" value="No"> No
+								</td>
+							</tr>
+						</table>
+
+					</div>
+					<br>
+
+					<!-- -->
+					<button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Guardar y continuar</button>
+					<br>
+					<br>
+					<br>
+				</div>
+			</div>
+		</div>
+		<!-- -->
+
+		<!-- -->
+		<div class="row setup-content" id="step-5">
+			<div class="col-xs-12">
+				<div class="col-md-12">
+					<!-- -->
+					<h3 style="color:#579526">MERCADEO / COMERCIAL</h3>
+					<hr>
+
+					<div class="row">
+						<div class="col-md-12">
+
+							<label>10. Por favor marque con un círculo los puntos que considera problemáticos en su empresa:</label>
+
+							<ol>
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="1" name="1">Su Dificultades al definir los objetivos de la empresa a largo plazo</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="2" name="2">Su Dificultades al diseñar la estrategia de ventas</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="3" name="3">Su Dificultades al implementar la estrategia de ventas</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="4" name="4">Su Falta de competitividad de los productos/servicio en cuanto a precios</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="5" name="5">Su Falta de competitividad de los productos /o servicios en cuanto a calidad</label>
+									</div>
+								</li>
+
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="6" name="6">Su Baja disponibilidad de canales de distribución para los productos /o servicios</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="7" name="7">Su Falta de información del mercado (Tendencias, competidores, consumidores/clientes, etc.)</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="8" name="8">Su Falta de capacidad para desarrollar nuevos productos</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="9" name="9">Su Mercado local, nacional saturado</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="10" name="10">Su Hay fluctuaciones en sus ventas anuales que no ha podido controlar</label>
+									</div>
+								</li>
+
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="11" name="11">Su Dificultad al comercializar sus productos /o servicios</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="12" name="12">Su Venta a pérdida</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="13" name="13">Su Dificultades logísticas</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="14" name="14">Su Baja inversión en publicidad y promoción</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="15" name="15">Su Dificultades con la cartera</label>
+									</div>
+								</li>
+
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="16" name="16">Su Fuerza de ventas insuficiente y sin experiencia</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="17" name="17">Su Altos costos de distribución</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="18" name="18">Su Imagen de la empresa ante el cliente</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="19" name="19">Su Cobertura y calidad en la atención de los mercados</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="20" name="20">Su Fuerza de ventas motivada y suficiente para atender el mercado</label>
+									</div>
+								</li>
+
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="21" name="21">Su Cumplimiento de la fuerza de ventas de las cuotas establecidas por periodo</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="22" name="22">Su Precio del producto / servicio con respecto al precio de la competencia</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="23" name="23">Su Nivel de aceptación del producto / servicio que ofrece la empresa</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="24" name="24">Su El producto/ servicio que ofrece la empresa cuenta con ventajas sobre la competencia</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="25" name="25">Su Disponibilidad de insumos/materias primas</label>
+									</div>
+								</li>
+
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="26" name="26">Su Portafolio de productos/servicios</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="27" name="27">Su Participación en el mercado</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="28" name="28">Su Lealtad y satisfacción del cliente</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="29" name="29">Su Desarrollos tecnológicos e innovaciones</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="30" name="30">Su Tiempo medio de rotación de existencias en puntos de venta/Usuarios del servicio</label>
+									</div>
+								</li>
+
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="31" name="31">Su Fallos de producción detectados internamente o por los clientes/ Quejas de los usuarios del
+                                                    servicio</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="32" name="32">Su Captación de nuevos clientes/Usuarios del servicio</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="33" name="33">Su Porcentaje de ventas correspondiente a los nuevos productos y/o servicios lanzados</label>
+									</div>
+								</li>
+
+								<li>
+									<div class="checkbox">
+										<label><input type="checkbox" value="34" name="34">Su Un solo cliente aporta la mayor parte delos ingresos.</label>
+									</div>
+								</li>
+
+							</ol>
+
+						</div>
+					</div>
+
+					<!-- -->
+					<button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Guardar y continuar</button>
+					<br>
+					<br>
+					<br>
+				</div>
+			</div>
+		</div>
+		<!-- -->
+
+		<!-- -->
+		<div class="row setup-content" id="step-6">
+			<div class="col-xs-12">
+				<div class="col-md-12">
+					<!-- -->
+					<h3 style="color:#579526">ANALISIS ECONOMICO Y FINANCIERO</h3>
+					<hr>
+
+					<div class="row">
+						<div class="col-md-12">
+							<table>
+								<tr>
+									<td>
+										<label>1. La empresa tiene implementado un sistema de contabilidad.</label>
+									</td>
+									<td>
+										<input type="radio" name="sistema_compatibilidad" value="Si" checked> Si
+										<input type="radio" name="sistema_compatibilidad" value="No"> No
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>2. La empresa tiene la contabilidad al día y se revisa cada mes.</label>
+									</td>
+									<td>
+										<input type="radio" name="contabilidad_aldia" value="Si" checked> Si
+										<input type="radio" name="contabilidad_aldia" value="Mas o menos"> Mas o menos
+										<input type="radio" name="contabilidad_aldia" value="No"> No
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>3. La empresa aplica las Normas internacionales de Contabilidad-NIIF.</label>
+									</td>
+									<td>
+										<input type="radio" name="aplica_normas_contabilidad" value="Si" checked> Si
+										<input type="radio" name="aplica_normas_contabilidad" value="No"> No
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>4. Cuánto ha facturado tu empresa en el último año:</label>
+									</td>
+									<td>
+										<input name="facturacion_ultimoanio" class="form-control" type="number" placeholder="Cantidad" />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>5. La empresa tiene planificación financiera formal.</label>
+									</td>
+									<td>
+										<input type="radio" name="planificacion_financiera_formal" value="Si" checked> Si
+										<input type="radio" name="planificacion_financiera_formal" value="No"> No
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>6. La empresa conoce el margen de rentabilidad.</label>
+									</td>
+									<td>
+										<input type="radio" name="margen_rentabilidad" value="Si" checked> Si
+										<input type="radio" name="margen_rentabilidad" value="No"> No
+										<td>
+								</tr>
+								<tr>
+									<td>
+										<ol>
+											<label>El margen de rentabilidad es positivo.</label>
+										</ol>
+									</td>
+									<td>
+										<input type="radio" name="margen_rentabilidad_pos" value="Si" checked> Si
+										<input type="radio" name="margen_rentabilidad_pos" value="No"> No
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>7. El nivel de endeudamiento de la empresa con respecto a los activos es:</label>
+									</td>
+									<td>
+										<select class="form-control" id="exampleSelect1" name="nivel_endeudamiento">
+                                                      <option>Alto</option>
+                                                      <option>Medio</option>
+                                                      <option>Bajo</option>
+                                                      <option>No conoce</option>
+                                                    </select>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>8. Los ingresos permiten cumplir con las obligaciones oportunamente.</label>
+									</td>
+									<td>
+										<input type="radio" name="ingresos_cumplen_objetivos" value="Si" checked> Si
+										<input type="radio" name="ingresos_cumplen_objetivos" value="No"> No
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>9. La empresa cuenta con suficiente capital de trabajo.</label>
+									</td>
+									<td>
+										<input type="radio" name="suficiente_capital" value="Si" checked> Si
+										<input type="radio" name="suficiente_capital" value="No"> No
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>10. El flujo de caja (liquidez) es positivo.</label>
+									</td>
+									<td>
+										<input type="radio" name="flujo_caja_positivo" value="Si" checked> Si
+										<input type="radio" name="flujo_caja_positivo" value="No"> No
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>11. La empresa conoce cuál es el costo de su producto/servicio.</label>
+									</td>
+									<td>
+										<input type="radio" name="costo_producto" value="Si" checked> Si
+										<input type="radio" name="costo_producto" value="Parcialmente"> Parcialmente
+										<input type="radio" name="costo_producto" value="No"> No
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>12. La empresa establece presupuestos y no gasta más de lo presupuestado en cada proyecto. Si</label>
+									</td>
+									<td>
+										<input type="radio" name="presupuesto_estable" value="Si" checked> Si
+										<input type="radio" name="presupuesto_estable" value="Parcialmente"> Parcialmente
+										<input type="radio" name="presupuesto_estable" value="No"> No
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>13. Se toman decisiones con base al análisis de los estados financieros..</label>
+									</td>
+									<td>
+										<input type="radio" name="desiciones_analisis" value="Si" checked> Si
+										<input type="radio" name="desiciones_analisis" value="Mas o menos"> Mas o menos
+										<input type="radio" name="desiciones_analisis" value="No"> No
+									</td>
+								</tr>
+							</table>
+							<hr>
+							<h3 style="color:#579526">PRODUCCIÓN</h3>
+							<hr>
+							<table>
+								<tr>
+									<td>
+										<label>1. Conoce el porcentaje de la capacidad instalada utilizada de su empresa.</label>
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<ol>
+											<label>¿Cúal es el porcentaje?</label>
+										</ol>
+									</td>
+									<td>
+										<input type="number" name="porcentaje_capacidad" class="form-control" placeholder="%">
+									</td>
+								</tr>
+								</tr>
+								<tr>
+									<td>
+										<label>2. Conoce las normas técnicas establecidas para el sector?</label>
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<ol>
+											<label>¿Cuales?</label>
+									</td>
+									<td>
+										</ol>
+										<input type="text" name="normas_tecnicas_sector" class="form-control" placeholder="Ingrese el campo">
+									</td>
+
+								</tr>
+								<tr>
+									<td>
+										<label>3. Cuál es el estado de maquinaria y tecnología de su empresa frente a competitividad?</label>
+
+									</td>
+									<td>
+										<div class="form-group">
+											<select name="estado_maquinaria" class="form-control" id="sel1">
+                                                            <option>Excelente</option>
+                                                            <option>Muy buena</option>
+                                                            <option>Buena</option>
+                                                            <option>Regular</option>
+                                                            <option>Obsoleta</option>
+                                                        </select>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>4. La empresa programa la producción.</label>
+									</td>
+									<td>
+										<input type="radio" name="programa_produccion" value="Si" checked> Si
+										<input type="radio" name="programa_produccion" value="No"> No
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>esta programación responde a la demanda del mercado.</label>
+									</td>
+									<td>
+										<input type="radio" name="corresponde_demanda_mercado" value="Si" checked> Si
+										<input type="radio" name="corresponde_demanda_mercado" value="No"> No
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>5. En el proceso de producción se definen planes, tareas, operaciones, procedimientos y encadenamientos</label>
+									</td>
+									<td>
+										<input type="radio" name="produccion_planes" value="Si" checked> Si
+										<input type="radio" name="produccion_planes" value="Mas o menos"> Mas o menos
+										<input type="radio" name="produccion_planes" value="No"> No
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>6. Se controla la calidad del producto/servicio.</label>
+									</td>
+									<td>
+										<input type="radio" name="pontrola_calidad_producto" value="Si" checked> Si
+										<input type="radio" name="pontrola_calidad_producto" value="No"> No
+
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>7. Se presentan problemas de abastecimiento de materias primas/insumos.</label>
+									</td>
+									<td>
+										<input type="radio" name="problemas_abastecimiento" value="Si" checked> Si
+										<input type="radio" name="problemas_abastecimiento" value="No"> No
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>8. La empresa planea la adquisición de maquinaria, tecnología, materia prima, etc.
+                                                    </label>
+									</td>
+									<td>
+										<input type="radio" name="Adquisicion_maquinaria" value="Si" checked> Si
+										<input type="radio" name="Adquisicion_maquinaria" value="No"> No
+									</td>
+
+								</tr>
+								<tr>
+									<td>
+										<label>9. Le empresa tiene planes de contingencia para proveerse de materias primas, 
+                                                        recursos humanos, etc.</label>
+									</td>
+									<td>
+										<input type="radio" name="Planes_contingencia_maprima" value="Si" checked> Si
+										<input type="radio" name="Planes_contingencia_maprima" value="No"> No
+									</td>
+
+								</tr>
+								<tr>
+									<td>
+										<label>10. La empresa realiza inventarios periódicamente.</label>
+									</td>
+									<td>
+										<input type="radio" name="Inventarios_periodicos" value="Si" checked> Si
+										<input type="radio" name="Inventarios_periodicos" value="No"> No
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>11. La empresa hace seguimiento a la rotación de inventarios.</label>
+									</td>
+									<td>
+										<input type="radio" name="Seguimiento_inventarios" value="Si" checked> Si
+										<input type="radio" name="Seguimiento_inventarios" value="Mas o menos"> Mas o menos
+										<input type="radio" name="Seguimiento_inventarios" value="No"> No
+									</td>
+
+								</tr>
+								<tr>
+									<td>
+										<label>12. La ubicación y organización de la planta permite una eficiente distribución del trabajo.</label>
+									</td>
+									<td>
+										<input type="radio" name="eficiente_dist_trabajo" value="Si" checked> Si
+										<input type="radio" name="eficiente_dist_trabajo" value="Parcialmente"> Parcialmente
+										<input type="radio" name="eficiente_dist_trabajo" value="No"> No
+									</td>
+								</tr>
+							</table>
+							<br>
+
+						</div>
+					</div>
+
+					<!-- -->
+					<button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Guardar y continuar</button>
+					<br>
+					<br>
+					<br>
+				</div>
+			</div>
+		</div>
+		<!-- -->
+
+		<!-- -->
+		<div class="row setup-content" id="step-7">
+			<div class="col-xs-12">
+				<div class="col-md-12">
+					<!-- -->
+
+					<div class="row">
+						<div class="col-md-12">
+							<h3 style="color:#579526">INTERNACIONALIZACIÓN</h3>
+							<hr>
+							<table>
+								<tr>
+
+									<label>1. ¿A qué países ha exportado o importado? </label><br>
+
+									<textarea class="form-control" rows="2" name="paises_importado_expor" placeholder="Ingrese la información"></textarea>
+								</tr>
+								<tr>
+									<label>2. ¿A qué mercados ha exportado e importado sus competidores?</label><br>
+
+									<textarea class="form-control" rows="2" name="mercados_importado_expor" placeholder="Ingrese la información"></textarea>
+								</tr>
+								<tr>
+									<label>3. ¿Cuáles son las metas en relación a la exportación e importación?</label><br>
+
+									<textarea class="form-control" rows="2" name="metas_importado_expor" placeholder="Ingrese la información"></textarea>
+								</tr>
+								<tr>
+									<label>4. ¿Qué estrategia de marketing se requiere para asegurar las ventas de exportación/ importación? </label><br>
+
+									<textarea class="form-control" rows="2" name="estrategia_marketing" placeholder="Ingrese la información"></textarea>
+								</tr>
+								<tr>
+									<label>5. ¿Cuál es el total de ventas esperadas, domésticas y extranjeras, por los próximos tres años? </label><br>
+
+									<textarea class="form-control" rows="2" name="ventas_esperadas" placeholder="Ingrese la información"></textarea>
+								</tr>
+								<tr>
+									<label>6. ¿Cuál es el margen comercial para las ventas domésticas / internacionales? </label><br>
+
+									<textarea class="form-control" rows="2" name="margen_ventas" placeholder="Ingrese la información"></textarea>
+								</tr>
+								<tr>
+									<label>7. ¿Cuánto capital deberá ser presupuestado para sus proyectos de export/ importación?</label><br>
+
+									<textarea class="form-control" rows="2" name="capital_presupuestado" placeholder="Ingrese la información"></textarea>
+								</tr>
+							</table>
+							<br>
+							<h3 style="color:#579526">ASPECTOS ADICIONALES</h3>
+							<hr>
+							<textarea class="form-control" rows="2" name="aspectos_adicionales" placeholder="Ingrese la información"></textarea>
+
+							<br>
+							<br>
+							<br>
+						</div>
+					</div>
+
+					<!-- -->
+					<button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Guardar y continuar</button>
+
+					<br>
+					<br>
+					<br>
+				</div>
+			</div>
+		</div>
+
+		<div class="row setup-content" id="step-8">
+			<div class="col-xs-12">
+				<div class="col-md-12">
+					<!-- -->
+
+					<div class="row">
+						<div class="col-md-12">
+							<h3 style="color:#579526">RESUMEN DE ASPECTOS A MEJORAR</h3>
+							<hr>
+							<label>Liste en orden de prioridad los aspectos a mejorar, estos formarán parte del Plan de Acción/mejoramiento.</label>
+							<br>
+							<div class="table-responsive">
+								<div class="iconos-add-delete">
+									<span>Añadir aspecto </span><img id="agregar-aspectos-mejorar" src="./public/images/add.png" />
+									<span>&nbsp&nbsp&nbsp Eliminar aspecto </span><img id="eliminar-aspectos-mejorar" src="./public/images/delete.png"
+									/>
+								</div>
+								<table class="table table-bordered">
+									<input id="cant-aspectos-mejorar" type="hidden" name="cant-aspectos-mejorar" value="">
+									<thead>
+										<tr>
+											<th>N°</th>
+											<th>Aspectos a mejorar</th>
+										</tr>
+									</thead>
+									<tbody id="aspectos-mejorar">
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+					<!-- -->
+					<button onclick="comprobarConexion()" class="btn btn-primary btn-lg pull-right" type="submit">Guardar</button>
+					<br>
+					<br>
+					<br>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+</div>
+<script>
+    $(document).ready(function () {
+        var tablaAspectosMejorar="";
+        var contFilasAspectos=0;
+	 jQuery.get('./app/views/components/aspectos-mejorar.html', function(data){
+            tablaAspectosMejorar=data;
+     });
+	 //agrego el evento al icono de agregar aspecto
+	$("#agregar-aspectos-mejorar").on("click", function(){
+		  contFilasAspectos++;
+		  var html= tablaAspectosMejorar.replace(/{{NUM_ASPECTOS_MEJORAR}}/gi,contFilasAspectos);
+          html= html.replace(/{{DESCRIPCION_ASPECTOS_MEJORAR}}/gi,"");
+		  $("#aspectos-mejorar").append(html);
+          $("#cant-aspectos-mejorar").attr("value",contFilasAspectos);
+	 });
+	  //eliminar el evento al icono de agregar aspecto
+	 $("#eliminar-aspectos-mejorar").on("click", function(){
+		//verifico que el numero de filas a borrar sean superior a 0
+		  if(contFilasAspectos>0){
+			  $("#aspectos-mejorar tr:last-child").remove();
+			  contFilasAspectos--;
+               $("#cant-aspectos-mejorar").attr("value",contFilasAspectos);
+		  }
+	 });
+  });
+</script>

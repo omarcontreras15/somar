@@ -1,0 +1,39 @@
+<link href='public/css/login.css' rel='stylesheet' type='text/css' />
+<link href='public/css/style.css' rel='stylesheet' type='text/css' />
+<div class="container banner">
+    <section class="title-section">
+        <h1 class="title-header">
+            Ingresar </h1>
+        <ul class="breadcrumb breadcrumb__t"><li><a href="index.php">Inicio</a></li><li class="active">Ingresar</li></ul>  
+    </section>
+</div>
+
+<div class="container contact">
+
+    <!-- contenido login   -->
+    <div class="div-login">
+        <div class="main"> 
+
+            <form action="index.php" method="post">
+                <input type="hidden" name="mode" value="login">
+                <div class="login-form"> 
+                    <h2 class="color">Iniciar Sesión</h2> 
+                    <div class="agileits-top">
+                        <div class="styled-input">
+                            <input type="text" name="username" required=""/>
+                            <label>Nombre de usuario</label>
+                            <span></span>
+                        </div>
+                        <div class="styled-input">
+                            <input type="password" name="password" required=""> 
+                            <label>Contraseña</label>
+                            <span></span>
+                        </div> 
+                    </div>
+                    <div class="agileits-bottom">
+                        <input type="submit" value="Iniciar sesión">
+                    </div>	
+                </div></form>
+        </div>		
+    </div>
+</div>
