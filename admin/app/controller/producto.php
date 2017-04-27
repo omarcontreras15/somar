@@ -77,7 +77,6 @@ class producto extends Controller{
 
     public function subirProducto($form){
       
-*/
     }
 
     //metodo para mover un archivo traido del formulario a la carpeta upload
