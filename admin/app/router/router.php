@@ -35,6 +35,14 @@ class Router
                           $this->user->inicioSesion();
                       }
                       break;
+
+                      case "consultar-productos":
+                      if(isset($_SESSION["user_id"])){
+                          $this->producto->mostrarTablaProductos();
+                      }else{
+                          $this->user->inicioSesion();
+                      }
+                      break;
                                             
                                       
                 default:
@@ -46,8 +54,12 @@ class Router
                     case "login":
                        $this->user->login($_POST["username"], $_POST["password"]);
                         break;
-                default:
-                          
+
+                    case "subir-producto":
+                      $this->producto->subirProducto($_POST);
+                      break;
+                      
+                      default:                   
                       header("Location:index.php");
                       break;
                       }  

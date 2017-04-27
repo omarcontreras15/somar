@@ -1,0 +1,42 @@
+<link href="public/css/datatables.css" type="text/css" rel="stylesheet">
+<div class="container banner">
+	<section class="title-section">
+		<h1 class="title-header">
+			Administrar Productos </h1>
+		<ul class="breadcrumb breadcrumb__t">
+			<li><a href="index.php">Inicio</a></li>
+			<li class="active">Administrar Productos </li>
+		</ul>
+	</section>
+</div>
+<div class='container contact'>
+<div class="main">
+        <br>
+      
+        <p style='font-weight: bold;'>Seleccione la acción que desea realizar con el producto.</p><br>
+        <!-- para hacer la tabla responsive toca agregar la clase table-responsive a la etiqueta div-->
+        <div>
+            <table id="example" class="table table-bordered table-hover">
+                <thead>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Cantidad Disponible</th>
+                    <th>Precio</th>
+                    <th>Imagen</th>
+                    <th>Acción</th>
+                </thead>
+                <tbody align="center">
+                    {{OPTION}}
+                </tbody>
+                <tfoot>
+                   <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Cantidad Disponible</th>
+                    <th>Precio</th>
+                    <th>Imagen</th>
+                    <th>Acción</th>
+                </tfoot>
+            </table>
+        </div>
+</div>
+</div>

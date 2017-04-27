@@ -1,0 +1,21 @@
+<tr>
+    <td width="15%">{{ID}}</td>
+    <td width="25%">{{NOMBRE}}</td>
+    <td width="15%">{{CANT_DISPONIBLE}}</td>
+    <td width="18%">{{PRECIO}}</td>
+    <td width="10%"><img class="img-tabla-productos" src="{{URL_IMAGEN}}"></td>
+    <td width="12%">
+        <div class="btn-group">
+            <button type="button" class="btn btn-warning">Opciones</button>
+            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#{{ID}}"><img src="public/images/ver.png"> Ver</a></li>
+                <li><a href="# {{ID}}"><img src="public/images/editar.png"> Modificar</a></li>
+                <li><a href="# {{ID}}"><img src="public/images/icon-basura.png"> Eliminar</a></li>
+            </ul>
+        </div>
+    </td>
+</tr>

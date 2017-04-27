@@ -167,6 +167,10 @@ body{margin-top:20px;}
   width: 100%;
 }
 
+.img-tabla-productos{
+	max-height: 100px;
+}
+
 .alert-white {
   background-image: linear-gradient(to bottom, #fff, #f9f9f9);
   border-top-color: #d8d8d8;
@@ -1643,14 +1647,14 @@ tr.active, tr.active td {
 
 .contentStyle{
   border-radius: 20px; border: 1px solid #999;      
-   background-color: #f2fff2;
+   background-color: #f9f6f0;
 }
 
 
 .titleStyle{
    border-radius: 20px;
    border: 1px solid #f4fff7;
-   border-color: #088A08;
+   border-color: #ad6a0a;
     
 }
 .iconos-add-delete{
