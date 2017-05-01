@@ -2,21 +2,22 @@
 
 include_once "./app/controller/user.php";
 include_once "./app/controller/producto.php";
-
+include_once "./app/controller/categoria.php";
 class Router
 {
 
     private $user;
     private $producto;
+    private $categoria;
 
     public function __construct()
     {
         $this->user = new User();
         $this->producto = new Producto();
-
+        $this->categoria=new Categoria();
     }
 
-    public function router(){
+    public function router(){ 
 
         if(isset($_GET["mode"])) {
               switch ($_GET["mode"]) {
@@ -43,8 +44,15 @@ class Router
                           $this->user->inicioSesion();
                       }
                       break;
-                                            
-                                      
+
+                 case "consultar-categorias":
+                  if(isset($_SESSION["user_id"])){
+                        $this->categoria->listarCategorias();
+                  }else{
+                     $this->user->inicioSesion();
+                    }
+                     break;
+                                                                                  
                 default:
                       header("Location:index.php");
                       break;
@@ -58,6 +66,15 @@ class Router
                     case "subir-producto":
                       $this->producto->subirProducto($_POST);
                       break;
+
+                    case "eliminar-producto":
+                        if(isset($_SESSION["user_id"])){
+                            $this->producto->eliminarProducto($_POST['id']);
+                        }else{
+                            $this->user->inicioSesion();
+                            }
+                     break;
+                    
                       
                       default:                   
                       header("Location:index.php");

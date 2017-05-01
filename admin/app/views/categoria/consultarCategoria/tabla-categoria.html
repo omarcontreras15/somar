@@ -1,0 +1,40 @@
+<!-- incluir css de dataTables -->
+<link href="public/css/jquery.dataTables.min.css">
+<link href="public/css/datatables.css" type="text/css" rel="stylesheet">
+<div class="container banner">
+	<section class="title-section">
+		<h1 class="title-header">
+			Administrar Categorias </h1>
+		<ul class="breadcrumb breadcrumb__t">
+			<li><a href="index.php">Inicio</a></li>
+			<li class="active">Administrar Categorias </li>
+		</ul>
+	</section>
+</div>
+<div class='container contact'>
+<div class="main">
+        <br>
+      
+        <p style='font-weight: bold;'>Seleccione la acción que desea realizar con la categoria.</p><br>
+        <!-- para hacer la tabla responsive toca agregar la clase table-responsive a la etiqueta div-->
+        <div>
+            <table id="example" class="table table-bordered table-hover">
+                <thead>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Cantidad de productos</th>
+                    <th>Acción</th>
+                </thead>
+                <tbody align="center">
+                    {{OPTION}}
+                </tbody>
+                <tfoot>
+                   <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Cantidad de productos</th>
+                    <th>Acción</th>
+                </tfoot>
+            </table>
+        </div>
+</div>
+</div>

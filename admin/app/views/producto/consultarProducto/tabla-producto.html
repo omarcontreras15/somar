@@ -1,3 +1,5 @@
+<!-- incluir css de dataTables -->
+<link href="public/css/jquery.dataTables.min.css">
 <link href="public/css/datatables.css" type="text/css" rel="stylesheet">
 <div class="container banner">
 	<section class="title-section">
@@ -25,7 +27,7 @@
                     <th>Imagen</th>
                     <th>Acción</th>
                 </thead>
-                <tbody align="center">
+                <tbody id="tabla-productos" align="center">
                     {{OPTION}}
                 </tbody>
                 <tfoot>
@@ -40,3 +42,35 @@
         </div>
 </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $(".boton-eliminar").on("click", function(){
+            var id=$(this).attr("id");
+            var res=confirm("¿Desea eliminar el producto?");
+            if(res){
+             realizarAjax(id);
+            }
+        });
+
+        //funcion ajax para enviar el id del producto que se desea eliminar 
+		function realizarAjax(id) {
+            var datos={
+                "mode":"eliminar-producto",
+                "id":id
+            };
+			$.ajax({
+				data: datos,
+				url: "index.php",
+				type: 'POST',
+				//esta funncion se ejecuta cuando el php a terminado de procesar
+				//con el resultado e inserta el resultado en algun elemento html
+				success: function (response) {
+					window.location="index.php?mode=consultar-productos";
+				},
+				error: function (xhr, status, error) {
+				}
+			});
+
+		}
+    });
+</script>

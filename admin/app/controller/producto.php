@@ -12,9 +12,11 @@ class producto extends Controller{
         $this->view=$this->getTemplate("./app/views/index.html");
     }
     
+
+   //Este metodo permite mostrar la vista del formulario para poder agregar productos nuevos a la tienda virtual
     public function agregarProducto(){
         $menu=null;
-        $contenido = $this->getTemplate("./app/views/agregarProducto/agregarProducto.html");
+        $contenido = $this->getTemplate("./app/views/producto/agregarProducto/agregarProducto.html");
         if((!isset($_SESSION["user_id"]) || $_SESSION["user_id"]==null)){
             
             $menu = $this->getTemplate("./app/views/components/menu-logout.html");
@@ -25,7 +27,7 @@ class producto extends Controller{
         $array=$this->productoModel->listarCategorias();
         $sizeArray = sizeof($array);
         $option = "";
-        $elementcheck = $this->getTemplate("./app/views/agregarProducto/components/checkbox-cate.html");
+        $elementcheck = $this->getTemplate("./app/views/producto/agregarProducto/components/checkbox-cate.html");
         if($sizeArray>0){
             foreach ($array as $element){
                 $temp = $elementcheck;
@@ -41,9 +43,10 @@ class producto extends Controller{
         $this->showView($this->view);
     }
     
+    //este metodo permite listar y motsrar en una datatable todos los prodcutos que tiene registrados la tienda virtual
     public function mostrarTablaProductos(){
         $menu=null;
-        $ventana = $this->getTemplate("./app/views/consultarProducto/tabla-producto.html");
+        $ventana = $this->getTemplate("./app/views/producto/consultarProducto/tabla-producto.html");
         if((!isset($_SESSION["user_id"]) || $_SESSION["user_id"]==null)){
             
             $menu = $this->getTemplate("./app/views/components/menu-logout.html");
@@ -57,8 +60,8 @@ class producto extends Controller{
         
         $array=$this->productoModel->listarProductos();
         $sizeArray = sizeof($array);
-        $option = "";
-        $elementotabla = $this->getTemplate("./app/views/consultarProducto/components/body-tabla-producto.html");
+        $tablaProductos = "";
+        $elementotabla = $this->getTemplate("./app/views/producto/consultarProducto/components/body-tabla-producto.html");
         if($sizeArray>0){
             foreach ($array as $element){
                 $temp = $elementotabla;
@@ -67,38 +70,70 @@ class producto extends Controller{
                 $temp= $this->renderView($temp, "{{CANT_DISPONIBLE}}", $element['cant_disponibles']);
                 $temp= $this->renderView($temp, "{{PRECIO}}", $element['precio']);
                 $temp= $this->renderView($temp, "{{URL_IMAGEN}}", $element['url_img1']);
-                $option .= $temp;
+                $tablaProductos .= $temp;
             }
         }
-        $this->view = $this->renderView($this->view, "{{OPTION}}", $option);
+        $this->view = $this->renderView($this->view, "{{OPTION}}", $tablaProductos);
         $this->showView($this->view);
         
     }
 
+     //este metodo permite subir un producto a la tienda virtual
     public function subirProducto($form){
-      
+        $url_imagen1=$this->agregarArchivo("imagen1");
+        $url_imagen2=$this->agregarArchivo("imagen2");
+        $url_imagen3=$this->agregarArchivo("imagen3");
+        $resul=$this->productoModel->agregarProducto($form,$url_imagen1,$url_imagen2,$url_imagen3);
+        if($resul<1){
+            $this->eliminarArchivo($url_imagen1);
+            $this->eliminarArchivo($url_imagen2);
+            $this->eliminarArchivo($url_imagen3);
+        }
+        
+        echo $resul;
     }
 
+    public function eliminarProducto($id){
+        $urls=$this->productoModel->eliminarProducto($id);
+        $this->eliminarArchivo($urls['url_img1']);
+        $this->eliminarArchivo($urls['url_img2']);
+        $this->eliminarArchivo($urls['url_img3']);
+
+    }
+
+    
+    
     //metodo para mover un archivo traido del formulario a la carpeta upload
-  private function agregarArchivo($nom_input_file){
-    $urlArchivo="";
-    if (is_uploaded_file($_FILES[$nom_input_file]['tmp_name'])){
-        $nombreDirectorio = "public/upload/";
-        $nombreFichero = $_FILES[$nom_input_file]['name'];
-        //opcional
-        $tipoArchivo=$_FILES[$nom_input_file]['type'];
-        $extencionFichero= ".". substr(strrchr($tipoArchivo, "/"), 1);
-        //
-        //id unico de tiempo
-        $idUnico=time();
-        
-        $urlArchivo = $nombreDirectorio . $idUnico . "_" . $nombreFichero;
-        move_uploaded_file($_FILES[$nom_input_file]['tmp_name'], $urlArchivo);
-        
+    private function agregarArchivo($nom_input_file){
+        $urlArchivo="";
+        if (is_uploaded_file($_FILES[$nom_input_file]['tmp_name'])){
+            $nombreDirectorio = "public/upload/";
+            $nombreFichero = $_FILES[$nom_input_file]['name'];
+            //opcional
+            $tipoArchivo=$_FILES[$nom_input_file]['type'];
+            $extencionFichero= ".". substr(strrchr($tipoArchivo, "/"), 1);
+            //
+            //id unico de tiempo
+            $idUnico=time();
+            
+            $urlArchivo = $nombreDirectorio .$nom_input_file."-".$idUnico.$extencionFichero;
+            move_uploaded_file($_FILES[$nom_input_file]['tmp_name'], $urlArchivo);
+            
             return $urlArchivo;
         }else{
             return false;
+        }
+    }
+    
+    private function eliminarArchivo($url){
+        //Eliminamos la imagen del evento ubicada en la carpeta upload
+        try{
+            if($url!=""){
+                unlink($url);
             }
+        }catch(Exception $e){
+            
+        }
     }
     
 }
