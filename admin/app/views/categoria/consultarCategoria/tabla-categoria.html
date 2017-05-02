@@ -38,3 +38,35 @@
         </div>
 </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $(".boton-eliminar").on("click", function(){
+            var id=$(this).attr("id");
+            var res=confirm("¿Desea eliminar la categoria?");
+            if(res){
+             realizarAjax(id);
+            }
+        });
+
+        //funcion ajax para enviar el id del producto que se desea eliminar 
+		function realizarAjax(id) {
+            var datos={
+                "mode":"eliminar-categoria",
+                "id":id
+            };
+			$.ajax({
+				data: datos,
+				url: "index.php",
+				type: 'POST',
+				//esta funncion se ejecuta cuando el php a terminado de procesar
+				//con el resultado e inserta el resultado en algun elemento html
+				success: function (response) {
+					window.location="index.php?mode=consultar-categorias";
+				},
+				error: function (xhr, status, error) {
+				}
+			});
+
+		}
+    });
+</script>

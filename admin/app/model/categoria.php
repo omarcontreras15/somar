@@ -15,6 +15,15 @@ class CategoriaModel extends Model{
         return $array;
     }
 
+    public function eliminarCategoria($id){
+        $this->connect();
+        $delete = "delete from categoria where id_categoria=$id";
+        $this->query($delete);
+        $delete = "delete from categorias_producto where id_producto=$id";
+        $this->query($delete);
+        $this->terminate();
+    }
+
 }
 
 ?>

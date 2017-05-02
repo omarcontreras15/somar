@@ -31,27 +31,35 @@ class Router
 
                     case "agregar-producto":
                       if(isset($_SESSION["user_id"])){
-                          $this->producto->agregarProducto();
+                          $this->producto->cargarAgregarProducto();
                       }else{
                           $this->user->inicioSesion();
                       }
                       break;
 
                       case "consultar-productos":
-                      if(isset($_SESSION["user_id"])){
-                          $this->producto->mostrarTablaProductos();
-                      }else{
-                          $this->user->inicioSesion();
-                      }
-                      break;
+                        if(isset($_SESSION["user_id"])){
+                            $this->producto->mostrarTablaProductos();
+                        }else{
+                            $this->user->inicioSesion();
+                        }
+                        break;
 
-                 case "consultar-categorias":
-                  if(isset($_SESSION["user_id"])){
-                        $this->categoria->listarCategorias();
-                  }else{
-                     $this->user->inicioSesion();
-                    }
-                     break;
+                      case "editar-producto":
+                        if(isset($_SESSION["user_id"]) && isset($_GET['id'])){
+                            $this->producto->cargarEditarProducto($_GET['id']);
+                        }else{
+                            $this->user->inicioSesion();
+                        }
+                        break;
+
+                     case "consultar-categorias":
+                        if(isset($_SESSION["user_id"])){
+                                $this->categoria->listarCategorias();
+                        }else{
+                            $this->user->inicioSesion();
+                            }
+                            break;
                                                                                   
                 default:
                       header("Location:index.php");
@@ -63,8 +71,8 @@ class Router
                        $this->user->login($_POST["username"], $_POST["password"]);
                         break;
 
-                    case "subir-producto":
-                      $this->producto->subirProducto($_POST);
+                    case "agregar-producto":
+                      $this->producto->agregarProducto($_POST);
                       break;
 
                     case "eliminar-producto":
@@ -74,6 +82,14 @@ class Router
                             $this->user->inicioSesion();
                             }
                      break;
+
+                     case "editar-producto":
+                      $this->producto->editarProducto($_POST);
+                      break;
+
+                      case "eliminar-categoria":
+                      $this->categoria->eliminarCategoria($_POST['id']);
+                      break;
                     
                       
                       default:                   

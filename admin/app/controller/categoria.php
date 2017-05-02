@@ -43,5 +43,9 @@ class Categoria extends Controller{
         $this->view = $this->renderView($this->view, "{{OPTION}}", $option);
         $this->showView($this->view);
     }
+
+    public function eliminarCategoria($id){
+        $this->categoriaModel->eliminarCategoria($id);
+    }
 }
     ?>
