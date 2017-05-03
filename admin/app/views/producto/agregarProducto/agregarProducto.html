@@ -183,12 +183,12 @@
 				//var con la url del archivo php
 				var url = "index.php";
 				//llama a la funcion ajax
-				realizarAjax(datos, url, this);
+				realizarAjax(datos, url);
 			});
 		}
 
 		//funcion ajax para enviar formulario a php
-		function realizarAjax(datos, url1, form) {
+		function realizarAjax(datos, url1) {
 			var boton = null;
 			$("#ventana-emergente-error").hide();
 			$.ajax({
@@ -206,7 +206,7 @@
 				//esta funncion se ejecuta cuando el php a terminado de procesar
 				//con el resultado e inserta el resultado en algun elemento html
 				success: function (response) {
-					if (response > 1) {
+					if (response >= 1) {
 						//mostramos la ventana emergente de que la carga de la evidencia fue exitosa
 						$("#ventana-emergente-exito").show();
 						$("#boton-submit").html('<a  href="index.php?mode=agregar-producto" class="btn btn-warning btn-lg pull-right">Nuevo Producto &nbsp<img src="public/images/add-blanco.png"></a>');

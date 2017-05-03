@@ -4,34 +4,38 @@
 <div class="container banner">
 	<section class="title-section">
 		<h1 class="title-header">
-			Administrar Categorias </h1>
+			Administrar Productos </h1>
 		<ul class="breadcrumb breadcrumb__t">
 			<li><a href="index.php">Inicio</a></li>
-			<li class="active">Administrar Categorias </li>
+			<li class="active">Administrar Productos </li>
 		</ul>
 	</section>
 </div>
 <div class='container contact'>
 <div class="main">
         <br>
-      
-        <p style='font-weight: bold;'>Seleccione la acción que desea realizar con la categoria.</p><br>
+          <p style='font-weight: bold;'>Total de productos: <strong>{{TOTAL_PRODUCTOS}}</strong></p><br>
+        <p style='font-weight: bold;'>Seleccione la acción que desea realizar con el producto.</p><br>
         <!-- para hacer la tabla responsive toca agregar la clase table-responsive a la etiqueta div-->
         <div>
             <table id="example" class="table table-bordered table-hover">
                 <thead>
                     <th>Id</th>
                     <th>Nombre</th>
-                    <th>Cantidad de productos</th>
+                    <th>Cantidad Disponible</th>
+                    <th>Precio</th>
+                    <th>Imagen</th>
                     <th>Acción</th>
                 </thead>
-                <tbody align="center">
+                <tbody id="tabla-productos" align="center">
                     {{OPTION}}
                 </tbody>
                 <tfoot>
                    <th>Id</th>
                     <th>Nombre</th>
-                    <th>Cantidad de productos</th>
+                    <th>Cantidad Disponible</th>
+                    <th>Precio</th>
+                    <th>Imagen</th>
                     <th>Acción</th>
                 </tfoot>
             </table>
@@ -42,7 +46,7 @@
     $(document).ready(function () {
         $(".boton-eliminar").on("click", function(){
             var id=$(this).attr("id");
-            var res=confirm("¿Desea eliminar la categoria?");
+            var res=confirm("¿Desea eliminar el producto?");
             if(res){
              realizarAjax(id);
             }
@@ -51,7 +55,7 @@
         //funcion ajax para enviar el id del producto que se desea eliminar 
 		function realizarAjax(id) {
             var datos={
-                "mode":"eliminar-categoria",
+                "mode":"eliminar-producto",
                 "id":id
             };
 			$.ajax({
@@ -61,7 +65,7 @@
 				//esta funncion se ejecuta cuando el php a terminado de procesar
 				//con el resultado e inserta el resultado en algun elemento html
 				success: function (response) {
-					window.location="index.php?mode=consultar-categorias";
+					window.location="index.php?mode=consultar-productos";
 				},
 				error: function (xhr, status, error) {
 				}

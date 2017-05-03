@@ -124,7 +124,7 @@ class producto extends Controller{
     //este metodo permite listar y motsrar en una datatable todos los prodcutos que tiene registrados la tienda virtual
     public function mostrarTablaProductos(){
         $menu=null;
-        $ventana = $this->getTemplate("./app/views/producto/consultarProducto/tabla-producto.html");
+        $ventana = $this->getTemplate("./app/views/producto/consultarProducto/administrarProducto.html");
         if((!isset($_SESSION["user_id"]) || $_SESSION["user_id"]==null)){
             
             $menu = $this->getTemplate("./app/views/components/menu-logout.html");
@@ -134,7 +134,6 @@ class producto extends Controller{
         }
         $this->view = $this->renderView($this->view, "{{TITULO}}","Consultar Productos");
         $this->view = $this->renderView($this->view, "{{SESION}}", $menu);
-        $this->view = $this->renderView($this->view, "{{CONTENT}}", $ventana);
         
         $array=$this->productoModel->listarProductos();
         $sizeArray = sizeof($array);
@@ -151,7 +150,9 @@ class producto extends Controller{
                 $tablaProductos .= $temp;
             }
         }
-        $this->view = $this->renderView($this->view, "{{OPTION}}", $tablaProductos);
+        $ventana = $this->renderView($ventana, "{{OPTION}}", $tablaProductos);
+        $ventana = $this->renderView($ventana, "{{TOTAL_PRODUCTOS}}", $sizeArray);   
+        $this->view = $this->renderView($this->view, "{{CONTENT}}", $ventana);
         $this->showView($this->view);
         
     }
@@ -179,8 +180,6 @@ class producto extends Controller{
         
     }
     
-    
-    
     //metodo para mover un archivo traido del formulario a la carpeta upload
     private function agregarArchivo($nom_input_file){
         $urlArchivo="";
@@ -206,7 +205,7 @@ class producto extends Controller{
     private function eliminarArchivo($url){
         //Eliminamos la imagen del evento ubicada en la carpeta upload
         try{
-            if($url!="" || !isset($url) || $url!=" "){
+            if($url!="" || !isset($url) || $url!=null){
                 unlink($url);
             }
         }catch(Exception $e){

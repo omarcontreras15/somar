@@ -92,7 +92,7 @@
                                 </fieldset>
                                 <br><br></div>
                         </div>
-                        <a href="index.php" class="btn btn-danger btn-lg pull-left" type="button">Cancelar &nbsp <img src="public/images/cerrar.png"></a></button>
+                        <a href="index.php?mode=consultar-productos" class="btn btn-danger btn-lg pull-left" type="button">Cancelar &nbsp <img src="public/images/cerrar.png"></a></button>
                         <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Siguiente &rarr;</button>
                         <br>
                         <br>
@@ -117,7 +117,7 @@
                                 </fieldset>
                                 <br><br></div>
                         </div>
-                        <a href="index.php" class="btn btn-danger btn-lg pull-left" type="button">Cancelar &nbsp <img src="public/images/cerrar.png"></a></button>
+                        <a href="index.php?mode=consultar-productos" class="btn btn-danger btn-lg pull-left" type="button">Cancelar &nbsp <img src="public/images/cerrar.png"></a></button>
                         <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Siguiente &rarr;</button>
                         <br>
                         <br>
@@ -139,21 +139,21 @@
                                             <div class="col-md-2"><label>Subir imagen 1:</label></div>
                                             <div class="col-md-8"><input type="file" class="form-control" accept="image/gif,image/jpeg,image/jpg,image/png"
                                                     name="imagen1"></div>
-                                            <div  id="img1" class="col-md-2"><img  class="img-responsive" src="{{url_img1}}">
+                                            <div id="img1" class="col-md-2"><img class="img-responsive" src="{{url_img1}}">
                                             </div>
                                         </div><br>
                                         <div class="row">
                                             <div class="col-md-2"><label>Subir imagen 2:</label></div>
                                             <div class="col-md-8"><input type="file" class="form-control" accept="image/gif,image/jpeg,image/jpg,image/png"
                                                     name="imagen2"></div>
-                                            <div id="img2"  class="col-md-2"><img class="img-responsive" src="{{url_img2}}">
+                                            <div id="img2" class="col-md-2"><img class="img-responsive" src="{{url_img2}}">
                                             </div>
                                         </div><br>
                                         <div class="row">
                                             <div class="col-md-2"><label>Subir imagen 3:</label></div>
                                             <div class="col-md-8"><input type="file" class="form-control" accept="image/gif,image/jpeg,image/jpg,image/png"
                                                     name="imagen3"></div>
-                                            <div id="img3" class="col-md-2"><img class="img-responsive" src="{{url_img3}}"  >
+                                            <div id="img3" class="col-md-2"><img class="img-responsive" src="{{url_img3}}">
                                             </div>
                                         </div><br>
 
@@ -162,7 +162,7 @@
                                 </fieldset>
                                 <br><br></div>
                         </div>
-                        <a href="index.php" class="btn btn-danger btn-lg pull-left" type="button">Cancelar &nbsp <img src="public/images/cerrar.png"></a></button>
+                        <a href="index.php?mode=consultar-productos" class="btn btn-danger btn-lg pull-left" type="button">Cancelar &nbsp <img src="public/images/cerrar.png"></a></button>
                         <div id="boton-submit"><label class="btn btn-primary btn-lg pull-right">Guardar &nbsp<input type="submit" style="display: none;"><img src="public/images/save.png"></label></div>
                         <br>
                         <br>
@@ -190,6 +190,8 @@
         function cargarEventos() {
             //funcion para agregar el ajax al submit del formulario
             $("#agregar-producto").on("submit", function (e) {
+                $("#ventana-emergente-exito").hide();
+                $("#ventana-emergente-error").hide();
                 //previene que se envien los datos por la url
                 e.preventDefault();
                 var datos = new FormData(this);
@@ -220,23 +222,21 @@
                 //con el resultado e inserta el resultado en algun elemento html
                 success: function (response) {
                     console.log(response);
-                    var array=JSON.parse(response);
-                    if (array['resul'] > 1) {
+                    var array = JSON.parse(response);
+                    if (array['resul'] >= 1) {
                         //mostramos la ventana emergente de que la carga de la evidencia fue exitosa
-                        $("#boton-submit").html(boton);
                         $("#ventana-emergente-exito").show();
-                       $("#img1").html('<img class="img-responsive" src="'+array['url']["imagen1"]+'">');
-                        $("#img2").html('<img class="img-responsive" src="'+array['url']["imagen2"]+'">');
-                        $("#img3").html('<img class="img-responsive" src="'+array['url']["imagen3"]+'">');
-                        
+                        $("#img1").html('<img class="img-responsive" src="' + array['url']["imagen1"] + '">');
+                        $("#img2").html('<img class="img-responsive" src="' + array['url']["imagen2"] + '">');
+                        $("#img3").html('<img class="img-responsive" src="' + array['url']["imagen3"] + '">');
+
                     } else if (response == "repetido") {
                         $("#ventana-emergente-error").show();
                         $("#span-error").text("No se puede actualizar el producto porque ya que la información ya se encuentra registrada.");
-                        $("#boton-submit").html(boton);
                     } else {
                         $("#ventana-emergente-error").show();
-                        $("#boton-submit").html(boton);
                     }
+                     $("#boton-submit").html(boton);
                     window.location = "#";
                 },
                 error: function (xhr, status, error) {

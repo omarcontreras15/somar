@@ -59,7 +59,23 @@ class Router
                         }else{
                             $this->user->inicioSesion();
                             }
-                            break;
+                        break;
+
+                     case "agregar-categoria":
+                        if(isset($_SESSION["user_id"])){
+                            $this->categoria->cargarAgregarCategoria();
+                        }else{
+                            $this->user->inicioSesion();
+                            }
+                        break;
+
+                    case "editar-categoria":
+                        if(isset($_SESSION["user_id"])){
+                            $this->categoria-> cargarEditarCategoria($_GET['id']);
+                        }else{
+                            $this->user->inicioSesion();
+                            }
+                        break;
                                                                                   
                 default:
                       header("Location:index.php");
@@ -89,6 +105,14 @@ class Router
 
                       case "eliminar-categoria":
                       $this->categoria->eliminarCategoria($_POST['id']);
+                      break;
+
+                      case "agregar-categoria":
+                      $this->categoria->agregarCategoria($_POST['nombre']);
+                      break;
+
+                      case "editar-categoria":
+                      $this->categoria->editarCategoria($_POST['id'],$_POST['nombre']);
                       break;
                     
                       

@@ -29,8 +29,10 @@ body a{
 .header_top{
 	
 	background: url(../images/header.jpg);
+	/*background: white; */
 	padding:1.5em;
 }
+
 .logo{
 	float:left;
 	margin-top:5px;
@@ -170,8 +172,6 @@ body{margin-top:20px;}
 .img-tabla-productos{
 	max-height: 100px;
 }
-
-
 .alert-white {
   background-image: linear-gradient(to bottom, #fff, #f9f9f9);
   border-top-color: #d8d8d8;
