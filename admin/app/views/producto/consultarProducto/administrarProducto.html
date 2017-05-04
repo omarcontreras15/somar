@@ -14,7 +14,10 @@
 <div class='container contact'>
 <div class="main">
         <br>
-          <p style='font-weight: bold;'>Total de productos: <strong>{{TOTAL_PRODUCTOS}}</strong></p><br>
+        <div class="row">
+        <div class="col-md-6"><p style='font-weight: bold;'>Total de productos: <strong>{{TOTAL_PRODUCTOS}}</strong></p><br></div>
+        <div class="col-md-6" align="rigth"><a  href="index.php?mode=agregar-producto" class="btn btn-warning btn-lg pull-right">Nuevo Producto &nbsp<img src="public/images/add-blanco.png"></a></div>
+        </div>
         <p style='font-weight: bold;'>Seleccione la acción que desea realizar con el producto.</p><br>
         <!-- para hacer la tabla responsive toca agregar la clase table-responsive a la etiqueta div-->
         <div>
