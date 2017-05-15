@@ -15,15 +15,9 @@ class producto extends Controller{
     
     //Este metodo permite mostrar la vista del formulario para poder agregar productos nuevos a la tienda virtual
     public function cargarAgregarProducto(){
-        $menu=null;
+         //varifica si hay o no una sesion iniciado, dependiendo del caso cargar el menuBar
+        $menu=$this->cargarMenuBar();
         $contenido = $this->getTemplate("./app/views/producto/agregarProducto/agregarProducto.html");
-        if((!isset($_SESSION["user_id"]) || $_SESSION["user_id"]==null)){
-            
-            $menu = $this->getTemplate("./app/views/components/menu-logout.html");
-        }else{
-            $menu = $this->getTemplate("./app/views/components/menu-login.html");
-            
-        }
         $array=$this->productoModel->listarCategorias();
         $sizeArray = sizeof($array);
         $option = "";
@@ -45,15 +39,9 @@ class producto extends Controller{
     
     //Este metodo permite mostrar la vista de editar producto
     public function cargarEditarProducto($id){
-        $menu=null;
+         //varifica si hay o no una sesion iniciado, dependiendo del caso cargar el menuBar
+        $menu=$this->cargarMenuBar();
         $contenido = $this->getTemplate("./app/views/producto/editarProducto/editarProducto.html");
-        if((!isset($_SESSION["user_id"]) || $_SESSION["user_id"]==null)){
-            
-            $menu = $this->getTemplate("./app/views/components/menu-logout.html");
-        }else{
-            $menu = $this->getTemplate("./app/views/components/menu-login.html");
-            
-        }
         //Llamamos al metodo consultarProducto de ProductoModel y le pasamos como parametro el id de un producto para
         $array=$this->productoModel->consultarProducto($id);
         $info=$array['infoP'];
@@ -123,15 +111,9 @@ class producto extends Controller{
     }
     //este metodo permite listar y motsrar en una datatable todos los prodcutos que tiene registrados la tienda virtual
     public function mostrarTablaProductos(){
-        $menu=null;
+         //varifica si hay o no una sesion iniciado, dependiendo del caso cargar el menuBar
+        $menu=$this->cargarMenuBar();
         $ventana = $this->getTemplate("./app/views/producto/consultarProducto/administrarProducto.html");
-        if((!isset($_SESSION["user_id"]) || $_SESSION["user_id"]==null)){
-            
-            $menu = $this->getTemplate("./app/views/components/menu-logout.html");
-        }else{
-            $menu = $this->getTemplate("./app/views/components/menu-login.html");
-            
-        }
         $this->view = $this->renderView($this->view, "{{TITULO}}","Consultar Productos");
         $this->view = $this->renderView($this->view, "{{SESION}}", $menu);
         

@@ -3,18 +3,22 @@
 include_once "./app/controller/user.php";
 include_once "./app/controller/producto.php";
 include_once "./app/controller/categoria.php";
+include_once "./app/controller/venta.php";
+
 class Router
 {
 
     private $user;
     private $producto;
     private $categoria;
+    private $venta;
 
     public function __construct()
     {
         $this->user = new User();
         $this->producto = new Producto();
         $this->categoria=new Categoria();
+        $this->venta=new Venta();
     }
 
     public function router(){ 
@@ -76,6 +80,14 @@ class Router
                             $this->user->inicioSesion();
                             }
                         break;
+
+                        case "ventas-realizadas":
+                        if(isset($_SESSION["user_id"])){
+                            $this->venta-> cargarVistaVentasRealizadas();
+                        }else{
+                            $this->user->inicioSesion();
+                            }
+                        break;
                                                                                   
                 default:
                       header("Location:index.php");
@@ -113,6 +125,10 @@ class Router
 
                       case "editar-categoria":
                       $this->categoria->editarCategoria($_POST['id'],$_POST['nombre']);
+                      break;
+
+                      case "eliminar-pedido":
+                      $this->venta->eliminarPedido($_POST['id']);
                       break;
                     
                       

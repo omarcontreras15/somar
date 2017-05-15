@@ -13,16 +13,9 @@ class Categoria extends Controller{
     }
 
     public function listarCategorias(){
-
-        $menu=null;
+        //varifica si hay o no una sesion iniciado, dependiendo del caso cargar el menuBar
+        $menu=$this->cargarMenuBar();
         $ventana = $this->getTemplate("./app/views/categoria/consultarCategoria/administrarCategoria.html");
-        if((!isset($_SESSION["user_id"]) || $_SESSION["user_id"]==null)){
-            
-            $menu = $this->getTemplate("./app/views/components/menu-logout.html");
-        }else{
-            $menu = $this->getTemplate("./app/views/components/menu-login.html");
-            
-        }
         $this->view = $this->renderView($this->view, "{{TITULO}}","Consultar Categorias");
         $this->view = $this->renderView($this->view, "{{SESION}}", $menu);
         
@@ -46,15 +39,9 @@ class Categoria extends Controller{
     }
 
     public function cargarAgregarCategoria(){
-        $menu=null;
+         //varifica si hay o no una sesion iniciado, dependiendo del caso cargar el menuBar
+        $menu=$this->cargarMenuBar();
         $contenido = $this->getTemplate("./app/views/categoria/agregarCategoria/agregarCategoria.html");
-        if((!isset($_SESSION["user_id"]) || $_SESSION["user_id"]==null)){
-            
-            $menu = $this->getTemplate("./app/views/components/menu-logout.html");
-        }else{
-            $menu = $this->getTemplate("./app/views/components/menu-login.html");
-            
-        }
         $this->view = $this->renderView($this->view, "{{TITULO}}","Agregar Categoria");
         $this->view = $this->renderView($this->view, "{{SESION}}", $menu);
         $this->view = $this->renderView($this->view, "{{CONTENT}}", $contenido);
@@ -62,15 +49,9 @@ class Categoria extends Controller{
     }
 
     public function cargarEditarCategoria($id){
-        $menu=null;
+         //varifica si hay o no una sesion iniciado, dependiendo del caso cargar el menuBar
+        $menu=$this->cargarMenuBar();
         $contenido = $this->getTemplate("./app/views/categoria/editarCategoria/editarCategoria.html");
-        if((!isset($_SESSION["user_id"]) || $_SESSION["user_id"]==null)){
-            
-            $menu = $this->getTemplate("./app/views/components/menu-logout.html");
-        }else{
-            $menu = $this->getTemplate("./app/views/components/menu-login.html");
-            
-        }
         $nombre=$this->categoriaModel->buscarNombreCategoria($id);
         $contenido = $this->renderView($contenido, "{{ID}}",$id);
         $contenido = $this->renderView($contenido, "{{NOMBRE}}",$nombre);

@@ -15,16 +15,10 @@ class User extends Controller {
     }
 
     public function index() {
-        $menu;
+         //varifica si hay o no una sesion iniciado, dependiendo del caso cargar el menuBar
+        $menu=$this->cargarMenuBar();
         $inicio = $this->getTemplate("./app/views/inicio.html");
-        if((!isset($_SESSION["user_id"]) || $_SESSION["user_id"]==null)){
-
-            $menu = $this->getTemplate("./app/views/components/menu-logout.html");
-        }else{
-            $menu = $this->getTemplate("./app/views/components/menu-login.html");
-
-        }
-
+        
         $this->view = $this->renderView($this->view, "{{TITULO}}","SOMAR");
         $this->view = $this->renderView($this->view, "{{SESION}}", $menu);
         $this->view = $this->renderView($this->view, "{{CONTENT}}", $inicio);

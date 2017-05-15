@@ -8,11 +8,11 @@ if (document.querySelectorAll("#example").length == 1) {
             {
                 "language": {
                     "lengthMenu": "Mostrando _MENU_ resultados por pagina",
-                    "zeroRecords": "No se encuentran productos",
+                    "zeroRecords": "No se encuentran resultados",
                     "info": "Mostrando pagina _PAGE_ de _PAGES_",
                     "infoEmpty": "",
                     "infoFiltered": "(filtrado de _MAX_ registros)",
-                    "search": "Buscar Producto: ",
+                    "search": "Buscar: ",
                     "paginate": {
                         "first": "Primero",
                         "last": "Ultimo",
