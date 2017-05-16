@@ -88,6 +88,14 @@ class Router
                             $this->user->inicioSesion();
                             }
                         break;
+
+                         case "facturas":
+                        if(isset($_SESSION["user_id"])){
+                            $this->venta-> cargarVistaFactura();
+                        }else{
+                            $this->user->inicioSesion();
+                            }
+                        break;
                                                                                   
                 default:
                       header("Location:index.php");
@@ -129,6 +137,10 @@ class Router
 
                       case "eliminar-pedido":
                       $this->venta->eliminarPedido($_POST['id']);
+                      break;
+
+                      case "ver-detalle-pedido":
+                      $this->venta->cargarVistaDetallePedido($_POST['id']);
                       break;
                     
                       

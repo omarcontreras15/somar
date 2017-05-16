@@ -29,5 +29,7 @@
 }
 .btn-warning{
 	margin-bottom: 5px;
+}
+label.btn.btn-warning{
     width: 100%;
 }

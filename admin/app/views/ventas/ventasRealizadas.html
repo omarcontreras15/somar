@@ -51,10 +51,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h3 class="modal-title" id="frame-titulo"></h3>
+                <h3 class="modal-title" id="frame-titulo">Detalles del pedido</h3>
             </div>
-            <div class="modal-body">
-                <iframe width="100%" frameborder="0" id="frame-url" src="" style="height: 400px;" __idm_frm__="721"></iframe>
+            <div class="modal-body" id="ventana-detalle-pedido">
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -88,7 +88,6 @@
                 //con el resultado e inserta el resultado en algun elemento html
                 success: function (response) {
                     window.location = "index.php?mode=ventas-realizadas";
-                    console.log(response);
                 },
                 error: function (xhr, status, error) {
                 }
@@ -97,4 +96,22 @@
         }
     });
 
+function cargarVentana(id){
+     var datos = {
+                "mode": "ver-detalle-pedido",
+                "id": id
+            };
+            $.ajax({
+                data: datos,
+                url: "index.php",
+                type: 'POST',
+                //esta funncion se ejecuta cuando el php a terminado de procesar
+                //con el resultado e inserta el resultado en algun elemento html
+                success: function (response) {
+                    $("#ventana-detalle-pedido").html(response);
+                },
+                error: function (xhr, status, error) {
+                }
+            });
+}
 </script>

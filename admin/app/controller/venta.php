@@ -40,6 +40,35 @@ class Venta extends Controller{
         $this->showView($this->view);
     }
 
+public function cargarVistaDetallePedido($id_pedido){
+        $ventana = $this->getTemplate("./app/views/ventas/factura/factura.html");
+        $datosCliente=$this->ventaModel->obtenerDatosUsuario($id_pedido);
+        foreach($datosCliente as $key => $value){
+            $ventana=$this->renderView($ventana,"{{".$key."}}", $value);
+        }
+       
+       $datosDetalleP=$this->ventaModel->obtenerDetalleFactura($id_pedido);
+        foreach($datosDetalleP as $key => $value){
+            $ventana=$this->renderView($ventana,"{{".$key."}}", $value);
+        }
+
+        $array=$this->ventaModel->listarItemsPedido($id_pedido);
+        $sizeArray = sizeof($array);
+        $tablaVentas = "";
+        $elementotabla = $this->getTemplate("./app/views/ventas/factura/body-tabla-factura.html");
+        if($sizeArray>0){
+            foreach ($array as $element){
+                $temp = $elementotabla;
+                foreach ($element as $key=>$value){
+                     $temp=$this->renderView($temp,"{{".$key."}}", $value);
+                }
+                $tablaVentas .= $temp;
+            }
+        }
+        $ventana = $this->renderView($ventana, "{{OPTION}}", $tablaVentas);
+        
+        $this->showView($ventana);
+    }
     public function eliminarPedido($id){
     $this->ventaModel->eliminarPedido($id);
     }

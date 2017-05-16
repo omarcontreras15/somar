@@ -57,6 +57,7 @@ body a{
 	transition: all 0.3s ease;
 	font-weight: bold;
 }
+
 #nav .current a {
    color:#fff;
    background:#ff9801;
@@ -1592,6 +1593,7 @@ th{
     text-align: center;
     position: relative;
 }
+
 
 .btn-circle {
   width: 30px;
