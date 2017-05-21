@@ -63,6 +63,27 @@
 
     </div>
 </div>
+
+<!-- Este html muestra una ventana emergente con los detalles completos del pedido-->
+<div id="ventanaComprobante" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" id="frame-titulo">Ver Comprobante De Pago</h3>
+            </div>
+            <div class="modal-body" id="ventana-ver-comprobante">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 <!-- -->
 <script>
     $(document).ready(function () {
@@ -114,4 +135,25 @@ function cargarVentana(id){
                 }
             });
 }
+
+function verComprobante(id) {
+        var datos = {
+            "mode": "ver-comprobante",
+            "id": id
+        };
+        $.ajax({
+            data: datos,
+            url: "index.php",
+            type: 'POST',
+            //esta funncion se ejecuta cuando el php a terminado de procesar
+            //con el resultado e inserta el resultado en algun elemento html
+            success: function (response) {
+                var html='<div><img src="'+response+'" class="img-responsive"></div>';
+                $("#ventana-ver-comprobante").html(html);
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+     }
+
 </script>
