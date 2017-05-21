@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <div class="agileits-bottom">
-                        <input type="submit" value="Cambiar Contraseña">
+                        <input type="submit"  id="boton-enviar-correo" value="Cambiar Contraseña">
                     </div>
                 </div>
             </form>
@@ -68,6 +68,8 @@
 				var datos = new FormData(this);
 				//llama a la funcion ajax
 				realizarAjax(datos);
+                //desactivo el boton del submit hasta que se haya enviado el correo
+                $("#boton-enviar-correo").attr("disabled", true);
 			});
 
         function ocultarMsgEmergente(){
@@ -86,7 +88,7 @@
 				//esta funncion se ejecuta cuando el php a terminado de procesar
 				//con el resultado e inserta el resultado en algun elemento html
 				success: function (response) {
-                    console.log(response);
+                    $("#boton-enviar-correo").removeAttr("disabled");
 					ocultarMsgEmergente();
 					if(response){
                         $("#ventana-emergente-exito").show();

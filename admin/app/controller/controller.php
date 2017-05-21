@@ -6,15 +6,15 @@ class Controller {
     public function getTemplate($route){
         return file_get_contents($route);
     }
-
+    
     public function showView($view){
         echo $view;
     }
-
+    
     public function renderView($ubicacion, $cadenaReemplazar, $reemplazo){
         return str_replace($cadenaReemplazar, $reemplazo, $ubicacion);
     }
-
+    
     public function cargarMenuBar(){
         $menu=null;
         if((!isset($_SESSION["user_id"]) || $_SESSION["user_id"]==null)){
@@ -24,10 +24,10 @@ class Controller {
             $menu = $this->getTemplate("./app/views/components/menu-login.html");
             
         }
-
+        
         return $menu;
     }
-
+    
     public function enviarEmail($email, $asunto, $contenido){
         $mail = new PHPMailer();
         $mail ->IsSmtp();
@@ -43,10 +43,17 @@ class Controller {
         $mail ->Subject = $asunto;
         $mail ->Body = $contenido;
         $mail ->AddAddress($email);
-
+        //esta linea debe ir para que funcione correctamente con gmail y SSL
+        $mail->SMTPOptions = array(
+        'ssl' => array(
+        'verify_peer' => false,
+        'verify_peer_name' => false,
+        'allow_self_signed' => true
+        )
+        );
         return $mail->Send();
     }
-
-
+    
+    
 }
 ?>
