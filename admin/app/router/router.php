@@ -17,140 +17,141 @@ class Router
     {
         $this->user = new User();
         $this->producto = new Producto();
-        $this->categoria=new Categoria();
-        $this->venta=new Venta();
+        $this->categoria = new Categoria();
+        $this->venta = new Venta();
     }
 
-    public function router(){ 
+    public function router()
+    {
 
-        if(isset($_GET["mode"])) {
-              switch ($_GET["mode"]) {
-                    case "iniciarSesion":
-                       $this->user->inicioSesion();
-                        break;
+        if (isset($_GET["mode"])) {
+            if (isset($_SESSION["user_id"])) {
+
+                switch ($_GET["mode"]) {
+
                     case "cerrarSesion":
                         session_destroy();
                         header("Location:index.php");
                         break;
 
                     case "agregar-producto":
-                      if(isset($_SESSION["user_id"])){
-                          $this->producto->cargarAgregarProducto();
-                      }else{
-                          $this->user->inicioSesion();
-                      }
-                      break;
-
-                      case "consultar-productos":
-                        if(isset($_SESSION["user_id"])){
-                            $this->producto->mostrarTablaProductos();
-                        }else{
-                            $this->user->inicioSesion();
-                        }
+                        $this->producto->cargarAgregarProducto();
                         break;
 
-                      case "editar-producto":
-                        if(isset($_SESSION["user_id"]) && isset($_GET['id'])){
-                            $this->producto->cargarEditarProducto($_GET['id']);
-                        }else{
-                            $this->user->inicioSesion();
-                        }
+                    case "consultar-productos":
+                        $this->producto->mostrarTablaProductos();
                         break;
 
-                     case "consultar-categorias":
-                        if(isset($_SESSION["user_id"])){
-                                $this->categoria->listarCategorias();
-                        }else{
-                            $this->user->inicioSesion();
-                            }
+                    case "editar-producto":
+                        $this->producto->cargarEditarProducto($_GET['id']);
                         break;
 
-                     case "agregar-categoria":
-                        if(isset($_SESSION["user_id"])){
-                            $this->categoria->cargarAgregarCategoria();
-                        }else{
-                            $this->user->inicioSesion();
-                            }
+                    case "consultar-categorias":
+                        $this->categoria->listarCategorias();
+                        break;
+
+                    case "agregar-categoria":
+                        $this->categoria->cargarAgregarCategoria();
                         break;
 
                     case "editar-categoria":
-                        if(isset($_SESSION["user_id"])){
-                            $this->categoria-> cargarEditarCategoria($_GET['id']);
-                        }else{
-                            $this->user->inicioSesion();
-                            }
+                        $this->categoria->cargarEditarCategoria($_GET['id']);
                         break;
 
-                        case "ventas-realizadas":
-                        if(isset($_SESSION["user_id"])){
-                            $this->venta-> cargarVistaVentasRealizadas();
-                        }else{
-                            $this->user->inicioSesion();
-                            }
+                    case "ventas-realizadas":
+                        $this->venta->cargarVistaVentasRealizadas();
                         break;
 
-                         case "facturas":
-                        if(isset($_SESSION["user_id"])){
-                            $this->venta-> cargarVistaFactura();
-                        }else{
-                            $this->user->inicioSesion();
-                            }
-                        break;
-                                                                                  
-                default:
-                      header("Location:index.php");
-                      break;
-        }
-            } else if(isset($_POST["mode"])) {
-                  switch ($_POST["mode"]) {
-                    case "login":
-                       $this->user->login($_POST["username"], $_POST["password"]);
+                     case "ventas-progreso":
+                        $this->venta->cargarVistaVentasProgreso();
                         break;
 
-                    case "agregar-producto":
-                      $this->producto->agregarProducto($_POST);
-                      break;
-
-                    case "eliminar-producto":
-                        if(isset($_SESSION["user_id"])){
-                            $this->producto->eliminarProducto($_POST['id']);
-                        }else{
-                            $this->user->inicioSesion();
-                            }
-                     break;
-
-                     case "editar-producto":
-                      $this->producto->editarProducto($_POST);
-                      break;
-
-                      case "eliminar-categoria":
-                      $this->categoria->eliminarCategoria($_POST['id']);
-                      break;
-
-                      case "agregar-categoria":
-                      $this->categoria->agregarCategoria($_POST['nombre']);
-                      break;
-
-                      case "editar-categoria":
-                      $this->categoria->editarCategoria($_POST['id'],$_POST['nombre']);
-                      break;
-
-                      case "eliminar-pedido":
-                      $this->venta->eliminarPedido($_POST['id']);
-                      break;
-
-                      case "ver-detalle-pedido":
-                      $this->venta->cargarVistaDetallePedido($_POST['id']);
-                      break;
+                    case "facturas":
+                        $this->venta->cargarVistaFactura();
+                        break;
                     
-                      
-                      default:                   
-                      header("Location:index.php");
-                      break;
-                      }  
-            } else {
-              $this->user->index();  
+                    case "restablecer-clave":
+                        $this->user->restablecerClave($_GET['id']);
+                        break;
+
+                    default:
+                        header("Location:index.php");
+                        break;
+                }
+            } else if($_GET["mode"] == "iniciarSesion"){
+                    $this->user->inicioSesion();
+            }else if($_GET["mode"] == "recuperarClave"){
+                    $this->user->vistaRecuperarClave();
+            }else if ($_GET["mode"] =="restablecer-clave"){
+                    $this->user->restablecerClave($_GET['id']);
+
+            }else{
+                 header("Location:index.php");
             }
+        } else if (isset($_POST["mode"])) {
+            switch ($_POST["mode"]) {
+                case "login":
+                    $this->user->login($_POST["username"], $_POST["password"]);
+                    break;
+
+                case "agregar-producto":
+                    $this->producto->agregarProducto($_POST);
+                    break;
+
+                case "eliminar-producto":
+                    if (isset($_SESSION["user_id"])) {
+                        $this->producto->eliminarProducto($_POST['id']);
+                    } else {
+                        $this->user->inicioSesion();
+                    }
+                    break;
+
+                case "editar-producto":
+                    $this->producto->editarProducto($_POST);
+                    break;
+
+                case "eliminar-categoria":
+                    $this->categoria->eliminarCategoria($_POST['id']);
+                    break;
+
+                case "agregar-categoria":
+                    $this->categoria->agregarCategoria($_POST['nombre']);
+                    break;
+
+                case "editar-categoria":
+                    $this->categoria->editarCategoria($_POST['id'], $_POST['nombre']);
+                    break;
+
+                case "eliminar-pedido":
+                    $this->venta->eliminarPedido($_POST['id']);
+                    break;
+
+                case "ver-detalle-pedido":
+                    $this->venta->cargarVistaDetallePedido($_POST['id']);
+                    break;
+
+                case "recuperar-clave":
+                    $this->user->recuperarClave($_POST['email']);
+                    break;
+                 case "cambiar-clave":
+                    $this->user->cambiarClave($_POST['password'],$_POST['id']);
+                    break;
+                case "ver-comprobante":
+                    $this->venta->verComprobante($_POST['id']);
+                    break;
+
+                case "validar-comprobante":
+                    $this->venta->validarComprobante($_POST['accion'],$_POST['id']);
+                    break;
+
+
+                default:
+                    header("Location:index.php");
+                    break;
+            }
+        } else {
+            $this->user->index();
+        }
     }
 
 

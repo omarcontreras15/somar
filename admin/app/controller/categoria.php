@@ -3,7 +3,7 @@ include_once  "./app/controller/controller.php";
 include_once  "./app/model/categoria.php";
 
 class Categoria extends Controller{
-    
+
     private $view;
     private $categoriaModel;
     
@@ -18,7 +18,7 @@ class Categoria extends Controller{
         $ventana = $this->getTemplate("./app/views/categoria/consultarCategoria/administrarCategoria.html");
         $this->view = $this->renderView($this->view, "{{TITULO}}","Consultar Categorias");
         $this->view = $this->renderView($this->view, "{{SESION}}", $menu);
-        
+
         $array=$this->categoriaModel->listarCategorias();
         $sizeArray = sizeof($array);
         $option = "";

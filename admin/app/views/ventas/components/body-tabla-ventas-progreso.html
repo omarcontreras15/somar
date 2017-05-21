@@ -1,0 +1,21 @@
+<tr>
+    <td width="15%">{{ID}}</td>
+    <td width="25%">{{USUARIO}}</td>
+    <td width="20%">{{FECHA_PEDIDO}}</td>
+    <td width="15%">{{VALOR_PEDIDO}}</td>
+    <td width="5%"><img src="public/images/{{ESTADO}}.png"></td>
+    <td width="20%">
+        <div class="btn-group">
+            <button type="button" class="btn btn-warning">Opciones</button>
+            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#"  onclick="cargarVentana({{ID}})"  data-toggle="modal" data-target="#myModal"><img src="public/images/ver.png"> Ver detalles</a></li>
+                {{CHECK_COMPROBANTE}}
+                <li><a class="boton-eliminar" id="{{ID}}" style="cursor:pointer"><img src="public/images/icon-basura.png"> Eliminar</a></li>
+            </ul>
+        </div>
+    </td>
+</tr>
