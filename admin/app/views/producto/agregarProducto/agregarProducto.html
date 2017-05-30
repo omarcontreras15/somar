@@ -220,7 +220,8 @@
 						$("#ventana-emergente-error").show();
 						$("#boton-submit").html(boton);
 					}
-					window.location = "#";
+					//ir hacia arriba en el scrollTop
+                    $('html, body').animate({scrollTop:0}, 'slow')
 				},
 				error: function (xhr, status, error) {
 					$("#ventana-emergente-error").show();

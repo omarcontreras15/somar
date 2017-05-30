@@ -95,7 +95,8 @@
                     }else{
                         $("#ventana-emergente-error").show();
                     }
-                     window.location="#";
+                    //ir hacia arriba en el scrollTop
+                    $('html, body').animate({scrollTop:0}, 'slow')
                      setTimeout("location.href='index.php'",3000); 
 				},
 				error: function (xhr, status, error) {

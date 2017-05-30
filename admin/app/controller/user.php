@@ -42,7 +42,7 @@ class User extends Controller {
 
     public function login($user, $password) {
         $pass = sha1($password);
-        $log = $this->userModel->login($user, $pass);
+        $log = $this->userModel->loginAdmin($user, $pass);
         if($log) {
            $this->index();
           

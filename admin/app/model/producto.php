@@ -5,13 +5,40 @@ class ProductoModel extends Model{
     
     public function listarProductos(){
         $this->connect();
-        $consulta = "SELECT id_producto, nombre_producto, precio, cant_disponibles, url_img1 from producto";
+        //listamos todos los productos que tengan el atributo disponibilidad como disponible 
+        $consulta = "SELECT id_producto, nombre_producto, precio, cant_disponibles, url_img1 from producto where disponibilidad='disponible'";
         $query = $this->query($consulta);
         $this->terminate();
         $array = array();
         while($row = mysqli_fetch_array($query)){
             array_unshift($array, $row);
         }
+        return $array;
+    }
+
+    public function listarProductosNuevo(){
+         $this->connect();
+        //listamos todos los productos que tengan el atributo disponibilidad como disponible 
+        $consulta = "SELECT id_producto, nombre_producto, precio, cant_disponibles, url_img1 from producto where disponibilidad='disponible' and cant_disponibles>0 and DATEDIFF(now(), fecha_registro)<=7 order by fecha_registro desc limit 6";
+        $query = $this->query($consulta);
+        $array = array();
+        while($row = mysqli_fetch_array($query)){
+            array_unshift($array, $row);
+        }
+        $this->terminate();
+        return $array;
+    }
+
+     public function listarProductosMasVendido(){
+         $this->connect();
+        //listamos todos los productos que tengan el atributo disponibilidad como disponible 
+        $consulta = "SELECT p.id_producto, nombre_producto, precio, cant_disponibles, url_img1, IFNULL((select sum(cantidad) from detalle_pedido where id_producto=p.id_producto),0) cant_vendidas from producto p where disponibilidad='disponible' and cant_disponibles>0 order by cant_vendidas desc limit 6";
+        $query = $this->query($consulta);
+        $array = array();
+        while($row = mysqli_fetch_array($query)){
+            array_unshift($array, $row);
+        }
+        $this->terminate();
         return $array;
     }
     
@@ -117,8 +144,9 @@ class ProductoModel extends Model{
         $urls=mysqli_fetch_array($this->query($consulta));
         $delete = "delete from productos_categoria where id_producto=$id";
         $this->query($delete);
-        $delete = "delete from producto where id_producto=$id";
-        $this->query($delete);
+        //no podemos eliminar el producto, le cambiamos la disponibilidad a no_disponible con el objetivo de respetar la integridad referencial
+        $update = "UPDATE producto set disponibilidad='no_disponible', url_img1='', url_img2='', url_img3='' where id_producto=$id";
+        $this->query($update);
         $this->terminate();
         return $urls;
     }

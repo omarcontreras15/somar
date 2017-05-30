@@ -99,11 +99,7 @@ class Router
                     break;
 
                 case "eliminar-producto":
-                    if (isset($_SESSION["user_id"])) {
                         $this->producto->eliminarProducto($_POST['id']);
-                    } else {
-                        $this->user->inicioSesion();
-                    }
                     break;
 
                 case "editar-producto":

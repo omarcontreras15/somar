@@ -4,7 +4,7 @@ require_once "./app/model/model.php";
 class UserModel extends Model {
     
     
-    function login ($usuario, $password) {
+    public function loginAdmin($usuario, $password) {
         $this->connect();
         $consulta = "SELECT * FROM usuario WHERE (nick = '$usuario' AND password = '$password' AND tipo='admin') OR (email = '$usuario' AND password = '$password' AND tipo='admin')";
         $query = $this->query($consulta);
@@ -20,6 +20,43 @@ class UserModel extends Model {
         
         
     }
+
+     public function loginUser($usuario, $password) {
+        $this->connect();
+        $consulta = "SELECT * FROM usuario WHERE (nick = '$usuario' AND password = '$password' AND tipo='user') OR (email = '$usuario' AND password = '$password' AND tipo='user')";
+        $query = $this->query($consulta);
+        $this->terminate();
+        while($row = mysqli_fetch_array($query)){
+            //agrega el id a la session
+            $_SESSION["user_id"] = $row["nick"];
+            //agrega la hora en la que inicio sesion
+            $_SESSION["ultimoAcceso"] = time();
+            return true;
+        }
+        return false;
+        
+        
+    }
+
+    public function registrarUsuario($form){
+        $this->connect();
+        $consulta = "SELECT * FROM usuario WHERE email='".$form['email']."' OR nick='".$form['username']."'";
+        $query = $this->query($consulta);
+        $row = mysqli_fetch_array($query);
+        if(!isset($row)){
+           $password=sha1($form['password']);
+           $insert="INSERT INTO usuario (nick,email,password, nombres, apellidos,cc, direccion) values ('".$form['username']."', '".$form['email']."','$password','".$form['nombres']."','".$form['apellidos']."',".$form['cc'].",'".$form['direccion']."')";  
+           $insert = $this->query($insert);
+           return true;
+           $this->terminate();
+        }else{
+        $this->terminate();
+        return false;
+        }
+
+
+    }
+
     
     public function recuperarClave($email){
         $id=null;

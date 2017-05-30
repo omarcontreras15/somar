@@ -1,5 +1,5 @@
 <?php
-require 'public/lib/PHPMailer/PHPMailerAutoload.php';
+require './public/lib/PHPMailer/PHPMailerAutoload.php';
 
 
 class Controller {
