@@ -1,0 +1,20 @@
+<tr>
+    <td width="15%">{{ID}}</td>
+    <td width="25%">{{FECHA_PEDIDO}}</td>
+    <td width="25%">{{VALOR_PEDIDO}}</td>
+     <td width="15%">{{ESTADO}}</td>
+    <td width="20%">
+        <div class="btn-group">
+            <button type="button" class="btn btn-warning">Opciones</button>
+            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#"  onclick="cargarVentana({{ID}})"  data-toggle="modal" data-target="#myModal"><img src="public/images/ver.png"> Ver detalles</a></li>
+                <li><a href='#'  onclick='verComprobante({{ID}})'  data-toggle='modal' data-target='#ventanaComprobante'><img src="public/images/ver.png"> Ver comprobante</a></li>
+                <li><a class="boton-eliminar" id="{{ID}}" style="cursor:pointer"><img src="public/images/icon-basura.png"> Eliminar</a></li>
+            </ul>
+        </div>
+    </td>
+</tr>

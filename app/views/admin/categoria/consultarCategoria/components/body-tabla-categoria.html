@@ -1,0 +1,18 @@
+<tr>
+    <td>{{ID}}</td>
+    <td>{{NOMBRE_CATEGORIA}}</td>
+    <td>{{CANT_PRODUCTOS}}</td>
+    <td>
+        <div class="btn-group">
+            <button type="button" class="btn btn-warning">Opciones</button>
+            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="admin.php?mode=editar-categoria&id={{ID}}"><img src="public/images/editar.png"> Modificar</a></li>
+                 <li><a class="boton-eliminar" id="{{ID}}" style="cursor:pointer"><img src="public/images/icon-basura.png"> Eliminar</a></li>
+            </ul>
+        </div>
+    </td>
+</tr>

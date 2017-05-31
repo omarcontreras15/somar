@@ -1,0 +1,191 @@
+<!-- incluir css de dataTables -->
+<link href="public/css/jquery.dataTables.min.css">
+<link href="public/css/datatables.css" type="text/css" rel="stylesheet">
+<div class="container banner">
+    <section class="title-section">
+        <h1 class="title-header">
+            Ventas en progreso </h1>
+        <ul class="breadcrumb breadcrumb__t">
+            <li><a href="admin.php">Inicio</a></li>
+            <li class="active">Ventas en progreso </li>
+        </ul>
+    </section>
+</div>
+<div class='container contact'>
+    <div class="main">
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <p style='font-weight: bold;'>Total de pedidos: <strong>{{TOTAL_PEDIDOS}}</strong></p><br></div>
+        </div>
+        <p style='font-weight: bold;'>Seleccione la acción que desea realizar con el pedido.</p><br>
+        <!-- para hacer la tabla responsive toca agregar la clase table-responsive a la etiqueta div-->
+        <div class="row text-left">
+            <div> <img src="public/images/aprobado.png"> El usuario ya subio comprobante de pago </div>
+            <div><img src="public/images/no-progreso.png"> El usuario no ha subio comprobante de pago </div><br>
+        </div>
+        <div>
+            <table id="example" class="table table-bordered table-hover">
+                <thead>
+                    <th>Id</th>
+                    <th>Usuario</th>
+                    <th>Fecha de pedido</th>
+                    <th>Valor pedido</th>
+                    <th>Estado</th>
+                    <th>Acción</th>
+                </thead>
+                <tbody id="tabla-productos" align="center">
+                    {{OPTION}}
+                </tbody>
+                <tfoot>
+                    <th>Id</th>
+                    <th>Usuario</th>
+                    <th>Fecha del pedido</th>
+                    <th>Valor pedido</th>
+                    <th>Estado</th>
+                    <th>Acción</th>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Este html muestra una ventana emergente con los detalles completos del pedido-->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" id="frame-titulo">Detalles del pedido</h3>
+            </div>
+            <div class="modal-body" id="ventana-detalle-pedido">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Este html muestra una ventana emergente con los detalles completos del pedido-->
+<div id="ventanaComprobante" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" id="frame-titulo">Ver Comprobante De Pago</h3>
+            </div>
+            <div class="modal-body" id="ventana-ver-comprobante">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- -->
+<script>
+    $(document).ready(function () {
+        $(".boton-eliminar").on("click", function () {
+            var id = $(this).attr("id");
+            var res = confirm("¿Desea eliminar el pedido?");
+            if (res) {
+                realizarAjax(id);
+            }
+        });
+
+        //funcion ajax para enviar el id del producto que se desea eliminar 
+        function realizarAjax(id) {
+            var datos = {
+                "mode": "eliminar-pedido",
+                "id": id
+            };
+            $.ajax({
+                data: datos,
+                url: "admin.php",
+                type: 'POST',
+                //esta funncion se ejecuta cuando el php a terminado de procesar
+                //con el resultado e inserta el resultado en algun elemento html
+                success: function (response) {
+                    window.location = "admin.php?mode=ventas-progreso";
+                },
+                error: function (xhr, status, error) {
+                }
+            });
+
+        }
+    });
+
+    function cargarVentana(id) {
+        var datos = {
+            "mode": "ver-detalle-pedido",
+            "id": id
+        };
+        $.ajax({
+            data: datos,
+            url: "admin.php",
+            type: 'POST',
+            //esta funncion se ejecuta cuando el php a terminado de procesar
+            //con el resultado e inserta el resultado en algun elemento html
+            success: function (response) {
+                $("#ventana-detalle-pedido").html(response);
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+    }
+
+    function verComprobante(id) {
+        var datos = {
+            "mode": "ver-comprobante",
+            "id": id
+        };
+        $.ajax({
+            data: datos,
+            url: "admin.php",
+            type: 'POST',
+            //esta funncion se ejecuta cuando el php a terminado de procesar
+            //con el resultado e inserta el resultado en algun elemento html
+            success: function (response) {
+                var html='<div><img src="'+response+'" class="img-responsive"><br><div class="text-right"><button type="button" class="btn btn-success" onclick=validarComprobante('+id+',"check")>Aprobar Comprobante</button><button type="button" class="btn btn-danger"  onclick=validarComprobante('+id+',"eliminar")>Eliminar Comprobante</button></div></div>';
+                $("#ventana-ver-comprobante").html(html);
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+     }
+
+     function validarComprobante(id, accion){
+         var datos = {
+            "mode": "validar-comprobante",
+            "id": id, 
+            "accion": accion
+        };
+        $.ajax({
+            data: datos,
+            url: "admin.php",
+            type: 'POST',
+            //esta funncion se ejecuta cuando el php a terminado de procesar
+            //con el resultado e inserta el resultado en algun elemento html
+            success: function (response) {
+            alert("La operacion se realizo exitosamente.");
+            window.location="admin.php?mode=ventas-progreso";
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+    }
+
+</script>
+<div>
+
+
+</div>

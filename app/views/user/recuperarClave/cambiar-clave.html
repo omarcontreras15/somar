@@ -1,0 +1,98 @@
+<section class="contenido">
+    <!--form-->
+    <div class="container">
+        <div class="breadcrumbs">
+            <ol class="breadcrumb">
+                <li><a href="#">Inicio</a></li>
+                <li class="active">Cambiar Contraseña</li>
+            </ol>
+        </div>
+       <!--- bloque de alertas -->
+	<div class="alert alert-success alert-white rounded" style="display: none" id="ventana-emergente-exito">
+		<button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+		<div class="icon">
+			<img src="public/images/check.png" />
+		</div>
+		<strong>Exito!</strong> Se ha cambiado su contraseña
+	</div>
+	<div class="alert alert-danger alert-white rounded" style="display: none" id="ventana-emergente-error">
+		<button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+		<div class="icon">
+			<img src="public/images/cerrar.png" />
+		</div>
+		<strong>Error!</strong><span id="span-error"> Hubo un inconveniente al cambiar la contraseña, por favor intentelo de nuevo.</span>
+	</div>
+
+	<!--- bloque de alertas -->
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-1">
+                <!--/login form-->
+            </div>
+            <div class="col-sm-4">
+                <div class="signup-form">
+                    <!--sign up form-->
+                    <form id="recuperar-clave">
+                        <input type="hidden" name="mode" value="cambiar-clave">
+                        <input type="hidden" name="id" value="{{ID_SEGURIDAD}}">
+                        <h2>Restablecimiento De Contraseña</h2>
+                        <p>Por favor ingrese la nueva contraseña de la cuenta asociada al correo electronico {{EMAIL}}. </p>
+                        <input type="password" name="password" placeholder="Ingrese la nueva contraseña" required="">
+                        <button type="submit" class="btn btn-default">Cambiar Contraseña</button>
+                    </form>
+                </div>
+                <!--/sign up form-->
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        $(".close").on("click", function () {
+            ocultarMsgEmergente();
+        });
+
+        $("#recuperar-clave").on("submit", function (e) {
+            //previene que se envien los datos por la url
+            e.preventDefault();
+            var datos = new FormData(this);
+            //llama a la funcion ajax
+            realizarAjax(datos);
+            //desactivo el boton del submit hasta que se haya enviado el correo
+            $("#boton-enviar-correo").attr("disabled", true);
+        });
+
+        function ocultarMsgEmergente() {
+            $("#ventana-emergente-exito").hide();
+            $("#ventana-emergente-error").hide();
+        }
+        function realizarAjax(datos) {
+
+            $.ajax({
+                data: datos,
+                url: "index.php",
+                type: 'POST',
+                //es necesario colocarle estos 2 elementos al json para enviar informacion de un formulario
+                processData: false,
+                contentType: false,
+                //esta funncion se ejecuta cuando el php a terminado de procesar
+                //con el resultado e inserta el resultado en algun elemento html
+                success: function (response) {
+                    $("#boton-enviar-correo").removeAttr("disabled");
+                    ocultarMsgEmergente();
+                    if (response) {
+                        $("#ventana-emergente-exito").show();
+                    } else {
+                        $("#ventana-emergente-error").show();
+                    }
+                    //ir hacia arriba en el scrollTop
+                    $('html, body').animate({ scrollTop: 0 }, 'slow')
+                    setTimeout("location.href='index.php?mode=iniciarSesion'", 3000);
+                },
+                error: function (xhr, status, error) {
+                }
+            });
+        }
+    });
+
+</script>

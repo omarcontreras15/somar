@@ -1,0 +1,92 @@
+<section class="contenido">
+    <!--form-->
+    <div class="container">
+        <div class="breadcrumbs">
+				<ol class="breadcrumb">
+				  <li><a href="#">Inicio</a></li>
+				  <li class="active">Recuperar Contraseña</li>
+				</ol>
+			</div>
+        <!--- bloque de alertas -->
+	<div class="alert alert-success alert-white rounded" style="display: none" id="ventana-emergente-exito">
+		<button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+		<div class="icon">
+			<img src="public/images/check.png" />
+		</div>
+		<strong>Exito!</strong> Se ha enviado a su correo la url para restablecer su contraseña
+	</div>
+	<div class="alert alert-danger alert-white rounded" style="display: none" id="ventana-emergente-error">
+		<button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+		<div class="icon">
+			<img src="public/images/cerrar.png" />
+		</div>
+		<strong>Error!</strong><span id="span-error"> Hubo un inconveniente, el email ingresado no se encuentra registrado.</span>
+	</div>
+
+	<!--- bloque de alertas -->
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-1">
+                <!--/login form-->
+            </div>
+            <div class="col-sm-4">
+                <div class="signup-form">
+                    <!--sign up form-->
+                    <h2>¿Olvidaste tu contraseña?</h2>
+                  <form action="index.php" id="recuperar-clave">
+                        <p>Por favor ingresa la dirección de email que utilizaste en el proceso de registro. Te enviaremos por email tu contraseña.</p>
+                        <input type="hidden" name="mode" value="recuperar-clave">
+                        <input id="form-email" type="email" placeholder="E-mail" name="email"  required/>  
+                     <button type="submit" class="btn btn-default">Enviar Correo</button>  
+                    </form>
+                </div>
+                <!--/sign up form-->
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function () {
+     $(".close").on("click", function () {
+			ocultarMsgEmergente();
+		});
+
+        $("#recuperar-clave").on("submit", function (e) {
+				//previene que se envien los datos por la url
+				e.preventDefault();
+				var datos = new FormData(this);
+				//llama a la funcion ajax
+				realizarAjax(datos);
+			});
+
+        function ocultarMsgEmergente(){
+            $("#ventana-emergente-exito").hide();
+			$("#ventana-emergente-error").hide();
+        }
+		function realizarAjax(datos){
+      
+			$.ajax({
+				data: datos,
+				url: "index.php",
+				type: 'POST',
+                //es necesario colocarle estos 2 elementos al json para enviar informacion de un formulario
+                processData: false,
+                contentType: false,
+				//esta funncion se ejecuta cuando el php a terminado de procesar
+				//con el resultado e inserta el resultado en algun elemento html
+				success: function (response) {
+                    ocultarMsgEmergente();
+					if(response){
+                        $("#ventana-emergente-exito").show();
+                    }else{
+                        $("#ventana-emergente-error").show();
+                    }
+                    $("form-email").val("");
+                   //ir hacia arriba en el scrollTop
+                    $('html, body').animate({scrollTop:0}, 'slow')
+				},
+				error: function (xhr, status, error) {
+				}
+			});
+		}
+    });
+</script>
