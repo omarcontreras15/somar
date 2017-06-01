@@ -162,38 +162,7 @@ class producto extends Controller{
         
     }
     
-    //metodo para mover un archivo traido del formulario a la carpeta upload
-    private function agregarArchivo($nom_input_file){
-        $urlArchivo="";
-        if (is_uploaded_file($_FILES[$nom_input_file]['tmp_name'])){
-            $nombreDirectorio = "public/upload/";
-            $nombreFichero = $_FILES[$nom_input_file]['name'];
-            //opcional
-            $tipoArchivo=$_FILES[$nom_input_file]['type'];
-            $extencionFichero= ".". substr(strrchr($tipoArchivo, "/"), 1);
-            //
-            //id unico de tiempo
-            $idUnico=time();
-            
-            $urlArchivo = $nombreDirectorio .$nom_input_file."-".$idUnico.$extencionFichero;
-            move_uploaded_file($_FILES[$nom_input_file]['tmp_name'], $urlArchivo);
-            
-            return $urlArchivo;
-        }else{
-            return false;
-        }
-    }
-    
-    private function eliminarArchivo($url){
-        //Eliminamos la imagen del evento ubicada en la carpeta upload
-        try{
-            if($url!="" || !isset($url) || $url!=null){
-                unlink($url);
-            }
-        }catch(Exception $e){
-            
-        }
-    }
+
     
 }
 ?>

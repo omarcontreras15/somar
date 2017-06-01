@@ -1,7 +1,7 @@
 <!-- incluir css de dataTables -->
 <link href="public/css/jquery.dataTables.min.css">
 <link href="public/css/datatables.css" type="text/css" rel="stylesheet">
-<section class="contenido">
+
     <!--form-->
     <div class="container">
         <div class="breadcrumbs">
@@ -10,92 +10,96 @@
                 <li class="active">Mis Compras</li>
             </ol>
         </div>
-<div class="main">
-        <br>
-        <div class="row">
-            <div class="col-md-6">
-                <p style='font-weight: bold;'>Total de pedidos: <strong>{{TOTAL_PEDIDOS}}</strong></p><br></div>
-        </div>
+        <div class="main">
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <p style='font-weight: bold;'>Total de pedidos: <strong>{{TOTAL_PEDIDOS}}</strong></p><br></div>
+            </div>
         <p style='font-weight: bold;'>Seleccione la acción que desea realizar con el pedido.</p><br>
         <!-- para hacer la tabla responsive toca agregar la clase table-responsive a la etiqueta div-->
-        <div>
-            <table id="example" class="table table-bordered table-hover">
-                <thead>
-                    <th>Id</th>
-                    <th>Fecha de pedido</th>
-                    <th>Valor pedido</th>
-                     <th>Estado</th>
-                    <th>Acción</th>
-                </thead>
-                <tbody id="tabla-productos" align="center">
-                    {{OPTION}}
-                </tbody>
-                <tfoot>
-                    <th>Id</th>
-                    <th>Fecha del pedido</th>
-                    <th>Valor pedido</th>
-                     <th>Estado</th>
-                    <th>Acción</th>
-                </tfoot>
-            </table>
+        <div class="row text-left">
+            <div> <img src="public/images/aprobado.png">La tienda ha validado el comprobante de pago de manera satisfactoria.</div>
+            <div><img src="public/images/progreso.png"> El usuario ya subio el comprobante de pago pero la tienda aún no ha validado el comprobante de pago </div>
+            <div><img src="public/images/no-progreso.png"> El usuario no ha subido el comprobante de pago </div><br>
         </div>
-    </div>
-
-    <!-- Este html muestra una ventana emergente con los detalles completos del pedido-->
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h3 class="modal-title" id="frame-titulo">Detalles del pedido</h3>
-            </div>
-            <div class="modal-body" id="ventana-detalle-pedido">
-                
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            <div>
+                <table id="example" class="table table-bordered table-hover">
+                    <thead>
+                        <th>Id</th>
+                        <th>Fecha de pedido</th>
+                        <th>Valor pedido</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </thead>
+                    <tbody id="tabla-productos" align="center">
+                        {{OPTION}}
+                    </tbody>
+                    <tfoot>
+                        <th>Id</th>
+                        <th>Fecha del pedido</th>
+                        <th>Valor pedido</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tfoot>
+                </table>
             </div>
         </div>
 
-    </div>
-</div>
+        <!-- Este html muestra una ventana emergente con los detalles completos del pedido-->
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
 
-<!-- Este html muestra una ventana emergente con los detalles completos del pedido-->
-<div id="ventanaComprobante" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3 class="modal-title" id="frame-titulo">Detalles del pedido</h3>
+                    </div>
+                    <div class="modal-body" id="ventana-detalle-pedido">
 
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h3 class="modal-title" id="frame-titulo">Ver Comprobante De Pago</h3>
-            </div>
-            <div class="modal-body" id="ventana-ver-comprobante">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
 
+        <!-- Este html muestra una ventana emergente con los detalles completos del pedido-->
+        <div id="ventanaComprobante" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3 class="modal-title" id="frame-titulo">Subir Comprobante De Pago</h3>
+                    </div>
+                    <div class="modal-body" id="ventana-subir-comprobante">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
-</div>
-    </div>
-</section>
 <script>
     $(document).ready(function () {
         $(".boton-eliminar").on("click", function () {
             var id = $(this).attr("id");
             var res = confirm("¿Desea eliminar el pedido?");
             if (res) {
-                realizarAjax(id);
+                eliminarPedido(id);
             }
         });
 
         //funcion ajax para enviar el id del producto que se desea eliminar 
-        function realizarAjax(id) {
+        function eliminarPedido(id) {
             var datos = {
                 "mode": "eliminar-pedido",
                 "id": id
@@ -116,23 +120,59 @@
         }
     });
 
-function cargarVentana(id){
-     var datos = {
-                "mode": "ver-detalle-pedido",
-                "id": id
-            };
-            $.ajax({
-                data: datos,
-                url: "index.php",
-                type: 'POST',
-                //esta funncion se ejecuta cuando el php a terminado de procesar
-                //con el resultado e inserta el resultado en algun elemento html
-                success: function (response) {
-                    $("#ventana-detalle-pedido").html(response);
-                },
-                error: function (xhr, status, error) {
-                }
-            });
-}
+    function cargarVentana(id) {
+        var datos = {
+            "mode": "ver-detalle-pedido",
+            "id": id
+        };
+        $.ajax({
+            data: datos,
+            url: "index.php",
+            type: 'POST',
+            //esta funncion se ejecuta cuando el php a terminado de procesar
+            //con el resultado e inserta el resultado en algun elemento html
+            success: function (response) {
+                $("#ventana-detalle-pedido").html(response);
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+    }
+
+    function ventanaSubirComprobante(id){
+        var html="<div><form id='subir-comprobante-pago' enctype='multipart/form-data'><input type='hidden' name='id_pedido' value='"+id+"'><input type='hidden' name='mode' value='subir-comprobante-pago'><input type='file' name='comprobante-pago' accept='image/gif,image/jpeg,image/jpg,image/png'><div id='boton-submit'><input type='submit' class='btn btn-default get' value='Subir Comprobante'></div></form></div>";
+         $("#ventana-subir-comprobante").html(html);
+         $("#subir-comprobante-pago").on("submit", function(e){
+                e.preventDefault();
+				var datos = new FormData(this);
+				//var con la url del archivo php
+				var url = "index.php";
+				//llama a la funcion ajax
+                subirComprobante(datos, url);
+         });
+    }
+
+    function subirComprobante(datos, url1){
+        	$.ajax({
+				data: datos,
+				url: url1,
+				type: 'POST',
+				processData: false,
+				contentType: false,
+				//esta funcion se ejecuta antes de enviar los datos al php
+				beforeSend: function () {
+					var html = "<div id='floatingBarsG'><div class='blockG' id='rotateG_01'></div><div class='blockG' id='rotateG_02'></div><div class='blockG' id='rotateG_03'></div><div class='blockG' id='rotateG_04'></div><div class='blockG' id='rotateG_05'></div><div class='blockG' id='rotateG_06'></div><div class='blockG' id='rotateG_07'></div><div class='blockG' id='rotateG_08'></div></div>";
+					boton = $("#boton-submit").html();
+					$("#boton-submit").html(html);
+				},
+				//esta funncion se ejecuta cuando el php a terminado de procesar
+				//con el resultado e inserta el resultado en algun elemento html
+				success: function (response) {
+                    var html="<br><img src='public/images/subido.png'>";
+					$("#boton-submit").html(html);
+                    setTimeout("location.href='index.php?mode=mis-compras'",2000); 
+				}
+			});
+    }
 
 </script>

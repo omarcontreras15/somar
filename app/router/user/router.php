@@ -1,6 +1,7 @@
 <?php
 
 include_once "./app/controller/user/user.php";
+include_once "./app/controller/user/compra.php";
 
 class Router
 {
@@ -10,6 +11,7 @@ class Router
     public function __construct()
     {
         $this->user = new User();
+        $this->compra=new Compra();
     }
 
     public function router()
@@ -32,7 +34,11 @@ class Router
                     case "buscar":
                      echo $_GET["producto"];
                         break;
-
+                    case "mis-compras":
+                        $this->compra->cargarMisCompras();
+                        break;
+                    
+                    
                     default:
                         header("Location:index.php");
                         break;
@@ -67,6 +73,15 @@ class Router
                  case "cambiar-clave":
                     $this->user->cambiarClave($_POST['password'],$_POST['id']);
                     break;
+
+                case "ver-detalle-pedido":
+                        $this->compra->verDetallePedido($_POST['id']);
+                        break;
+
+                 case "subir-comprobante-pago":
+                        $this->compra->subirComprobantePago($_POST['id_pedido']);
+                        break;
+            
 
                 default:
                     header("Location:index.php");

@@ -97,6 +97,7 @@ class Controller {
         return $view;
     }
     
+    //metodo para enviar emails
     public function enviarEmail($email, $asunto, $contenido){
         $mail = new PHPMailer();
         $mail ->IsSmtp();
@@ -121,6 +122,39 @@ class Controller {
         )
         );
         return $mail->Send();
+    }
+
+        //metodo para mover un archivo traido del formulario a la carpeta upload
+    public function agregarArchivo($nom_input_file){
+        $urlArchivo="";
+        if (is_uploaded_file($_FILES[$nom_input_file]['tmp_name'])){
+            $nombreDirectorio = "public/upload/";
+            $nombreFichero = $_FILES[$nom_input_file]['name'];
+            //opcional
+            $tipoArchivo=$_FILES[$nom_input_file]['type'];
+            $extencionFichero= ".". substr(strrchr($tipoArchivo, "/"), 1);
+            //
+            //id unico de tiempo
+            $idUnico=time();
+            
+            $urlArchivo = $nombreDirectorio .$nom_input_file."-".$idUnico.$extencionFichero;
+            move_uploaded_file($_FILES[$nom_input_file]['tmp_name'], $urlArchivo);
+            
+            return $urlArchivo;
+        }else{
+            return false;
+        }
+    }
+    
+    public function eliminarArchivo($url){
+        //Eliminamos la imagen del evento ubicada en la carpeta upload
+        try{
+            if($url!="" || !isset($url) || $url!=null){
+                unlink($url);
+            }
+        }catch(Exception $e){
+            
+        }
     }
     
     

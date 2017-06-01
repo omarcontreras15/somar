@@ -77,7 +77,7 @@ class Venta extends Controller{
     }
 
 public function cargarVistaDetallePedido($id_pedido){
-        $ventana = $this->getTemplate("./app/views/admin/ventas/factura/factura.html");
+        $ventana = $this->getTemplate("./app/views/factura/factura.html");
         $datosCliente=$this->ventaModel->obtenerDatosUsuario($id_pedido);
         foreach($datosCliente as $key => $value){
             $ventana=$this->renderView($ventana,"{{".$key."}}", $value);
@@ -91,7 +91,7 @@ public function cargarVistaDetallePedido($id_pedido){
         $array=$this->ventaModel->listarItemsPedido($id_pedido);
         $sizeArray = sizeof($array);
         $tablaVentas = "";
-        $elementotabla = $this->getTemplate("./app/views/admin/ventas/factura/body-tabla-factura.html");
+        $elementotabla = $this->getTemplate("./app/views/factura/body-tabla-factura.html");
         if($sizeArray>0){
             foreach ($array as $element){
                 $temp = $elementotabla;
@@ -118,23 +118,11 @@ public function cargarVistaDetallePedido($id_pedido){
     public function validarComprobante($accion, $id){
     
     if($accion=="check"){
-        echo "hola";
         $this->ventaModel->cambiarEstadoPedido($id);
     }else{
        $url=$this->ventaModel->borrarComprobantePago($id);
        $this->eliminarArchivo($url);
     }
-    }
-
-    private function eliminarArchivo($url){
-        //Eliminamos la imagen del evento ubicada en la carpeta upload
-        try{
-            if($url!="" || !isset($url) || $url!=null){
-                unlink($url);
-            }
-        }catch(Exception $e){
-            
-        }
     }
 
 }
