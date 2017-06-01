@@ -1,0 +1,124 @@
+<div class="container banner">
+    <section class="title-section">
+        <h1 class="title-header">
+            Editar Categoria </h1>
+        <ul class="breadcrumb breadcrumb__t">
+            <li><a href="admin.php">Inicio</a></li>
+            <li class="active">Editar Categoria</li>
+        </ul>
+    </section>
+</div>
+<div class='container contact'>
+
+    <!--- bloque de alertas -->
+    <div class="alert alert-success alert-white rounded" style="display: none" id="ventana-emergente-exito">
+        <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+        <div class="icon">
+            <img src="public/images/check.png" />
+        </div>
+        <strong>Exito!</strong> La categoria se ha actualizado exitosamente.!
+    </div>
+    <div class="alert alert-danger alert-white rounded" style="display: none" id="ventana-emergente-error">
+        <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+        <div class="icon">
+            <img src="public/images/cerrar.png" />
+        </div>
+        <strong>Error!</strong><span id="span-error"> Hubo un inconveniente al actualizar la categoria, por favor intentelo de nuevo.</span>
+    </div>
+    <div class="container container-fixed">
+        <hr>
+        <form action='admin.php' enctype='multipart/form-data' id="editar-categoria">
+            <input type="hidden" name="mode" value="editar-categoria">
+            <input type="hidden" name="id" value="{{ID}}">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <fieldset class="contentStyle">
+                        <legend class="titleStyle">Editar Información De La Categoria</legend>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3"><label>Nombre de la categoria:</label></div>
+                                <div class="col-md-5"><input type="text" class="form-control" name="nombre" value="{{NOMBRE}}"></div>
+                            </div>
+                        </div>
+                    </fieldset><br>
+                </div></div>
+
+            <div class="row">
+                <a href="admin.php?mode=consultar-categorias" class="btn btn-danger btn-lg pull-left" type="button">Cancelar &nbsp <img src="public/images/cerrar.png"></a></button>
+                <div id="boton-submit"><label class="btn btn-primary btn-lg pull-right">Guardar &nbsp<input type="submit" style="display: none;"><img src="public/images/save.png"></label></div>
+            </div><br>
+        </form>
+    </div>
+</div>
+</div>
+<!-- FIN HTML -->
+<script>
+    //ESPACIO PARA COLOCAR EL CODIGO AJAX 
+    //funcion para que se ejecute el script cuando termine de cargar
+    $(document).ready(function () {
+
+        $(".close").on("click", function () {
+            $("#ventana-emergente-exito").hide();
+            $("#ventana-emergente-error").hide();
+        });
+
+        cargarEventos();
+
+        function cargarEventos() {
+            //funcion para agregar el ajax al submit del formulario
+            $("#editar-categoria").on("submit", function (e) {
+                 $("#ventana-emergente-exito").hide();
+                 $("#ventana-emergente-error").hide();
+                //previene que se envien los datos por la url
+                e.preventDefault();
+                var datos = new FormData(this);
+                //var con la url del archivo php
+                var url = "admin.php";
+                //llama a la funcion ajax
+                realizarAjax(datos, url);
+            });
+        }
+
+        //funcion ajax para enviar formulario a php
+        function realizarAjax(datos, url1) {
+            var boton = null;
+            $("#ventana-emergente-error").hide();
+            $.ajax({
+                data: datos,
+                url: url1,
+                type: 'POST',
+                processData: false,
+                contentType: false,
+                //esta funcion se ejecuta antes de enviar los datos al php
+                beforeSend: function () {
+                    var html = "<div id='floatingBarsG'><div class='blockG' id='rotateG_01'></div><div class='blockG' id='rotateG_02'></div><div class='blockG' id='rotateG_03'></div><div class='blockG' id='rotateG_04'></div><div class='blockG' id='rotateG_05'></div><div class='blockG' id='rotateG_06'></div><div class='blockG' id='rotateG_07'></div><div class='blockG' id='rotateG_08'></div></div>";
+                    boton = $("#boton-submit").html();
+                    $("#boton-submit").html(html);
+                },
+                //esta funncion se ejecuta cuando el php a terminado de procesar
+                //con el resultado e inserta el resultado en algun elemento html
+                success: function (response) {
+                    if (response=="1") {
+                        //mostramos la ventana emergente de que la carga de la evidencia fue exitosa
+                        $("#ventana-emergente-exito").show();
+                    } else if (response == "repetido") {
+                        $("#ventana-emergente-error").show();
+                        $("#span-error").text("No se puede actualizar la categoria porque ya se encuentra registrada.");
+                       
+                    } else {
+                        $("#ventana-emergente-error").show();
+                    }
+                     $("#boton-submit").html(boton);
+                    window.location = "#";
+                },
+                error: function (xhr, status, error) {
+                    $("#ventana-emergente-error").show();
+                }
+            });
+
+        }
+
+    });
+
+</script>

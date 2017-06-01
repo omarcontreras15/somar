@@ -1,10 +1,9 @@
 <?php
+require './public/lib/PHPMailer/PHPMailerAutoload.php';
+require './app/model/categoria.php';
 
-require './admin/public/lib/PHPMailer/PHPMailerAutoload.php';
-require './admin/app/model/categoria.php';
 
 class Controller {
- 
     public function getTemplate($route){
         return file_get_contents($route);
     }
@@ -17,13 +16,31 @@ class Controller {
         return str_replace($cadenaReemplazar, $reemplazo, $ubicacion);
     }
     
-    
+    public function cargarMenuBarAdmin(){
+        $menu=null;
+        if($this->sesionIniciadaAdmin()){
+            $menu = $this->getTemplate("./app/views/admin/components/menu-login.html");
+        }else{       
+            $menu = $this->getTemplate("./app/views/admin/components/menu-logout.html");       
+        }
+        
+        return $menu;
+    }
+
+    public function sesionIniciadaAdmin(){
+        return isset($_SESSION["admin_id"]);
+    }
+
+    public function sesionIniciadaUser(){
+        return isset($_SESSION["user_id"]);
+    }
+
     private function cargarMenuBarFront1(){
         $menu=null;
-        if($this->sesionIniciada()){
-            $menu = $this->getTemplate("./app/views/components/menu1/menu-login.html");
+        if($this->sesionIniciadaUser()){
+            $menu = $this->getTemplate("./app/views/user/components/menu1/menu-login.html");
         }else{
-            $menu = $this->getTemplate("./app/views/components/menu1/menu-logout.html");
+            $menu = $this->getTemplate("./app/views/user/components/menu1/menu-logout.html");
         }
         
         return $menu;
@@ -32,10 +49,10 @@ class Controller {
 
     private function cargarMenuBarFront2(){
         $menu=null;
-        if($this->sesionIniciada()){   
-            $menu = $this->getTemplate("./app/views/components/menu2/menu-login.html");
+        if($this->sesionIniciadaUser()){   
+            $menu = $this->getTemplate("./app/views/user/components/menu2/menu-login.html");
         }else{    
-            $menu = $this->getTemplate("./app/views/components/menu2/menu-logout.html");
+            $menu = $this->getTemplate("./app/views/user/components/menu2/menu-logout.html");
         } 
         //cargamos las catogorias en el menu2   
         $menu= $this->renderView($menu, "{{MENU_CATEGORIA}}",$this->cargarCategoriasMenu());
@@ -71,7 +88,7 @@ class Controller {
         //carga los menus dependiendo si el usuario tiene o no sesion iniciada
         $view = $this->renderView($view, "{{MENU_BAR1}}", $menu1);
         $view = $this->renderView($view, "{{MENU_BAR2}}", $menu2);
-        if($this->sesionIniciada()){
+        if($this->sesionIniciadaUser()){
           $view = $this->renderView($view, "{{SALUDO_NICK}}","Bienvenido - ".$_SESSION["user_id"]);  
         }else{
           $view = $this->renderView($view, "{{SALUDO_NICK}}","");  
@@ -79,11 +96,6 @@ class Controller {
 
         return $view;
     }
-
-    public function sesionIniciada(){
-        return !(!isset($_SESSION["user_id"]) || $_SESSION["user_id"]==null);
-    }
-
     
     public function enviarEmail($email, $asunto, $contenido){
         $mail = new PHPMailer();

@@ -1,0 +1,107 @@
+<link href='public/css/login.css' rel='stylesheet' type='text/css'/>
+<link href='public/css/style.css' rel='stylesheet' type='text/css'/>
+<div class="container banner">
+    <section class="title-section">
+        <h1 class="title-header">
+            Restablecimiento De Contraseña </h1>
+        <ul class="breadcrumb breadcrumb__t">
+            <li><a href="admin.php">Inicio</a></li>
+            <li class="active">Restablecimiento De Contraseña</li>
+        </ul>
+    </section>
+</div>
+
+<div class="container contact">
+
+    <!-- contenido login   -->
+    <div class="div-login">
+        <div class="main">
+<!--- bloque de alertas -->
+	<div class="alert alert-success alert-white rounded" style="display: none" id="ventana-emergente-exito">
+		<button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+		<div class="icon">
+			<img src="public/images/check.png" />
+		</div>
+		<strong>Exito!</strong> Se ha cambiado su contraseña
+	</div>
+	<div class="alert alert-danger alert-white rounded" style="display: none" id="ventana-emergente-error">
+		<button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+		<div class="icon">
+			<img src="public/images/cerrar.png" />
+		</div>
+		<strong>Error!</strong><span id="span-error"> Hubo un inconveniente al cambiar la contraseña, por favor intentelo de nuevo.</span>
+	</div>
+
+	<!--- bloque de alertas -->
+            <form  id="recuperar-clave" method="post">
+                <input type="hidden" name="mode" value="cambiar-clave">
+                <input type="hidden" name="id" value="{{ID_SEGURIDAD}}">
+
+                <div class="login-form">
+                    <h2 class="color">Restablecimiento De Contraseña</h2>
+                    <div class="agileits-top">
+                        <label>Por favor ingrese la nueva contraseña de la cuenta asociada al correo electronico {{EMAIL}}. </label>
+                      <div class="styled-input">
+                            <input type="password" name="password" required="">
+                            <label>Contraseña</label>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="agileits-bottom">
+                        <input type="submit"  id="boton-enviar-correo" value="Cambiar Contraseña">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+     $(".close").on("click", function () {
+			ocultarMsgEmergente();
+		});
+
+        $("#recuperar-clave").on("submit", function (e) {
+				//previene que se envien los datos por la url
+				e.preventDefault();
+				var datos = new FormData(this);
+				//llama a la funcion ajax
+				realizarAjax(datos);
+                //desactivo el boton del submit hasta que se haya enviado el correo
+                $("#boton-enviar-correo").attr("disabled", true);
+			});
+
+        function ocultarMsgEmergente(){
+            $("#ventana-emergente-exito").hide();
+			$("#ventana-emergente-error").hide();
+        }
+		function realizarAjax(datos){
+      
+			$.ajax({
+				data: datos,
+				url: "admin.php",
+				type: 'POST',
+                //es necesario colocarle estos 2 elementos al json para enviar informacion de un formulario
+                processData: false,
+                contentType: false,
+				//esta funncion se ejecuta cuando el php a terminado de procesar
+				//con el resultado e inserta el resultado en algun elemento html
+				success: function (response) {
+                    $("#boton-enviar-correo").removeAttr("disabled");
+					ocultarMsgEmergente();
+					if(response){
+                        $("#ventana-emergente-exito").show();
+                    }else{
+                        $("#ventana-emergente-error").show();
+                    }
+                    //ir hacia arriba en el scrollTop
+                    $('html, body').animate({scrollTop:0}, 'slow')
+                     setTimeout("location.href='admin.php'",3000); 
+				},
+				error: function (xhr, status, error) {
+				}
+			});
+		}
+    });
+</script>
