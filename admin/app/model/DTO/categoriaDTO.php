@@ -29,3 +29,5 @@ function setId_categoria($id_categoria) {
 function setNombre_categoria($nombre_categoria) {
     $this->nombre_categoria = $nombre_categoria;
 }
+
+}
