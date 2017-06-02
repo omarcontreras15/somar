@@ -51,5 +51,7 @@ class CompraModel extends Model{
         $this->terminate();
         return $array;
     }
+
+    
 }
 ?>

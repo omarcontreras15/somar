@@ -1,12 +1,13 @@
 <div class="col-sm-4">
     <div class="product-image-wrapper">
         <div class="single-products">
+           <a href="index.php?mode=ver-producto&id={{ID_PRODUCTO}}">
             <div class="productinfo text-center">
                 <img src="{{URL_IMG}}" alt="" />
                 <h2>{{PRECIO}}</h2>
                 <p>{{NOMBRE_PRODUCTO}}</p>
-                <a href="index.php?mode=agregar-producto-carrito&id={{ID_PRODUCTO}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Añadir al carrito</a>
-            </div>
+                <a href="index.php?mode=agregar-al-carrito&id={{ID_PRODUCTO}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Añadir al carrito</a>
+            </div></a>
 <img src="public/images/new.png" class="new" alt="" />
         </div>
     </div>

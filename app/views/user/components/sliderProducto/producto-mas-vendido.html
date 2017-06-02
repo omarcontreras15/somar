@@ -2,17 +2,17 @@
     <div class="product-image-wrapper">
         <div class="single-products">
             <div class="productinfo text-center">
-               <img src="{{URL_IMG}}" alt="" />
+              <a href="index.php?mode=ver-producto&id={{ID_PRODUCTO}}"> <img src="{{URL_IMG}}" alt=""></a>
                <h2>{{PRECIO}}</h2>
             <p>{{NOMBRE_PRODUCTO}}</p>
-                <a href="index.php?mode=agregar-producto-carrito&id={{ID_PRODUCTO}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Añadir al carrito</a>
+                <a href="index.php?mode=agregar-producto-al-carrito&id={{ID_PRODUCTO}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Añadir al carrito</a>
             </div>
             <div class="product-overlay">
-                <div class="overlay-content">
+               <a href="index.php?mode=ver-producto&id={{ID_PRODUCTO}}"> <div class="overlay-content">
                   <h2>{{PRECIO}}</h2>
             <p>{{NOMBRE_PRODUCTO}}</p>
-                    <a href="index.php?agregar-producto-carrito&id={{ID_PRODUCTO}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Añadir al carrito</a>
-                </div>
+                    <a href="index.php?agregar-al-carrito&id={{ID_PRODUCTO}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Añadir al carrito</a>
+                </div></a>
             </div>
         </div>
 

@@ -15,11 +15,12 @@ class ProductoModel extends Model{
         }
         return $array;
     }
+    
 
     public function listarProductosNuevo(){
          $this->connect();
         //listamos todos los productos que tengan el atributo disponibilidad como disponible 
-        $consulta = "SELECT id_producto, nombre_producto, precio, cant_disponibles, url_img1 from producto where disponibilidad='disponible' and cant_disponibles>0 and DATEDIFF(now(), fecha_registro)<=7 order by fecha_registro desc limit 6";
+        $consulta = "SELECT id_producto, nombre_producto, precio, cant_disponibles, url_img1 from producto where disponibilidad='disponible' and cant_disponibles>0 and DATEDIFF(now(), fecha_registro)<=7 order by fecha_registro asc limit 6";
         $query = $this->query($consulta);
         $array = array();
         while($row = mysqli_fetch_array($query)){
@@ -55,6 +56,7 @@ class ProductoModel extends Model{
         return $array;
         
     }
+
     
     //esta funcion sirve para agregar un nuevo producto y toda su informacion a la base de datos 
     public function agregarProducto($form, $url_img1, $url_img2, $url_img3){
@@ -181,5 +183,6 @@ class ProductoModel extends Model{
 
 
     }
+
 }
 ?>

@@ -1,0 +1,93 @@
+<script src="public/js/gallery-zoom.min.js"></script>
+<link href="public/css/gallery-zoom.css" rel="stylesheet">
+<section>
+    <div class="container">
+        <div class="breadcrumbs">
+				<ol class="breadcrumb">
+				  <li><a href="index.php">Inicio</a></li>
+				  <li class="active">Detalle Producto</li>
+				</ol>
+			</div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="left-sidebar">
+                    <h2>Categorias</h2>
+                    <div class="panel-group category-products" id="accordian">
+                        <!--category-productsr-->
+
+                        {{CATEGORIAS_MENU_LEFT}}
+                    </div>
+                    <!--/category-products-->
+
+                    <div class="shipping text-center">
+                        <!--shipping-->
+                        <img class="img-responsive" style="padding: 20px;" src="public/images/banner-inicio.png" alt="" />
+                    </div>
+                    <!--/shipping-->
+
+                </div>
+            </div>
+
+            <div class="col-sm-9 padding-right">
+                <div class="product-details">
+                    <!--product-details-->
+                    <!-- galeria de imagenes -->
+                    <div  class="col-sm-5">
+
+                        <div class="sp-wrap">
+                            {{IMAGENES}}
+                        </div>
+                        <!-- /galeria de imagenes -->
+
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="product-information">
+                            <!--/product-information-->
+                            <div class="col-sm-12">
+                                <h2>{{NOMBRE_PRODUCTO}}</h2>
+                                <p>Referencia Del Producto: {{REFERENCIA}}</p>
+                                <p><b>Stock:</b> {{CANT_DISPONIBLE}}</p><br>
+                                <h1 style="color:#FF9800;">${{PRECIO}}</h1>
+                            </div>
+                            <div class="col-sm-12">           
+                            {{FORM_CARRITO}}
+                            </div>
+
+                        </div>
+                        <!--/product-information-->
+                    </div>
+                </div>
+                <!--/product-details-->
+
+                <div class="category-tab shop-details-tab">
+                    <!--category-tab-->
+                    <div class="col-sm-12">
+                        <ul class="nav nav-tabs">
+                            <li><a href="#detalles"  data-toggle="tab">Descripción Del Producto</a></li>
+                            <li><a href="#categorias" data-toggle="tab">Categorias Asociadas</a></li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane fade" id="detalles">
+                            <div class="col-sm-6">
+                                <p>{{DESCRIPCION}}</p>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="categorias">
+                            <div class="col-sm-6">
+                                {{CATEGORIAS}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/category-tab-->
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function () {
+        //activamos la galeria con las imagenes y su respectivo zoom
+        $('.sp-wrap').smoothproducts();
+    });
+</script>

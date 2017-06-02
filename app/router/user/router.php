@@ -2,6 +2,7 @@
 
 include_once "./app/controller/user/user.php";
 include_once "./app/controller/user/compra.php";
+include_once "./app/controller/user/producto.php";
 
 class Router
 {
@@ -12,6 +13,7 @@ class Router
     {
         $this->user = new User();
         $this->compra=new Compra();
+        $this->producto=new Producto();
     }
 
     public function router()
@@ -38,6 +40,10 @@ class Router
                         $this->compra->cargarMisCompras();
                         break;
                     
+                    case "ver-producto":
+                        $this->producto->cargarVistaDetalleProducto($_GET['id']);
+                        break;
+                    
                     
                     default:
                         header("Location:index.php");
@@ -52,6 +58,9 @@ class Router
 
             }else if ($_GET["mode"] =="buscar"){
                     echo $_GET["producto"];
+
+            }else if ($_GET["mode"] =="ver-producto"){
+                   $this->producto->cargarVistaDetalleProducto($_GET['id']);
 
             }else{
                  header("Location:index.php");
@@ -81,7 +90,6 @@ class Router
                  case "subir-comprobante-pago":
                         $this->compra->subirComprobantePago($_POST['id_pedido']);
                         break;
-            
 
                 default:
                     header("Location:index.php");
