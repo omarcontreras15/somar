@@ -1,0 +1,92 @@
+<section>
+    <div class="container">
+        <div class="breadcrumbs">
+            <ol class="breadcrumb">
+                <li><a href="index.php">Inicio</a></li>
+                <li class="active">Ver Productos</li>
+            </ol>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="left-sidebar">
+                    <h2>Categorias</h2>
+                    <div class="panel-group category-products" id="accordian">
+                        <!--category-productsr-->
+
+                        {{CATEGORIAS_MENU_LEFT}}
+                    </div>
+                    <!--/category-products-->
+
+                    <div class="shipping text-center">
+                        <!--shipping-->
+                        <img src="public/images/banner-inicio.png" alt="" />
+                    </div>
+                    <!--/shipping-->
+
+                </div>
+            </div>
+
+            <div  class="col-sm-9 padding-right">
+                <div class="features_items">
+                    <!--features_items-->
+                    <h2 class="title text-center">Productos</h2>
+                    <input type="hidden" name="id_categoria" id="id_categoria" value="{{ID_CATEGORIA}}">
+                    <div id="div-productos">
+                        <!-- Aquí van los productos-->
+                    </div>
+                </div>
+                <!--features_items-->
+
+                <!--pagination-->
+                <div class="paginacion">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination" id="pagination"></ul>
+                    </nav>
+                </div>
+                <!--/pagination-->
+
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function () {
+        //cargar la paginacion e indicarle los numero de paginas
+    var totalPaginas = {{TOTAL_PAGINAS}};
+    if (totalPaginas != 0) {
+        var obj = $('#pagination').twbsPagination({
+            totalPages: totalPaginas,
+            visiblePages: 10,
+            onPageClick: function (event, pagina) {
+                cargarProductosPorPagina(pagina);
+            }
+        });
+    } else {
+        var html = "<h3 class='text-center' style='margin-top:70px; color:#696763;'>No existen productos registrados para esta categoria </h3>";
+        $("#div-productos").html(html);
+    }
+
+
+    function cargarProductosPorPagina(pagina) {
+        var id_categoria = parseInt($("#id_categoria").val());
+        var datos = {
+            "mode": "cargar-productos-categoria",
+            "id_categoria": id_categoria,
+            "pagina": pagina
+
+        };
+        $.ajax({
+            data: datos,
+            url: "index.php",
+            type: 'POST',
+            //con el resultado e inserta el resultado en algun elemento html
+            success: function (response) {
+                $("#div-productos").html(response);
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+    }
+    });
+
+</script>

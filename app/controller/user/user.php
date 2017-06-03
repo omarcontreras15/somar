@@ -50,7 +50,7 @@ class User extends Controller {
 
     private function mostrarProductosMasVendidos(){
         $productoModel= new ProductoModel();
-        $array=$productoModel->listarProductosNuevo();
+        $array=$productoModel->listarProductosMasVendido();
         $htmlProductos="";
         foreach ($array as $element) {
             $producto=$this->getTemplate("./app/views/user/components/sliderProducto/producto-mas-vendido.html");

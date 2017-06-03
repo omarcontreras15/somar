@@ -184,5 +184,27 @@ class ProductoModel extends Model{
 
     }
 
+     public function  obtenerNumeroTotalProductosCategoria($id_categoria){
+        $this->connect();
+        $consulta="SELECT count(*) total from producto where id_producto in(select id_producto from productos_categoria where    id_categoria=$id_categoria)";
+        $total=mysqli_fetch_array($this->query($consulta));
+        $this->terminate();
+        return $total['total'];
+    }
+
+    public function listarProductoCategoriaPorPaginas($id_categoria,$inicio, $num_productos_pagina){
+        $array= array();
+        $this->connect();
+        $consulta="SELECT * from producto where id_producto in(select id_producto from productos_categoria where id_categoria=$id_categoria)  limit $inicio,$num_productos_pagina";
+        $consulta=$this->query($consulta);
+         while($row = mysqli_fetch_array($consulta)){
+            array_unshift($array, $row);
+        }
+        $this->terminate();
+        return $array;
+
+
+    }
+
 }
 ?>

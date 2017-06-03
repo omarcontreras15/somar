@@ -43,6 +43,10 @@ class Router
                     case "ver-producto":
                         $this->producto->cargarVistaDetalleProducto($_GET['id']);
                         break;
+
+                    case "productos-categoria":
+                        $this->producto->cargarVistaProductosCategoria($_GET['id']);
+                        break;
                     
                     
                     default:
@@ -61,6 +65,9 @@ class Router
 
             }else if ($_GET["mode"] =="ver-producto"){
                    $this->producto->cargarVistaDetalleProducto($_GET['id']);
+
+            }else if ($_GET["mode"] =="productos-categoria"){
+                   $this->producto->cargarVistaProductosCategoria($_GET['id']);
 
             }else{
                  header("Location:index.php");
@@ -87,8 +94,12 @@ class Router
                         $this->compra->verDetallePedido($_POST['id']);
                         break;
 
-                 case "subir-comprobante-pago":
+                case "subir-comprobante-pago":
                         $this->compra->subirComprobantePago($_POST['id_pedido']);
+                        break;
+
+                case "cargar-productos-categoria":
+                        $this->producto-> cargarProductosCategoriaPagina($_POST['id_categoria'], $_POST['pagina']);
                         break;
 
                 default:

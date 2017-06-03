@@ -7,7 +7,7 @@ class CompraModel extends Model{
     public function cargarMisCompras($nick){
         $consulta=null;
         $this->connect();
-        $consulta = "SELECT id_pedido,DATE_FORMAT(fecha_pedido,'%b %d %Y - %h:%i %p') fecha_pedido, valor_pedido, status, url_comprobante_pago from Pedido where nick_usuario='$nick'";
+        $consulta = "SELECT id_pedido,DATE_FORMAT(fecha_pedido,'%b %d %Y - %h:%i %p') fecha_pedido, valor_pedido, status, url_comprobante_pago from pedido where nick_usuario='$nick'";
         $query = $this->query($consulta);
         $this->terminate();
         $array = array();

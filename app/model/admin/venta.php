@@ -9,9 +9,9 @@ class VentaModel extends Model{
         $consulta=null;
         $this->connect();
         if($tipo=='realizadas'){
-        $consulta = "SELECT id_pedido, nick_usuario,DATE_FORMAT(fecha_pedido,'%b %d %Y - %h:%i %p') fecha_pedido, valor_pedido from Pedido where status='aprobado'";
+        $consulta = "SELECT id_pedido, nick_usuario,DATE_FORMAT(fecha_pedido,'%b %d %Y - %h:%i %p') fecha_pedido, valor_pedido from pedido where status='aprobado'";
         }else{
-          $consulta = "SELECT id_pedido, nick_usuario,DATE_FORMAT(fecha_pedido,'%b %d %Y - %h:%i %p') fecha_pedido, valor_pedido, url_comprobante_pago from Pedido where status='progreso'";  
+          $consulta = "SELECT id_pedido, nick_usuario,DATE_FORMAT(fecha_pedido,'%b %d %Y - %h:%i %p') fecha_pedido, valor_pedido, url_comprobante_pago from pedido where status='progreso'";  
         }
         $query = $this->query($consulta);
         $this->terminate();

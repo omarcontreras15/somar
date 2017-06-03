@@ -64,7 +64,7 @@ class Controller {
         $htmlcategorias="";
         $array=$modelCategoria->listarCategorias();
         foreach($array as $element){
-            $htmlcategorias.='<li><a href="index.php?mode=buscar-productos-categoria&id='.$element['id'].'">'.$element['nombre_categoria'].'</a></li>';
+            $htmlcategorias.='<li><a href="index.php?mode=productos-categoria&id='.$element['id'].'">'.$element['nombre_categoria'].'</a></li>';
         }
 
         return $htmlcategorias;
@@ -75,7 +75,7 @@ class Controller {
         $htmlcategorias="";
         $array=$modelCategoria->listarCategorias();
         foreach($array as $element){
-            $htmlcategorias.='<div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><a href="index.php?mode=buscar-productos-categoria&id='.$element['id'].'">'.$element['nombre_categoria'].'</a></h4></div></div>';
+            $htmlcategorias.='<div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><a href="index.php?mode=productos-categoria&id='.$element['id'].'">'.$element['nombre_categoria'].'</a></h4></div></div>';
         }
 
         return $htmlcategorias;
