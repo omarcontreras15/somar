@@ -72,6 +72,22 @@ class User extends Controller {
         $this->showView($this->view);     
     }
 
+    public function cargarError404(){
+        $error404= $this->getTemplate("./app/views/user/404/404.html");
+        $this->view=$this->cargarContenidoPlantilla($this->view);
+        $this->view = $this->renderView($this->view, "{{TITULO}}","Error 404!");
+        $this->view = $this->renderView($this->view, "{{CONTENT}}", $error404);
+        $this->showView($this->view);   
+    }
+
+    public function cargarVistaCambiarClave(){
+        $contenido= $this->getTemplate("./app/views/user/cambiarClave/cambiar-clave.html");
+        $this->view=$this->cargarContenidoPlantilla($this->view);
+        $this->view = $this->renderView($this->view, "{{TITULO}}","Cambiar Contraseña");
+        $this->view = $this->renderView($this->view, "{{CONTENT}}", $contenido);
+        $this->showView($this->view);   
+    }
+
     public function login($user, $password) {
         $pass = sha1($password);
         $log = $this->userModel->loginUser($user, $pass);
@@ -114,7 +130,7 @@ class User extends Controller {
         $this->view = $this->renderView($this->view, "{{CONTENT}}", $vista);
         $this->showView($this->view);
         }else{
-            header("Location:index.php");
+            $this->cargarError404();
         }
 
     }
@@ -127,6 +143,22 @@ class User extends Controller {
         }else{
             return false;
         }
+    }
+
+     public function cambiarClaveUser($passwordVieja,$passwordNueva){
+       $nick=$_SESSION['user_id'];
+       $passwordVieja=sha1($passwordVieja);
+       $passwordNueva=sha1($passwordNueva);
+       if($this->userModel->loginUser($nick,$passwordVieja)){
+          $rel= $this->userModel->cambiarClaveUser($nick, $passwordNueva);
+            if($rel)
+                echo true;
+            else
+                echo false;
+            
+       }else{
+           echo false;
+       }
     }
 }
 

@@ -79,14 +79,20 @@ class producto extends Controller{
 
     public function cargarVistaProductosCategoria($id_categoria){
          $contenido= $this->getTemplate("./app/views/user/producto/vista-productos.html");
-         $nomCategoria=$this->categoriaModel->buscarNombreCategoria($id_categoria);
         //aca llamamos al metodo cargarCategoriasMenuLeft que se encargara de crear el html para las categorias
         //del menu que se encuentra en la parte izquierda de la pagina
         $contenido= $this->renderView($contenido, "{{CATEGORIAS_MENU_LEFT}}",$this->cargarCategoriasMenuLeft());
         $contenido= $this->renderView($contenido, "{{ID_CATEGORIA}}",$id_categoria);
+
+        if(is_numeric($id_categoria)){
+        $nomCategoria=$this->categoriaModel->buscarNombreCategoria($id_categoria);
+        }else{
+         $nomCategoria="Todos Los Productos"; 
+        }
+        
+        //reemplazamos el nombre de la categoria en el html 
         $contenido= $this->renderView($contenido, "{{NOMBRE_CATEGORIA}}",$nomCategoria);
 
-        
         //definimos la paginacion en html 
         $total_productos=$this->productoModel->obtenerNumeroTotalProductosCategoria($id_categoria);
         $totalPaginas=ceil($total_productos/$this->num_productos_pagina);

@@ -30,27 +30,43 @@ class Router
                         break;
                     
                     case "restablecer-clave":
+                        if(isset($_GET['id']))
                         $this->user->restablecerClave($_GET['id']);
+                        else
+                        $this->user->cargarError404();       
                         break;
 
                     case "buscar":
-                     $this->producto->cargarVistaBusquedaProducto($_GET["producto"]);
+                        if(isset($_GET["producto"]))
+                        $this->producto->cargarVistaBusquedaProducto($_GET["producto"]);
+                        else
+                        $this->user->cargarError404();
                         break;
                     case "mis-compras":
                         $this->compra->cargarMisCompras();
                         break;
                     
                     case "ver-producto":
+                        if(isset($_GET['id']))
                         $this->producto->cargarVistaDetalleProducto($_GET['id']);
+                        else
+                        $this->user->cargarError404();
                         break;
 
                     case "productos-categoria":
+                         if(isset($_GET['id']))
                         $this->producto->cargarVistaProductosCategoria($_GET['id']);
+                        else
+                        $this->user->cargarError404();
+                        break;
+
+                    case "cambiar-clave":
+                        $this->user-> cargarVistaCambiarClave();
                         break;
                     
                     
                     default:
-                        header("Location:index.php");
+                        $this->user->cargarError404();
                         break;
                 }
             } else if($_GET["mode"] == "iniciarSesion"){
@@ -58,19 +74,30 @@ class Router
             }else if($_GET["mode"] == "recuperarClave"){
                     $this->user->vistaRecuperarClave();
             }else if ($_GET["mode"] =="restablecer-clave"){
-                    $this->user->restablecerClave($_GET['id']);
+                    if(isset($_GET['id']))
+                        $this->user->restablecerClave($_GET['id']);
+                     else
+                        $this->user->cargarError404();
 
             }else if ($_GET["mode"] =="buscar"){
+                 if(isset($_GET['producto']))
                    $this->producto->cargarVistaBusquedaProducto($_GET["producto"]);
-
+                 else
+                   $this->user->cargarError404();
             }else if ($_GET["mode"] =="ver-producto"){
+                if(isset($_GET['id']))
                    $this->producto->cargarVistaDetalleProducto($_GET['id']);
+                   else
+                   $this->user->cargarError404();
 
             }else if ($_GET["mode"] =="productos-categoria"){
+                if(isset($_GET['id']))
                    $this->producto->cargarVistaProductosCategoria($_GET['id']);
+                   else
+                   $this->user->cargarError404();
 
             }else{
-                 header("Location:index.php");
+                 $this->user->cargarError404();
             }
 
             
@@ -106,8 +133,12 @@ class Router
                         $this->producto->cargarProductosPagina($_POST['producto'], $_POST['pagina'], "busqueda");
                         break;
 
+                case "cambiar-clave-user":
+                        $this->user->cambiarClaveUser($_POST['password-vieja'], $_POST['password-nueva']);
+                        break;
+
                 default:
-                    header("Location:index.php");
+                    $this->user->cargarError404();
                     break;
             }
         } else {
