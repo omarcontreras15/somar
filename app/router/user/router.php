@@ -34,7 +34,7 @@ class Router
                         break;
 
                     case "buscar":
-                     echo $_GET["producto"];
+                     $this->producto->cargarVistaBusquedaProducto($_GET["producto"]);
                         break;
                     case "mis-compras":
                         $this->compra->cargarMisCompras();
@@ -61,7 +61,7 @@ class Router
                     $this->user->restablecerClave($_GET['id']);
 
             }else if ($_GET["mode"] =="buscar"){
-                    echo $_GET["producto"];
+                   $this->producto->cargarVistaBusquedaProducto($_GET["producto"]);
 
             }else if ($_GET["mode"] =="ver-producto"){
                    $this->producto->cargarVistaDetalleProducto($_GET['id']);
@@ -99,7 +99,11 @@ class Router
                         break;
 
                 case "cargar-productos-categoria":
-                        $this->producto-> cargarProductosCategoriaPagina($_POST['id_categoria'], $_POST['pagina']);
+                        $this->producto->cargarProductosPagina($_POST['id_categoria'], $_POST['pagina'], "categoria");
+                        break;
+
+                case "cargar-productos-busqueda":
+                        $this->producto->cargarProductosPagina($_POST['producto'], $_POST['pagina'], "busqueda");
                         break;
 
                 default:

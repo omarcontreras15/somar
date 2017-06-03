@@ -79,10 +79,12 @@ class producto extends Controller{
 
     public function cargarVistaProductosCategoria($id_categoria){
          $contenido= $this->getTemplate("./app/views/user/producto/vista-productos.html");
+         $nomCategoria=$this->categoriaModel->buscarNombreCategoria($id_categoria);
         //aca llamamos al metodo cargarCategoriasMenuLeft que se encargara de crear el html para las categorias
         //del menu que se encuentra en la parte izquierda de la pagina
         $contenido= $this->renderView($contenido, "{{CATEGORIAS_MENU_LEFT}}",$this->cargarCategoriasMenuLeft());
         $contenido= $this->renderView($contenido, "{{ID_CATEGORIA}}",$id_categoria);
+        $contenido= $this->renderView($contenido, "{{NOMBRE_CATEGORIA}}",$nomCategoria);
 
         
         //definimos la paginacion en html 
@@ -91,15 +93,20 @@ class producto extends Controller{
         $contenido= $this->renderView($contenido, "{{TOTAL_PAGINAS}}",$totalPaginas);
         //cargamos  los menus de la pagina
         $this->view=$this->cargarContenidoPlantilla($this->view);
-        $this->view = $this->renderView($this->view, "{{TITULO}}","Productos");
+        $this->view = $this->renderView($this->view, "{{TITULO}}",$nomCategoria);
         $this->view = $this->renderView($this->view, "{{CONTENT}}", $contenido);
         $this->showView($this->view);    
     }
 
-    public function cargarProductosCategoriaPagina($id_categoria, $pagina){
-
+    public function cargarProductosPagina($clave, $pagina, $accion){
+        $arrayProductos=null;
         $inicio=($pagina-1)*$this->num_productos_pagina;
-        $arrayProductos=$this->productoModel->listarProductoCategoriaPorPaginas($id_categoria,$inicio, $this->num_productos_pagina);
+        if($accion=="busqueda"){
+            $arrayProductos=$this->productoModel->listarProductoBusquedaPorPaginas($clave,$inicio, $this->num_productos_pagina);
+        }else{
+           $arrayProductos=$this->productoModel->listarProductoCategoriaPorPaginas($clave,$inicio, $this->num_productos_pagina);
+
+        }
 
          $htmlProductos="";
         foreach ($arrayProductos as $element) {
@@ -113,6 +120,25 @@ class producto extends Controller{
 
        echo $htmlProductos;
 
+    }
+
+    public function cargarVistaBusquedaProducto($producto){
+         $contenido= $this->getTemplate("./app/views/user/producto/buscar-productos.html");
+        //aca llamamos al metodo cargarCategoriasMenuLeft que se encargara de crear el html para las categorias
+        //del menu que se encuentra en la parte izquierda de la pagina
+        $contenido= $this->renderView($contenido, "{{CATEGORIAS_MENU_LEFT}}",$this->cargarCategoriasMenuLeft());
+
+        
+        //definimos la paginacion en html 
+        $total_productos=$this->productoModel->obtenerNumeroTotalProductosBusqueda($producto);
+        $totalPaginas=ceil($total_productos/$this->num_productos_pagina);
+        $contenido= $this->renderView($contenido, "{{TOTAL_PAGINAS}}",$totalPaginas);
+         $contenido= $this->renderView($contenido, "{{NOMBRE_PRODUCTO}}",$producto);
+        //cargamos  los menus de la pagina
+        $this->view=$this->cargarContenidoPlantilla($this->view);
+        $this->view = $this->renderView($this->view, "{{TITULO}}","Buscar Productos");
+        $this->view = $this->renderView($this->view, "{{CONTENT}}", $contenido);
+        $this->showView($this->view); 
     }
     
 }

@@ -206,5 +206,28 @@ class ProductoModel extends Model{
 
     }
 
+     public function  obtenerNumeroTotalProductosBusqueda($producto){
+        $this->connect();
+        $consulta="SELECT count(*) total from producto where nombre_producto like '%$producto%' or referencia like '%$producto%'";
+        
+        $total=mysqli_fetch_array($this->query($consulta));
+        $this->terminate();
+        return $total['total'];
+    }
+
+    public function listarProductoBusquedaPorPaginas($producto,$inicio, $num_productos_pagina){
+        $array= array();
+        $this->connect();
+        $consulta="SELECT * from producto where nombre_producto like '%$producto%' or referencia like '%$producto%'";
+        $consulta=$this->query($consulta);
+         while($row = mysqli_fetch_array($consulta)){
+            array_unshift($array, $row);
+        }
+        $this->terminate();
+        return $array;
+
+
+    }
+
 }
 ?>
