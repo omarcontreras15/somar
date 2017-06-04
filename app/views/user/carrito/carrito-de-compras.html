@@ -1,0 +1,115 @@
+<section class="contenido">
+    <div class="container">
+        <div class="breadcrumbs">
+            <ol class="breadcrumb">
+                <li><a href="index.php">Inicio</a></li>
+                <li class="active">Carrito De Compras</li>
+            </ol>
+        </div>
+        <div class="cart_info table-responsive">
+            <table class="table table-condensed">
+                <thead>
+                    <tr class="cart_menu">
+                        <td class="image">Producto</td>
+                        <td class="description"></td>
+                        <td class="price">Precio</td>
+                        <td class="quantity">Cantidad</td>
+                        <td class="total">Total</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody id="tabla-carrito">
+                   {{TABLA_CARRITO}}
+                </tbody>
+            </table>
+        </div>
+        <div class="pull-right">
+        <button type="button"  id="vaciar-carrito" class="btn btn-default get">Vaciar Carrito</button>
+         <button type="button" id="realizar-compra" class="btn btn-default get">Realizar Compra</button>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+        cargarEventosBotonEliminarProductos();
+        cargarTotal();
+
+        function cargarEventosBotonEliminarProductos(){
+            $(".boton-eliminar-producto").on("click",function(){
+                eliminarProductoCarrito($(this).attr("id"));
+            });
+
+            $("#vaciar-carrito").on("click", function(){
+                vaciarCarrito();
+            });
+
+             $("#realizar-compra").on("click", function(){
+                vaciarCarrito();
+            });
+        }
+
+
+        function cargarTotal(){
+            var html='<tr><td colspan="3">&nbsp;</td><td><h4>Total Del Carrito:</h4></td><td><h4>$<span id="precio-total"></span></h4></td></tr>';
+            $("#tabla-carrito").append(html);
+            var total=0;
+            $(".precio-total-producto").each(function(){
+                total+=parseInt($(this).text());
+            });
+            $("#precio-total").text(total);
+        }
+
+        function eliminarProductoCarrito(id){
+            var datos = {
+            "mode": "eliminar-producto-carrito",
+            "id": id
+        };
+        $.ajax({
+            data: datos,
+            url: "index.php",
+            type: 'POST',
+            //esta funncion se ejecuta cuando el php a terminado de procesar
+            //con el resultado e inserta el resultado en algun elemento html
+            success: function (response) {
+                $("#tabla-carrito").html(response);
+                cargarEventosBotonEliminarProductos();
+                cargarTotal();
+            }
+        });
+
+        }
+
+        function vaciarCarrito(){
+             var datos = {
+            "mode": "vaciar-carrito"
+        };
+        $.ajax({
+            data: datos,
+            url: "index.php",
+            type: 'POST',
+            //esta funncion se ejecuta cuando el php a terminado de procesar
+            //con el resultado e inserta el resultado en algun elemento html
+            success: function (response) {
+                $("#tabla-carrito").html(response);
+                cargarEventosBotonEliminarProductos();
+                cargarTotal();
+            }
+        });
+        }
+
+        function realizarCompra(){
+            var datos = {
+            "mode": "realizar-compra"
+        };
+        $.ajax({
+            data: datos,
+            url: "index.php",
+            type: 'POST',
+            //esta funncion se ejecuta cuando el php a terminado de procesar
+            //con el resultado e inserta el resultado en algun elemento html
+            success: function (response) {
+            }
+        }); 
+        }
+    });
+</script>

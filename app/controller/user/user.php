@@ -37,11 +37,22 @@ class User extends Controller {
         $array=$productoModel->listarProductosNuevo();
         $htmlProductos="";
         foreach ($array as $element) {
-            $producto=$this->getTemplate("./app/views/user/components/sliderProducto/producto-nuevo.html");
+            $producto=$this->getTemplate("./app/views/user/components/sliderProducto/slider-producto.html");
              $producto = $this->renderView($producto, "{{PRECIO}}",$element['precio']);
              $producto = $this->renderView($producto, "{{NOMBRE_PRODUCTO}}",$element['nombre_producto']);     
              $producto = $this->renderView($producto, "{{ID_PRODUCTO}}",$element['id_producto']);
              $producto = $this->renderView($producto, "{{URL_IMG}}",$element['url_img1']);
+
+             //Validamos que hayan producto disponibles para habilitar el boton de agregar al carrito
+             if($element['cant_disponibles']>0){
+                $formProducto=$this->getTemplate("./app/views/user/components/sliderProducto/components/slider-form-carrito.html");
+                 $formProducto = $this->renderView($formProducto, "{{ID_PRODUCTO}}",$element['id_producto']);
+                 $formProducto = $this->renderView($formProducto, "{{CANT_DISPONIBLE}}",$element['cant_disponibles']);
+                $producto = $this->renderView($producto, "{{FORM_CARRITO}}",$formProducto);  
+             }else{
+                $producto = $this->renderView($producto, "{{FORM_CARRITO}}","<p>Agotado</p>");  
+             }
+             
              $htmlProductos.=$producto; 
         }
 
@@ -53,11 +64,22 @@ class User extends Controller {
         $array=$productoModel->listarProductosMasVendido();
         $htmlProductos="";
         foreach ($array as $element) {
-            $producto=$this->getTemplate("./app/views/user/components/sliderProducto/producto-mas-vendido.html");
+            $producto=$this->getTemplate("./app/views/user/components/sliderProducto/slider-producto.html");
              $producto = $this->renderView($producto, "{{PRECIO}}",$element['precio']);
              $producto = $this->renderView($producto, "{{NOMBRE_PRODUCTO}}",$element['nombre_producto']);     
              $producto = $this->renderView($producto, "{{ID_PRODUCTO}}",$element['id_producto']);
              $producto = $this->renderView($producto, "{{URL_IMG}}",$element['url_img1']);
+
+              //Validamos que hayan producto disponibles para habilitar el boton de agregar al carrito
+             if($element['cant_disponibles']>0){
+                $formProducto=$this->getTemplate("./app/views/user/components/sliderProducto/components/slider-form-carrito.html");
+                 $formProducto = $this->renderView($formProducto, "{{ID_PRODUCTO}}",$element['id_producto']);
+                 $formProducto = $this->renderView($formProducto, "{{CANT_DISPONIBLE}}",$element['cant_disponibles']);
+                $producto = $this->renderView($producto, "{{FORM_CARRITO}}",$formProducto);  
+             }else{
+                $producto = $this->renderView($producto, "{{FORM_CARRITO}}","<p>Agotado</p>");  
+             }
+
              $htmlProductos.=$producto; 
         }
 

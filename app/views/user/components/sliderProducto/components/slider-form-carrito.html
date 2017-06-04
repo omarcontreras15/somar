@@ -1,0 +1,8 @@
+<form action="index.php" method="post">
+    <input type="hidden" name="mode" value="agregar-al-carrito">
+    <input type="hidden" name="id_producto" value="{{ID_PRODUCTO}}">
+    <div class="col-sm-12"><input class="cantidad-productos" type="number" value="1" min="1" max="{{CANT_DISPONIBLE}}" name="cantidad-productos"
+        /></div>
+    <div class="col-sm-12">
+        <button type="submit" class="btn btn-default add-to-cart"> <i class="fa fa-shopping-cart"></i>Añadir Al Carrito</button></div>
+</form>

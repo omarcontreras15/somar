@@ -1,9 +1,9 @@
-<form action="index.php" method="get">
+<form action="index.php" method="post">
     <input type="hidden" name="mode" value="agregar-al-carrito">
     <input type="hidden" name="id_producto" value="{{ID_PRODUCTO}}">
     <span>
 	<label>Cantidad:</label>
-	<input type="number" min="1" max="{{CANT_DISPONIBLE}}" name="cantidad_productos"/>
+	<input type="number" value="1" min="1" max="{{CANT_DISPONIBLE}}" name="cantidad-productos"/>
 			<button type="submit" class="btn btn-fefault cart"> <i class="fa fa-shopping-cart"></i>Añadir Al Carrito</button>       
 	</span>
 </form>
