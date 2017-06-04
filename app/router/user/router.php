@@ -69,6 +69,9 @@ class Router
                     case "carrito-de-compras":
                         $this->carrito-> cargarCarritoDeCompras();
                         break;
+                    case "contactanos":
+                        $this->user->cargarContactanos();
+                        break;
                     
                     
                     default:
@@ -102,6 +105,8 @@ class Router
                    else
                    $this->user->cargarError404();
 
+            }else if ($_GET["mode"] =="contactanos"){
+                   $this->user->cargarContactanos();
             }else{
                  $this->user->cargarError404();
             }
@@ -156,6 +161,10 @@ class Router
                         break;
                 case "realizar-compra":
                         $this->carrito->realizarCompra();
+                        break;
+
+                case "enviar-mensaje-tienda":
+                        $this->user->enviarMensajeTienda($_POST['nombre'],$_POST['email'],$_POST['asunto'],$_POST['mensaje']);
                         break;
                 
                 default:

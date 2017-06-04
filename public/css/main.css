@@ -630,6 +630,9 @@ ul.sub-menu {
   font-weight: 300;
   margin-top: 23px;
 }
+button#vaciar-carrito {
+    margin-right: 10px;
+}
 
 
 .item button:hover {
@@ -2427,12 +2430,12 @@ h2.title {
   margin-bottom: 20px;
 }
 
-#contact-page 
+ 
 .form-control::-moz-placeholder {
   color: #8D8D8D;
 }
 
-#contact-page .form-control {
+ .form-control {
   background-color: #fff;
   border: 1px solid #ddd;
   color: #696763;
@@ -2444,7 +2447,7 @@ h2.title {
   box-shadow:inherit;
 }
 
-#contact-page #message {
+ #message {
   height:160px;
   resize:none;
 }
@@ -2455,22 +2458,22 @@ h2.title {
 }
 
 
-#contact-page .form-control:focus, 
-#contact-page .form-control:hover {
+ .form-control:focus, 
+ .form-control:hover {
   box-shadow: inherit;
   border-color: #FDB45E;
 }
 
-#contact-page .contact-info {
+ .contact-info {
   padding: 0 20px;
 }
 
-#contact-page .contact-info address {
+ .contact-info address {
   margin-bottom: 40px;
   margin-top: -5px;
 }
 
-#contact-page .contact-info p {
+ .contact-info p {
   margin-bottom: 0;
   color: #696763;
   font-size: 16px;

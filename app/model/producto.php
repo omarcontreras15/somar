@@ -235,8 +235,6 @@ class ProductoModel extends Model{
         }
         $this->terminate();
         return $array;
-
-
     }
 
 }
