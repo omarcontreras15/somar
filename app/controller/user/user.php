@@ -39,7 +39,13 @@ class User extends Controller {
         foreach ($array as $element) {
             $producto=$this->getTemplate("./app/views/user/components/sliderProducto/slider-producto.html");
             $producto = $this->renderView($producto, "{{PRECIO}}",$element['precio']);
-            $producto = $this->renderView($producto, "{{NOMBRE_PRODUCTO}}",$element['nombre_producto']);
+             //calculamos el tamaño del string del nombre del producto si es superior a 30 se corta y rellena de puntos suspensivos 
+              if(strlen($element['nombre_producto'])>30){
+               $producto = $this->renderView($producto, "{{NOMBRE_PRODUCTO}}",substr($element['nombre_producto'],0,30)."...");
+             }else{
+                $producto = $this->renderView($producto, "{{NOMBRE_PRODUCTO}}",$element['nombre_producto']);
+             } 
+             //
             $producto = $this->renderView($producto, "{{ID_PRODUCTO}}",$element['id_producto']);
             $producto = $this->renderView($producto, "{{URL_IMG}}",$element['url_img1']);
             
@@ -68,7 +74,14 @@ class User extends Controller {
         foreach ($array as $element) {
             $producto=$this->getTemplate("./app/views/user/components/sliderProducto/slider-producto.html");
             $producto = $this->renderView($producto, "{{PRECIO}}",$element['precio']);
-            $producto = $this->renderView($producto, "{{NOMBRE_PRODUCTO}}",$element['nombre_producto']);
+
+            //calculamos el tamaño del string del nombre del producto si es superior a 30 se corta y rellena de puntos suspensivos 
+            if(strlen($element['nombre_producto'])>30){
+               $producto = $this->renderView($producto, "{{NOMBRE_PRODUCTO}}",substr($element['nombre_producto'],0,30)."...");
+             }else{
+                $producto = $this->renderView($producto, "{{NOMBRE_PRODUCTO}}",$element['nombre_producto']);
+             } 
+             //
             $producto = $this->renderView($producto, "{{ID_PRODUCTO}}",$element['id_producto']);
             $producto = $this->renderView($producto, "{{URL_IMG}}",$element['url_img1']);
             

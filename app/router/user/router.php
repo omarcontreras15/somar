@@ -149,7 +149,8 @@ class Router
                         break;
 
                 case "agregar-al-carrito":
-                        $this->carrito->agregarProducto($_POST['id_producto'], $_POST['cantidad-productos']);
+                        $this->carrito->agregarProducto($_POST['id_producto'], $_POST['cantidad-productos']);                              
+                         header("Location:index.php?mode=carrito-de-compras");
                         break;
 
                 case "eliminar-producto-carrito":
@@ -165,6 +166,10 @@ class Router
 
                 case "enviar-mensaje-tienda":
                         $this->user->enviarMensajeTienda($_POST['nombre'],$_POST['email'],$_POST['asunto'],$_POST['mensaje']);
+                        break;
+
+                case "modificar-cant-productos-carrito":
+                        $this->carrito->agregarProducto($_POST['id_producto'], $_POST['cantidad-productos']);
                         break;
                 
                 default:

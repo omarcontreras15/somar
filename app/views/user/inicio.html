@@ -72,7 +72,7 @@
 						</div><!--/category-products-->
 						
 						<div class="shipping text-center"><!--shipping-->
-							<img src="public/images/banner-inicio.png" alt="" />
+							<img  class="img-responsive" src="public/images/banner-inicio.png" alt="" />
 						</div><!--/shipping-->
 					
 					</div>
@@ -80,24 +80,16 @@
 				
 				<div class="col-sm-9 padding-right">
 					<div class="features_items"><!--features_items-->
-						<h2 class="title text-center">Productos MÁS VENDIDOS</h2>
+						<h2 class="title text-center">PRODUCTOS MÁS VENDIDOS</h2>
 						{{PRODUCTOS_MAS_VENDIDOS}}
 					</div><!--features_items-->
 					
 					
-					
-					<div class="recommended_items"><!--recommended_items-->
+					<div class="features_items"><!-- -->
 						<h2 class="title text-center">Productos Nuevos</h2>
-						
-						<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-							<div class="carousel-inner">
-								<div class="item active">	
-									{{PRODUCTOS_NUEVOS}}
-								</div>
-							</div>
-								
-						</div>
-					</div><!--/recommended_items-->
+						{{PRODUCTOS_NUEVOS}}
+					</div><!-- -->
+					
 					
 				</div>
 			</div>

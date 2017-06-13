@@ -45,12 +45,18 @@
 </section>
 <script>
     $(document).ready(function () {
-        cargarEventosBotones();
-        //cargamos los productos almacenados en el carrito al cargar la pagina, el enviamos el id -1 para que no elimine ninguno
-        //producto, solo que nos cargue el html con todos los productos del carrito.
-        eliminarProductoCarrito(-1);
-        cargarTotal();
+        
+        cargarProductos();
 
+
+        function cargarProductos(){
+            cargarEventosBotones();
+            //cargamos los productos almacenados en el carrito al cargar la pagina, el enviamos el id -1 para que no elimine ninguno
+            //producto, solo que nos cargue el html con todos los productos del carrito.
+            eliminarProductoCarrito(-1);
+            cargarTotal();
+
+        }
 
         //esta funcion carga todos los eventos que poseen los botones 
         function cargarEventosBotones() {
@@ -63,8 +69,35 @@
             });
 
             $("#realizar-compra").on("click", function () {
-                realizarCompra();
+                var acept=confirm("¿Está seguro que desea continuar con la compra?");
+                if(acept){
+                    realizarCompra();
+                }
+                
             });
+
+            //evento para disminur productos del carrito
+             $(".cart_quantity_up").on("click", function () {
+                var id_producto=$(this).attr("idproducto");
+                var cant_productos=parseInt($(this).attr("cantproductos"));
+                $("#tabla-carrito").empty();
+                modificarCantProductoCarrito(id_producto,(cant_productos+1));
+                cargarProductos();
+                
+            });
+            //evento para aumentar productos del carrito
+             $(".cart_quantity_down").on("click", function () {
+                var id_producto=$(this).attr("idproducto");
+                var cant_productos=parseInt($(this).attr("cantproductos"));
+                if((cant_productos-1)>0){
+                    $("#tabla-carrito").empty();
+                    modificarCantProductoCarrito(id_producto,(cant_productos-1));
+                    cargarProductos();
+                }
+                
+            });
+
+
         }
 
         //esta funcion calcula el total de todos los productos incluidos en el carrito
@@ -106,6 +139,25 @@
                     }
                     //recalculamos el total por todos los produtos del carrito de compras
                     cargarTotal();
+                }
+            });
+
+        }
+
+        function modificarCantProductoCarrito(id, cant) {
+            var datos = {
+                "mode": "modificar-cant-productos-carrito",
+                "id_producto": id,
+                "cantidad-productos":cant
+            };
+            $.ajax({
+                data: datos,
+                url: "index.php",
+                type: 'POST',
+                //esta funncion se ejecuta cuando el php a terminado de procesar
+                //con el resultado e inserta el resultado en algun elemento html
+                success: function (response) {
+                   
                 }
             });
 

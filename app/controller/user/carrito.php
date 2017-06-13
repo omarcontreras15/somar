@@ -36,8 +36,6 @@ class Carrito extends Controller {
             $this->carritoModel->agregarProducto($nick, $id_producto, $cant_productos);
         }
         
-        header("Location:index.php?mode=carrito-de-compras");
-        
     }
     
     public function cargarProductosCarrito($nick){
