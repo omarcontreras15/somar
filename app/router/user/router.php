@@ -3,6 +3,7 @@
 include_once "./app/controller/user/user.php";
 include_once "./app/controller/user/compra.php";
 include_once "./app/controller/user/producto.php";
+include_once "./app/controller/user/carrito.php";
 
 class Router
 {
@@ -14,6 +15,7 @@ class Router
         $this->user = new User();
         $this->compra=new Compra();
         $this->producto=new Producto();
+        $this->carrito=new Carrito();
     }
 
     public function router()
@@ -30,27 +32,50 @@ class Router
                         break;
                     
                     case "restablecer-clave":
+                        if(isset($_GET['id']))
                         $this->user->restablecerClave($_GET['id']);
+                        else
+                        $this->user->cargarError404();       
                         break;
 
                     case "buscar":
-                     echo $_GET["producto"];
+                        if(isset($_GET["producto"]))
+                        $this->producto->cargarVistaBusquedaProducto($_GET["producto"]);
+                        else
+                        $this->user->cargarError404();
                         break;
                     case "mis-compras":
                         $this->compra->cargarMisCompras();
                         break;
                     
                     case "ver-producto":
+                        if(isset($_GET['id']))
                         $this->producto->cargarVistaDetalleProducto($_GET['id']);
+                        else
+                        $this->user->cargarError404();
                         break;
 
                     case "productos-categoria":
+                         if(isset($_GET['id']))
                         $this->producto->cargarVistaProductosCategoria($_GET['id']);
+                        else
+                        $this->user->cargarError404();
+                        break;
+
+                    case "cambiar-clave":
+                        $this->user-> cargarVistaCambiarClave();
+                        break;
+
+                    case "carrito-de-compras":
+                        $this->carrito-> cargarCarritoDeCompras();
+                        break;
+                    case "contactanos":
+                        $this->user->cargarContactanos();
                         break;
                     
                     
                     default:
-                        header("Location:index.php");
+                        $this->user->cargarError404();
                         break;
                 }
             } else if($_GET["mode"] == "iniciarSesion"){
@@ -58,19 +83,32 @@ class Router
             }else if($_GET["mode"] == "recuperarClave"){
                     $this->user->vistaRecuperarClave();
             }else if ($_GET["mode"] =="restablecer-clave"){
-                    $this->user->restablecerClave($_GET['id']);
+                    if(isset($_GET['id']))
+                        $this->user->restablecerClave($_GET['id']);
+                     else
+                        $this->user->cargarError404();
 
             }else if ($_GET["mode"] =="buscar"){
-                    echo $_GET["producto"];
-
+                 if(isset($_GET['producto']))
+                   $this->producto->cargarVistaBusquedaProducto($_GET["producto"]);
+                 else
+                   $this->user->cargarError404();
             }else if ($_GET["mode"] =="ver-producto"){
+                if(isset($_GET['id']))
                    $this->producto->cargarVistaDetalleProducto($_GET['id']);
+                   else
+                   $this->user->cargarError404();
 
             }else if ($_GET["mode"] =="productos-categoria"){
+                if(isset($_GET['id']))
                    $this->producto->cargarVistaProductosCategoria($_GET['id']);
+                   else
+                   $this->user->cargarError404();
 
+            }else if ($_GET["mode"] =="contactanos"){
+                   $this->user->cargarContactanos();
             }else{
-                 header("Location:index.php");
+                 $this->user->cargarError404();
             }
 
             
@@ -99,11 +137,38 @@ class Router
                         break;
 
                 case "cargar-productos-categoria":
-                        $this->producto-> cargarProductosCategoriaPagina($_POST['id_categoria'], $_POST['pagina']);
+                        $this->producto->cargarProductosPagina($_POST['id_categoria'], $_POST['pagina'], "categoria");
                         break;
 
+                case "cargar-productos-busqueda":
+                        $this->producto->cargarProductosPagina($_POST['producto'], $_POST['pagina'], "busqueda");
+                        break;
+
+                case "cambiar-clave-user":
+                        $this->user->cambiarClaveUser($_POST['password-vieja'], $_POST['password-nueva']);
+                        break;
+
+                case "agregar-al-carrito":
+                        $this->carrito->agregarProducto($_POST['id_producto'], $_POST['cantidad-productos']);
+                        break;
+
+                case "eliminar-producto-carrito":
+                        $this->carrito->eliminarProducto($_POST['id']);
+                        break;
+
+                case "vaciar-carrito":
+                        $this->carrito->vaciarCarrito();
+                        break;
+                case "realizar-compra":
+                        $this->carrito->realizarCompra();
+                        break;
+
+                case "enviar-mensaje-tienda":
+                        $this->user->enviarMensajeTienda($_POST['nombre'],$_POST['email'],$_POST['asunto'],$_POST['mensaje']);
+                        break;
+                
                 default:
-                    header("Location:index.php");
+                    $this->user->cargarError404();
                     break;
             }
         } else {

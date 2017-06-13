@@ -1,0 +1,25 @@
+<tr>
+    <td width="50%" class="cart_product">
+        <a href=""><img class="img-responsive" src="{{url_img1}}" alt=""></a>
+    </td>
+    <td width="15%" class="cart_description">
+        <h4><a href="index.php?mode=ver-producto&id={{id_producto}}">{{nombre_producto}}</a></h4>
+        <p>{{referencia}}</p>
+    </td>
+    <td width="20%" class="cart_price">
+        <p>${{precio}}</p>
+    </td>
+    <td width="15%" class="cart_quantity">
+        <div class="cart_quantity_button">
+            <a class="cart_quantity_up" href=""> + </a>
+            <input class="cart_quantity_input" type="text" name="quantity" disabled value="{{cantidad}}" autocomplete="off" size="1">
+            <a class="cart_quantity_down" href=""> - </a>
+        </div>
+    </td>
+    <td width="20%" class="cart_total">
+        <p class="cart_total_price">$<span class="precio-total-producto">{{precio_total}}</span></p>
+    </td>
+    <td width="5%" class="cart_delete">
+        <button id="{{id_producto}}" class="boton-eliminar-producto"><i class="fa fa-times"></i></button>
+    </td>
+</tr>

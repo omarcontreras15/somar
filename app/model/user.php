@@ -20,8 +20,8 @@ class UserModel extends Model {
         
         
     }
-
-     public function loginUser($usuario, $password) {
+    
+    public function loginUser($usuario, $password) {
         $this->connect();
         $consulta = "SELECT * FROM usuario WHERE (nick = '$usuario' AND password = '$password' AND tipo='user') OR (email = '$usuario' AND password = '$password' AND tipo='user')";
         $query = $this->query($consulta);
@@ -37,26 +37,26 @@ class UserModel extends Model {
         
         
     }
-
+    
     public function registrarUsuario($form){
         $this->connect();
         $consulta = "SELECT * FROM usuario WHERE email='".$form['email']."' OR nick='".$form['username']."'";
         $query = $this->query($consulta);
         $row = mysqli_fetch_array($query);
         if(!isset($row)){
-           $password=sha1($form['password']);
-           $insert="INSERT INTO usuario (nick,email,password, nombres, apellidos,cc, direccion) values ('".$form['username']."', '".$form['email']."','$password','".$form['nombres']."','".$form['apellidos']."',".$form['cc'].",'".$form['direccion']."')";  
-           $insert = $this->query($insert);
-           return true;
-           $this->terminate();
+            $password=sha1($form['password']);
+            $insert="INSERT INTO usuario (nick,email,password, nombres, apellidos,cc, direccion) values ('".$form['username']."', '".$form['email']."','$password','".$form['nombres']."','".$form['apellidos']."',".$form['cc'].",'".$form['direccion']."')";
+            $insert = $this->query($insert);
+            return true;
+            $this->terminate();
         }else{
-        $this->terminate();
-        return false;
+            $this->terminate();
+            return false;
         }
-
-
+        
+        
     }
-
+    
     
     public function recuperarClave($email){
         $id=null;
@@ -83,8 +83,8 @@ class UserModel extends Model {
         return false;
         
     }
-
-
+    
+    
     public function cambiarClave($id_seguridad, $password){
         $query=null;
         $email=$this->consultarInfoIdSeguridad($id_seguridad);
@@ -96,11 +96,18 @@ class UserModel extends Model {
             $delete="delete from recuperar_claves where email='$email'";
             $this->query($delete);
         }
-        echo $query;
         $this->terminate();
         return $query;
     }
-
+    
+    public function cambiarClaveUser($nick, $password){
+        $this->connect();
+        $update="UPDATE usuario  set password='$password' where nick='$nick'";
+        $query = $this->query($update);
+        $this->terminate();
+        return $query;
+    }
+    
     public  function consultarInfoIdSeguridad($id_seguridad){
         $this->connect();
         $consulta = "SELECT email from recuperar_claves where id_seguridad='$id_seguridad' AND DATEDIFF(now(), fecha_registro)<=1";

@@ -1,0 +1,178 @@
+<section class="contenido">
+    <div class="container">
+        <div class="breadcrumbs">
+            <ol class="breadcrumb">
+                <li><a href="index.php">Inicio</a></li>
+                <li class="active">Carrito De Compras</li>
+            </ol>
+        </div>
+          <!--- bloque de alertas -->
+	<div class="alert alert-success alert-white rounded" style="display: none"  id="ventana-emergente-exito">
+		<button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+		<div class="icon">
+			<img src="public/images/check.png" />
+		</div>
+		<strong>Exito!</strong> Se ha realizado la compra de forma satisfactoria, Por favor espere a que esta sea validada por el administrador de la tienda SOMAR.
+	</div>
+	<div class="alert alert-danger alert-white rounded" style="display: none" id="ventana-emergente-error">
+		<button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+		<div class="icon">
+			<img src="public/images/cerrar.png" />
+		</div>
+		<strong>Error!</strong><span id="span-error"></span>
+	</div>
+        <div class="cart_info table-responsive">
+            <table class="table table-condensed">
+                <thead>
+                    <tr class="cart_menu">
+                        <td class="image">Producto</td>
+                        <td class="description"></td>
+                        <td class="price">Precio</td>
+                        <td class="quantity">Cantidad</td>
+                        <td class="total">Total</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody id="tabla-carrito">
+                    <!-- aqui van todos los productos del carrito los cuales son cargados con js -->
+                </tbody>
+            </table>
+        </div>
+        <div id="botones-carrito" class="pull-right">
+            <!-- aqui van los botones del carrito los cuales son visibles si existen productos en el carrito de compras-->
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function () {
+        cargarEventosBotones();
+        //cargamos los productos almacenados en el carrito al cargar la pagina, el enviamos el id -1 para que no elimine ninguno
+        //producto, solo que nos cargue el html con todos los productos del carrito.
+        eliminarProductoCarrito(-1);
+        cargarTotal();
+
+
+        //esta funcion carga todos los eventos que poseen los botones 
+        function cargarEventosBotones() {
+            $(".boton-eliminar-producto").on("click", function () {
+                eliminarProductoCarrito($(this).attr("id"));
+            });
+
+            $("#vaciar-carrito").on("click", function () {
+                vaciarCarrito();
+            });
+
+            $("#realizar-compra").on("click", function () {
+                realizarCompra();
+            });
+        }
+
+        //esta funcion calcula el total de todos los productos incluidos en el carrito
+        function cargarTotal() {
+            var html = '<tr><td colspan="3">&nbsp;</td><td><h4>Total Del Carrito:</h4></td><td><h4>$<span id="precio-total"></span></h4></td></tr>';
+            $("#tabla-carrito").append(html);
+            var total = 0;
+            $(".precio-total-producto").each(function () {
+                total += parseInt($(this).text());
+            });
+            $("#precio-total").text(total);
+        }
+
+        function eliminarProductoCarrito(id) {
+            var datos = {
+                "mode": "eliminar-producto-carrito",
+                "id": id
+            };
+            $.ajax({
+                data: datos,
+                url: "index.php",
+                type: 'POST',
+                //esta funncion se ejecuta cuando el php a terminado de procesar
+                //con el resultado e inserta el resultado en algun elemento html
+                success: function (response) {
+                    //botones para vaciar el carrito o realizar pedido
+                    var botonesCarrito = '<button type="button"  id="vaciar-carrito" class="btn btn-default get">Vaciar Carrito</button><button type="button" id="realizar-compra" class="btn btn-default get">Realizar Compra</button>';
+
+                    //si no el sevidor responde false significa que no existe ningun producto en el carrito de compras
+                    if (response != false) {
+                        //insertamos el html con los prodcutos obtenido desde el servidor
+                        $("#tabla-carrito").html(response);
+                        $("#botones-carrito").html(botonesCarrito);
+
+                        cargarEventosBotones();
+                    } else {
+                        //llamamos a este metodo por que no hay ningun producto en el carrito
+                        cargarNoHayProductos();
+                    }
+                    //recalculamos el total por todos los produtos del carrito de compras
+                    cargarTotal();
+                }
+            });
+
+        }
+
+        function vaciarCarrito() {
+            var datos = {
+                "mode": "vaciar-carrito"
+            };
+            $.ajax({
+                data: datos,
+                url: "index.php",
+                type: 'POST',
+                //esta funncion se ejecuta cuando el php a terminado de procesar
+                //con el resultado e inserta el resultado en algun elemento html
+                success: function (response) {
+                    $("#tabla-carrito").html(response);
+                    //llamamos a este metodo por que no hay ningun producto en el carrito
+                    cargarNoHayProductos();
+                    cargarEventosBotones();
+                    cargarTotal();
+                }
+            });
+        }
+
+        //este metodo es llamado siempre que no existan productos en el carrito de compras
+        function cargarNoHayProductos() {
+            var noHayProductos = "<tr><td colspan='5'><h3 class='text-center'>No hay productos en el carrito.</h3><td><tr>";
+            $("#tabla-carrito").html(noHayProductos);
+            //eliminamos los botones de vaciar carrito y realizar compra
+            $("#botones-carrito").html("");
+        }
+
+        //metodo para mostrar msj de errores
+          function mostrarMsjError(msj){
+             $("#span-error").html(msj);
+            $("#ventana-emergente-error").show();
+             $('html, body').animate({scrollTop:0}, 'slow');
+        }
+
+        function realizarCompra() {
+
+            var datos = {
+                "mode": "realizar-compra"
+            };
+            $.ajax({
+                data: datos,
+                url: "index.php",
+                type: 'POST',
+                //esta funncion se ejecuta cuando el php a terminado de procesar
+                //con el resultado e inserta el resultado en algun elemento html
+                success: function (response) {
+                    
+                    if(response==""){
+                        $("#ventana-emergente-exito").show();
+                        vaciarCarrito();
+                        //ir hacia arriba en el scrollTop
+                        $('html, body').animate({scrollTop:0}, 'slow');
+                        setTimeout("location.href='index.php?mode=mis-compras'", 2000);
+                    }else if(response==false){
+                        mostrarMsjError(" Ha ocurrido un error al momento de realizar la compra, Por favor intente más tarde.")
+                    }else{
+                        mostrarMsjError(" Ha ocurrido un error uno o mas productos no tienen stock <br><b>Detalles:</b><br> "+response);
+                    }
+                }
+            });
+        }
+    });
+
+</script>

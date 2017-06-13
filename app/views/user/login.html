@@ -4,7 +4,7 @@
         <div class="breadcrumbs">
 				<ol class="breadcrumb">
 				  <li><a href="index.php">Inicio</a></li>
-				  <li class="active">Detalle Producto</li>
+				  <li class="active">Iniciar Sesión / Registrarse</li>
 				</ol>
 			</div>
         <!--- bloque de alertas -->
@@ -113,7 +113,6 @@
 				//esta funncion se ejecuta cuando el php a terminado de procesar
 				//con el resultado e inserta el resultado en algun elemento html
 				success: function (response) {
-                    console.log(response);
                     if(response){
                     window.location="index.php";
                     }else{
@@ -153,7 +152,7 @@
                       $("#form-email").val("");
                     }
                      //ir hacia arriba en el scrollTop
-                    $('html, body').animate({scrollTop:0}, 'slow')
+                    $('html, body').animate({scrollTop:0}, 'slow');
 				}
 			});
 

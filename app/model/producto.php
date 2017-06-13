@@ -186,7 +186,12 @@ class ProductoModel extends Model{
 
      public function  obtenerNumeroTotalProductosCategoria($id_categoria){
         $this->connect();
+        if(is_numeric($id_categoria)){
         $consulta="SELECT count(*) total from producto where id_producto in(select id_producto from productos_categoria where    id_categoria=$id_categoria)";
+        }else{
+          $consulta="SELECT count(*) total from producto";  
+        }
+       
         $total=mysqli_fetch_array($this->query($consulta));
         $this->terminate();
         return $total['total'];
@@ -195,7 +200,12 @@ class ProductoModel extends Model{
     public function listarProductoCategoriaPorPaginas($id_categoria,$inicio, $num_productos_pagina){
         $array= array();
         $this->connect();
+        if(is_numeric($id_categoria)){
         $consulta="SELECT * from producto where id_producto in(select id_producto from productos_categoria where id_categoria=$id_categoria)  limit $inicio,$num_productos_pagina";
+        }else{
+          $consulta="SELECT * from producto limit $inicio,$num_productos_pagina";   
+        }
+       
         $consulta=$this->query($consulta);
          while($row = mysqli_fetch_array($consulta)){
             array_unshift($array, $row);
@@ -204,6 +214,27 @@ class ProductoModel extends Model{
         return $array;
 
 
+    }
+
+     public function  obtenerNumeroTotalProductosBusqueda($producto){
+        $this->connect();
+        $consulta="SELECT count(*) total from producto where nombre_producto like '%$producto%' or referencia like '%$producto%'";
+        
+        $total=mysqli_fetch_array($this->query($consulta));
+        $this->terminate();
+        return $total['total'];
+    }
+
+    public function listarProductoBusquedaPorPaginas($producto,$inicio, $num_productos_pagina){
+        $array= array();
+        $this->connect();
+        $consulta="SELECT * from producto where nombre_producto like '%$producto%' or referencia like '%$producto%'";
+        $consulta=$this->query($consulta);
+         while($row = mysqli_fetch_array($consulta)){
+            array_unshift($array, $row);
+        }
+        $this->terminate();
+        return $array;
     }
 
 }

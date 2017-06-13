@@ -3,13 +3,13 @@
         <div class="breadcrumbs">
             <ol class="breadcrumb">
                 <li><a href="index.php">Inicio</a></li>
-                <li class="active">{{NOMBRE_CATEGORIA}}</li>
+                <li class="active">Buscar Productos</li>
             </ol>
         </div>
         <div class="row">
             <div class="col-sm-3">
                 <div class="left-sidebar">
-                    <a href="index.php?mode=productos-categoria&id=all"><h2>Categorias</h2></a>
+                   <a href="index.php?mode=productos-categoria&id=all"><h2>Categorias</h2></a>
                     <div class="panel-group category-products" id="accordian">
                         <!--category-productsr-->
 
@@ -30,7 +30,6 @@
                 <div class="features_items">
                     <!--features_items-->
                     <h2 class="title text-center">Productos</h2>
-                    <input type="hidden" name="id_categoria" id="id_categoria" value="{{ID_CATEGORIA}}">
                     <div id="div-productos">
                         <!-- Aquí van los productos-->
                     </div>
@@ -62,16 +61,15 @@
             }
         });
     } else {
-        var html = "<h3 class='text-center' style='margin-top:70px; color:#696763;'>No existen productos registrados para esta categoria. </h3>";
+        var html = "<h3 class='text-center' style='margin-top:70px; color:#696763;'>No existen productos registrados que concuerden con su busqueda. </h3>";
         $("#div-productos").html(html);
     }
 
 
     function cargarProductosPorPagina(pagina) {
-        var id_categoria = parseInt($("#id_categoria").val());
         var datos = {
-            "mode": "cargar-productos-categoria",
-            "id_categoria": id_categoria,
+            "mode": "cargar-productos-busqueda",
+            "producto":"{{NOMBRE_PRODUCTO}}",
             "pagina": pagina
 
         };
