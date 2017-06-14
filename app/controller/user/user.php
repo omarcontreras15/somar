@@ -149,7 +149,8 @@ class User extends Controller {
     public function recuperarClave($email){
         $rel=$this->userModel->recuperarClave($email);
         if($rel!=false){
-            $this->enviarEmail($email, "Restablecer Clave Tienda SOMAR", "<html><head></body><div>Ingrese al siguiente vinculo para restablecer la clave de su cuenta, recuerde que este vinculo tendra una vigencia de 24 Horas<br><a href='http://localhost/somar/index.php?mode=restablecer-clave&id=$rel'>Cambiar Clave</a></div></body></head></html>");
+            $urlServer=$_SERVER['SERVER_NAME'];
+            $this->enviarEmail($email, "Restablecer Clave Tienda SOMAR", "<html><head></body><div>Ingrese al siguiente vinculo para restablecer la clave de su cuenta, recuerde que este vinculo tendra una vigencia de 24 Horas<br><a href='http://$urlServer/somar/index.php?mode=restablecer-clave&id=$rel'>Cambiar Clave</a></div></body></head></html>");
             return true;
         }else{
             return false;

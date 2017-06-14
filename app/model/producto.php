@@ -24,7 +24,7 @@ class ProductoModel extends Model{
         $query = $this->query($consulta);
         $array = array();
         while($row = mysqli_fetch_array($query)){
-            array_unshift($array, $row);
+            array_push($array, $row);
         }
         $this->terminate();
         return $array;
@@ -37,7 +37,7 @@ class ProductoModel extends Model{
         $query = $this->query($consulta);
         $array = array();
         while($row = mysqli_fetch_array($query)){
-            array_unshift($array, $row);
+            array_push($array, $row);
         }
         $this->terminate();
         return $array;
