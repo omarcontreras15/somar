@@ -228,7 +228,8 @@ class ProductoModel extends Model{
     public function listarProductoBusquedaPorPaginas($producto,$inicio, $num_productos_pagina){
         $array= array();
         $this->connect();
-        $consulta="SELECT * from producto where nombre_producto like '%$producto%' or referencia like '%$producto%'";
+        $consulta="SELECT * from producto where 
+        (nombre_producto like '%$producto%' or referencia like '%$producto%') and disponibilidad='disponible'";
         $consulta=$this->query($consulta);
          while($row = mysqli_fetch_array($consulta)){
             array_unshift($array, $row);
