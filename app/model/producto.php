@@ -187,9 +187,9 @@ class ProductoModel extends Model{
      public function  obtenerNumeroTotalProductosCategoria($id_categoria){
         $this->connect();
         if(is_numeric($id_categoria)){
-        $consulta="SELECT count(*) total from producto where id_producto in(select id_producto from productos_categoria where    id_categoria=$id_categoria)";
+        $consulta="SELECT count(*) total from producto where (id_producto in(select id_producto from productos_categoria where id_categoria=$id_categoria)) and disponibilidad ='disponible'";
         }else{
-          $consulta="SELECT count(*) total from producto";  
+          $consulta="SELECT count(*) total from producto where disponibilidad ='disponible'";  
         }
        
         $total=mysqli_fetch_array($this->query($consulta));
@@ -201,9 +201,9 @@ class ProductoModel extends Model{
         $array= array();
         $this->connect();
         if(is_numeric($id_categoria)){
-        $consulta="SELECT * from producto where id_producto in(select id_producto from productos_categoria where id_categoria=$id_categoria)  limit $inicio,$num_productos_pagina";
+        $consulta="SELECT * from producto where (id_producto in(select id_producto from productos_categoria where id_categoria=$id_categoria)) and disponibilidad ='disponible'  limit $inicio,$num_productos_pagina";
         }else{
-          $consulta="SELECT * from producto limit $inicio,$num_productos_pagina";   
+          $consulta="SELECT * from producto where disponibilidad ='disponible' limit $inicio,$num_productos_pagina";   
         }
        
         $consulta=$this->query($consulta);
