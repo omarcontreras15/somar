@@ -218,7 +218,7 @@ class ProductoModel extends Model{
 
      public function  obtenerNumeroTotalProductosBusqueda($producto){
         $this->connect();
-        $consulta="SELECT count(*) total from producto where (nombre_producto like '%$producto%' or referencia like '%$producto%') and disponibilidad ='disponible';
+        $consulta="SELECT count(*) total from producto where (nombre_producto like '%$producto%' or referencia like '%$producto%') and disponibilidad ='disponible'";
         
         $total=mysqli_fetch_array($this->query($consulta));
         $this->terminate();
