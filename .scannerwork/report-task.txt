@@ -1,0 +1,6 @@
+projectKey=C31UsersEnderDocumentsGitHubsomar
+serverUrl=http://localhost:9000
+serverVersion=6.5.0.27846
+dashboardUrl=http://localhost:9000/dashboard/index/C31UsersEnderDocumentsGitHubsomar
+ceTaskId=AV6lI0bpCJt3vYB-Mjog
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AV6lI0bpCJt3vYB-Mjog
