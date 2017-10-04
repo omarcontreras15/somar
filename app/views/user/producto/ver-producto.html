@@ -45,9 +45,24 @@
                             <!--/product-information-->
                             <div class="col-sm-12">
                                 <h2>{{NOMBRE_PRODUCTO}}</h2>
+                                <!-- plugin facebook-->
+                                <div class="fb-like" data-href="{{URL_PAG}}" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
+
+                                <a href="https://twitter.com/share" class="twitter-share-button" data-url="{{URL_PAG}}" data-text="Producto SOMAR: {{NOMBRE_PRODUCTO}} http://{{URL_PAG}}">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+                                <script>(function(d, s, id) {
+                                  var js, fjs = d.getElementsByTagName(s)[0];
+                                  if (d.getElementById(id)) return;
+                                  js = d.createElement(s); js.id = id;
+                                  js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.10&appId=115063061856169";
+                                  fjs.parentNode.insertBefore(js, fjs);
+                                }(document, 'script', 'facebook-jssdk'));</script>
+                                 <!-- //plugin facebook-->
                                 <p>Referencia Del Producto: {{REFERENCIA}}</p>
                                 <p><b>Stock:</b> {{CANT_DISPONIBLE}}</p><br>
                                 <h1 style="color:#FF9800;">${{PRECIO}}</h1>
+
+
                             </div>
                             <div class="col-sm-12">           
                             {{FORM_CARRITO}}

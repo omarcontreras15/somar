@@ -51,6 +51,8 @@ class producto extends Controller{
         $contenido= $this->renderView($contenido, "{{PRECIO}}",$producto['precio']);
         $contenido= $this->renderView($contenido, "{{CANT_DISPONIBLE}}",$producto['cant_disponibles']);
         $contenido= $this->renderView($contenido, "{{DESCRIPCION}}",$producto['descripcion']);
+        $contenido= $this->renderView($contenido, "{{URL_PAG}}",($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']));
+        
 
         //verificamos las url de las imagenes 
         $htmlImages="";

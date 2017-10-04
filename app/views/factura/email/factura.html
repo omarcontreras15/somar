@@ -1,0 +1,80 @@
+<html lang="es">
+
+<body>
+<div>
+    <div align="right">
+            <img src='http://gidis.ufps.edu.co/somar/public/images/logo.png' class="logo-factura"> <h1>TIENDA VIRTUAL SOMAR</h1>
+        <h1><small>Factura #{{id_pedido}}</small></h1><br><br>
+    </div>
+
+    <hr/>
+
+    <div class="row">
+        <div class="col-xs-5">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>Detalles del cliente</h3>
+                </div>
+                <table>
+                    <tr>
+                    <td><p><strong>Nombres: </strong>{{nombres}}</p></td>
+                    <td><p><strong>Apellidos: </strong>{{apellidos}}</p></td>
+                    <tr>
+                    <tr>
+                    <td><p><strong>CC: </strong>{{cc}}</p></td>
+                    <td><p><strong>Direccion: </strong>{{direccion}}</p></td>
+                    </tr>
+                    <tr>
+                    <td><p><strong>Nombre de usuario: </strong>{{nick}}</p></td>
+                </table>
+            </div>
+        </div>
+        <div class="col-xs-5 col-xs-offset-2 text-right">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>Detalles de la factura</h3>
+                </div>
+                <div class="panel-body">
+                    <p><strong>Fecha de compra: </strong>{{fecha_pedido}}</p>
+                    <p><strong>Estatus: </strong> <img src='http://gidis.ufps.edu.co/somar/public/images/{{status}}.png'> {{status}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table style="border-collapse:collapse; width: 100%;" border="1">
+            <thead>
+                <tr>
+                    <th>
+                        <h4>ID</h4>
+                    </th>
+                    <th>
+                        <h4>Referencia</h4>
+                    </th>
+                    <th>
+                        <h4>Nombre</h4>
+                    </th>
+                    <th>
+                        <h4>Cantidad</h4>
+                    </th>
+                    <th>
+                        <h4>Precio unitario</h4>
+                    </th>
+                    <th>
+                        <h4>Precio total</h4>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {{OPTION}}
+            </tbody>
+        </table>
+    </div>
+
+    <div align="right">
+        <p style="margin-right: 20px"><strong>Total valor pedido: $</strong>{{valor_pedido}}</p><br><br>
+    </div>
+</div>
+</body>
+
+</html>

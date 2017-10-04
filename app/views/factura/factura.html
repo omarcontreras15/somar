@@ -1,70 +1,69 @@
-
-<div class="col-xs-6">
-    <h1><a href=" "><img src="public/images/logo.png" class="logo-factura"></a></h1>
-</div>
-<div class="col-xs-6 text-right">
-    <h1>TIENDA VIRTUAL SOMAR</h1>
-    <h1><small>Factura #{{id_pedido}}</small></h1><br><br>
-</div>
-
-<hr/>
-
-<div class="row">
-    <div class="col-xs-5">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4>Detalles del cliente</h4>
+<div class="col-x6-6">
+        <h1><a href=" "><img src="public/images/logo.png" class="logo-factura"></a></h1>
+    </div>
+    <div class="col-x6-6 text-right">
+        <h1>TIENDA VIRTUAL SOMAR</h1>
+        <h1><small>Factura #{{id_pedido}}</small></h1><br><br>
+    </div>
+    
+    <hr/>
+    
+    <div class="row">
+        <div class="col-xs-5">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Detalles del cliente</h4>
+                </div>
+                <div class="panel-body">
+                    <p><strong>Nombres: </strong>{{nombres}}</p>
+                    <p><strong>Apellidos: </strong>{{apellidos}}</p>
+                    <p><strong>CC: </strong>{{cc}}</p>
+                    <p><strong>Dirección: </strong>{{direccion}}</p>
+                    <p><strong>Nombre de usuario: </strong>{{nick}}</p>
+                </div>
             </div>
-            <div class="panel-body">
-                <p><strong>Nombres: </strong>{{nombres}}</p>
-                <p><strong>Apellidos: </strong>{{apellidos}}</p>
-                <p><strong>CC: </strong>{{cc}}</p>
-                <p><strong>Dirección: </strong>{{direccion}}</p>
-                <p><strong>Nombre de usuario: </strong>{{nick}}</p>
+        </div>
+        <div class="col-xs-5 col-xs-offset-2 text-right">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Detalles de la factura</h4>
+                </div>
+                <div class="panel-body">
+                    <p><strong>Fecha de compra:</strong>{{fecha_pedido}}</p>
+                    <p><strong>Estatus:</strong> <img src="public/images/{{status}}.png"> {{status}}</p>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-xs-5 col-xs-offset-2 text-right">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4>Detalles de la factura</h4>
-            </div>
-            <div class="panel-body">
-                <p><strong>Fecha de compra:</strong>{{fecha_pedido}}</p>
-                <p><strong>Estatus:</strong> <img src="public/images/{{status}}.png"> {{status}}</p>
-            </div>
-        </div>
+    <div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    <h4>ID</h4>
+                </th>
+                <th>
+                    <h4>Referencia</h4>
+                </th>
+                <th>
+                    <h4>Nombre</h4>
+                </th>
+                <th>
+                    <h4>Cantidad</h4>
+                </th>
+                <th>
+                    <h4>Precio unitario</h4>
+                </th>
+                <th>
+                    <h4>Precio total</h4>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {{OPTION}}
+        </tbody>
+    </table></div>
+    
+    <div class="row text-right ">
+        <p style="margin-right: 20px"><strong>Total valor pedido: $</strong>{{valor_pedido}}</p><br><br>
     </div>
-</div>
-<div class="table-responsive">
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>
-                <h4>ID</h4>
-            </th>
-            <th>
-                <h4>Referencia</h4>
-            </th>
-            <th>
-                <h4>Nombre</h4>
-            </th>
-            <th>
-                <h4>Cantidad</h4>
-            </th>
-            <th>
-                <h4>Precio unitario</h4>
-            </th>
-            <th>
-                <h4>Precio total</h4>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        {{OPTION}}
-    </tbody>
-</table></div>
-
-<div class="row text-right ">
-    <p style="margin-right: 20px"><strong>Total valor pedido: $</strong>{{valor_pedido}}</p><br><br>
-</div>

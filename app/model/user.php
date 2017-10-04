@@ -6,7 +6,7 @@ class UserModel extends Model {
     
     public function loginAdmin($usuario, $password) {
         $this->connect();
-        $consulta = "SELECT * FROM usuario WHERE (nick = '$usuario' AND password = '$password' AND tipo='admin') OR (email = '$usuario' AND password = '$password' AND tipo='admin')";
+        $consulta = "SELECT nick, email, nombres, apellidos, cc, direccion, fecha_registro  FROM usuario WHERE (nick = '$usuario' AND password = '$password' AND tipo='admin') OR (email = '$usuario' AND password = '$password' AND tipo='admin')";
         $query = $this->query($consulta);
         $this->terminate();
         while($row = mysqli_fetch_array($query)){
@@ -23,7 +23,7 @@ class UserModel extends Model {
     
     public function loginUser($usuario, $password) {
         $this->connect();
-        $consulta = "SELECT * FROM usuario WHERE (nick = '$usuario' AND password = '$password' AND tipo='user') OR (email = '$usuario' AND password = '$password' AND tipo='user')";
+        $consulta = "SELECT nick, email, nombres, apellidos, cc, direccion, fecha_registro  FROM usuario WHERE (nick = '$usuario' AND password = '$password' AND tipo='user') OR (email = '$usuario' AND password = '$password' AND tipo='user')";
         $query = $this->query($consulta);
         $this->terminate();
         while($row = mysqli_fetch_array($query)){
@@ -40,7 +40,7 @@ class UserModel extends Model {
     
     public function registrarUsuario($form){
         $this->connect();
-        $consulta = "SELECT * FROM usuario WHERE email='".$form['email']."' OR nick='".$form['username']."'";
+        $consulta = "SELECT nick, email, nombres, apellidos, cc, direccion, fecha_registro  FROM usuario WHERE email='".$form['email']."' OR nick='".$form['username']."'";
         $query = $this->query($consulta);
         $row = mysqli_fetch_array($query);
         if(!isset($row)){
@@ -61,7 +61,7 @@ class UserModel extends Model {
     public function recuperarClave($email){
         $id=null;
         $this->connect();
-        $consulta = "SELECT * FROM usuario WHERE email='$email'";
+        $consulta = "SELECT nick, email, nombres, apellidos, cc, direccion, fecha_registro FROM usuario WHERE email='$email'";
         $query = $this->query($consulta);
         $row = mysqli_fetch_array($query);
         if(isset($row)){
@@ -118,6 +118,18 @@ class UserModel extends Model {
             return $row['email'];
         }
         return "";
+    }
+
+    public function consultarEmail($nick){
+        $this->connect();
+        $consulta = "SELECT email from usuario where nick='$nick'";
+        $query = $this->query($consulta);
+        $this->terminate();
+        while($row = mysqli_fetch_array($query)){
+           
+            return $row['email'];
+        }
+        return false;
     }
 }
 

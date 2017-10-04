@@ -33,7 +33,7 @@ class VentaModel extends Model{
 
     public function obtenerDatosUsuario($id_pedido){
         $this->connect();
-        $consulta="SELECT * FROM usuario where nick=(SELECT nick_usuario from pedido where id_pedido=$id_pedido)";
+        $consulta="SELECT nick, email, nombres, apellidos, cc, direccion, fecha_registro  FROM usuario where nick=(SELECT nick_usuario from pedido where id_pedido=$id_pedido)";
         $datosU=mysqli_fetch_array($this->query($consulta));
         $this->terminate();
         return $datosU;

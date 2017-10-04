@@ -101,7 +101,7 @@ class Controller {
     public function enviarEmail($email, $asunto, $contenido){
         $mail = new PHPMailer();
         $mail ->IsSmtp();
-        $mail ->SMTPDebug = 2;
+        $mail ->SMTPDebug = 0;
         $mail ->SMTPAuth = true;
         $mail ->SMTPSecure = 'ssl';
         $mail ->Host = "smtp.gmail.com";

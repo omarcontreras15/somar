@@ -3,17 +3,23 @@
 include_once "./app/controller/controller.php";
 include_once "./app/model/user/carrito.php";
 include_once "./app/model/producto.php";
+include_once "./app/model/user/compra.php";
+include_once "./app/model/user.php";
 
 class Carrito extends Controller {
     
     private $carritoModel;
     private $productoModel;
+    private $compraModel;
+    private $userModel;
     private $view;
     
     
     public function __construct() {
         $this->carritoModel = new CarritoModel();
         $this->productoModel=new ProductoModel();
+        $this->compraModel=new compraModel();
+        $this->userModel=new userModel();
         $this->view = $this->getTemplate("./app/views/user/index.html");
     }
     
@@ -91,7 +97,7 @@ class Carrito extends Controller {
         }
         
         // si productos fueraDeStock sigue vacia significa que todos los productos a insertar en el pedido se encuentran disponibles
-        
+        $id_pedido=0;
         if($productosFueraStock==""){
             //creamos un registro en la tabla pedido
             $ver=$this->carritoModel->realizarCompra($nick);
@@ -106,9 +112,45 @@ class Carrito extends Controller {
                 return false;
             }
             
+
+        }
+        echo $productosFueraStock;
+        //enviamos el email con el detalle de la compra
+        $this->enviarDetallePedido($id_pedido);
+    }
+
+    private function enviarDetallePedido($id_pedido){
+        $ventana = $this->getTemplate("./app/views/factura/email/factura.html");
+        $datosCliente=$this->compraModel->obtenerDatosUsuario($id_pedido);
+        foreach($datosCliente as $key => $value){
+            $ventana=$this->renderView($ventana,"{{".$key."}}", $value);
+        }
+       
+       $datosDetalleP=$this->compraModel->obtenerDetalleFactura($id_pedido);
+        foreach($datosDetalleP as $key => $value){
+            $ventana=$this->renderView($ventana,"{{".$key."}}", $value);
         }
 
-        echo $productosFueraStock;
+        $array=$this->compraModel->listarItemsPedido($id_pedido);
+        $sizeArray = sizeof($array);
+        $tablaVentas = "";
+        $elementotabla = $this->getTemplate("./app/views/factura/email/body-tabla-factura.html");
+        if($sizeArray>0){
+            foreach ($array as $element){
+                $temp = $elementotabla;
+                foreach ($element as $key=>$value){
+                     $temp=$this->renderView($temp,"{{".$key."}}", $value);
+                }
+                $tablaVentas .= $temp;
+            }
+        }
+        $ventana = $this->renderView($ventana, "{{OPTION}}", $tablaVentas);
+        $ventana = $this->renderView($ventana, "{{URL_SERVER}}", $_SERVER['HTTP_HOST']);
+
+        //enviar correo con la factura de la compra
+        $email=$this->userModel->consultarEmail($_SESSION["user_id"]);
+        $asunto="Detalle de compra #".$id_pedido;
+        $this->enviarEmail($email,$asunto, $ventana);
     }
 }
 

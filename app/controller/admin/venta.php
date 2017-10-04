@@ -115,14 +115,23 @@ public function cargarVistaDetallePedido($id_pedido){
     echo $row['url_comprobante_pago'];
     }
 
-    public function validarComprobante($accion, $id){
-    
+    public function validarComprobante($accion, $id_pedido){
+     $asunto="Cambio de estatus en el pedido #".$id_pedido;
+      //consultamos el email del usuario que realizo el pedido
+      $datosU= $this->ventaModel->obtenerDatosUsuario($id_pedido);
+      $html="";
     if($accion=="check"){
-        $this->ventaModel->cambiarEstadoPedido($id);
+        $this->ventaModel->cambiarEstadoPedido($id_pedido);
+        //contenido del email que se enviara
+        $html="<img src='http://gidis.ufps.edu.co/somar/public/images/logo.png'><h3>El comprobante de pago del pedido #$id_pedido fue aprobado por el administrador</h3>";      
     }else{
-       $url=$this->ventaModel->borrarComprobantePago($id);
+       $url=$this->ventaModel->borrarComprobantePago($id_pedido);
+       //contenido del email que se enviara
+       $html="<img src='http://gidis.ufps.edu.co/somar/public/images/logo.png'><h3>El comprobante de pago del pedido #$id_pedido fue rechazado por el administrador, Por favor verifique su comprobante e intente subir al aplivativo un nuevo comprobante de pago.</h3>";    
        $this->eliminarArchivo($url);
     }
+    //enviar correo con status del pedido
+    $this->enviarEmail($datosU['email'],$asunto, $html);
     }
 
 }
