@@ -10,6 +10,7 @@
     <!-- Custom Theme files -->
     <link href="public/css/style.css" rel='stylesheet' type='text/css'/>
     <link href="public/css/menu.css" rel='stylesheet' type='text/css'/>
+    <link href="public/css/font-awesome.min.css" rel='stylesheet' type='text/css'/>
 
     <!-- Custom Theme files -->
     <meta charset="UTF-8">
@@ -51,7 +52,26 @@
             </div>
             {{SESION}}
         </div>
+        <!-- Este html muestra una ventana emergente con los detalles completos del pedido-->
+<div id="ventanaComprobante" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" id="frame-titulo">Ver Comprobante De Pago</h3>
+            </div>
+            <div class="modal-body" id="ventana-ver-comprobante">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+
+    </div>
+</div>
         <!-- Contenido de la pagina web -->
         {{CONTENT}}
         <!--        -->
@@ -96,12 +116,67 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $('[data-toggle="popover"]').popover();
         $('#horizontalTab').easyResponsiveTabs({
             type: 'default', //Types: default, vertical, accordion
             width: 'auto', //auto or any width like 600px
             fit: true   // 100% fit in a container
         });
     });
+
+    function verComprobanteNoti(id) {
+       //ocultamos el popover
+        $('#popoverNotificacion').popover('hide');
+        var datos = {
+            "mode": "ver-comprobante",
+            "id": id
+        };
+        $.ajax({
+            data: datos,
+            url: "admin.php",
+            type: 'POST',
+            //esta funncion se ejecuta cuando el php a terminado de procesar
+            //con el resultado e inserta el resultado en algun elemento html
+            success: function (response) {
+                var html='<div><img src="'+response+'" class="img-responsive"><br><div class="text-right"><button type="button" class="btn btn-success" onclick=validarComprobanteNoti('+id+',"check")>Aprobar Comprobante</button><button type="button" class="btn btn-danger"  onclick=validarComprobanteNoti('+id+',"eliminar")>Eliminar Comprobante</button></div></div>';
+                
+                $("#ventana-ver-comprobante").html(html);
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+     }
+
+     function validarComprobanteNoti(id, accion){
+         var datos = {
+            "mode": "validar-comprobante",
+            "id": id, 
+            "accion": accion
+        };
+        $.ajax({
+            data: datos,
+            url: "admin.php",
+            type: 'POST',
+            //esta funncion se ejecuta cuando el php a terminado de procesar
+            //con el resultado e inserta el resultado en algun elemento html
+            beforeSend: function () {
+                $("#ventana-ver-comprobante").html('<div class="windows8"><div class="wBall" id="wBall_1"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_2"> <div class="wInnerBall"></div></div><div class="wBall" id="wBall_3"> <div class="wInnerBall"></div></div><div class="wBall" id="wBall_4"> <div class="wInnerBall"></div></div><div class="wBall" id="wBall_5"> <div class="wInnerBall"></div></div></div><br>');
+            },
+            //esta funncion se ejecuta cuando el php a terminado de procesar
+            //con el resultado e inserta el resultado en algun elemento html
+            success: function (response) {
+            alert("La operacion se realizo exitosamente.");
+            if(accion=="check"){
+             window.location="admin.php?mode=ventas-realizadas";   
+            }else{
+                window.location="admin.php?mode=ventas-progreso";
+            }
+            
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+    }
 </script>
 
 </body>

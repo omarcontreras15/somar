@@ -21,6 +21,7 @@
 		</div>
 		<strong>Error!</strong><span id="span-error"></span>
 	</div>
+        <div id="productos-carrito">
         <div class="cart_info table-responsive">
             <table class="table table-condensed">
                 <thead>
@@ -40,6 +41,7 @@
         </div>
         <div id="botones-carrito" class="pull-right">
             <!-- aqui van los botones del carrito los cuales son visibles si existen productos en el carrito de compras-->
+        </div>
         </div>
     </div>
 </section>
@@ -209,9 +211,13 @@
                 type: 'POST',
                 //esta funncion se ejecuta cuando el php a terminado de procesar
                 //con el resultado e inserta el resultado en algun elemento html
+                beforeSend: function () {
+                    $("#productos-carrito").html('<div class="windows8"><div class="wBall" id="wBall_1"><div class="wInnerBall"></div></div><div class="wBall" id="wBall_2"> <div class="wInnerBall"></div></div><div class="wBall" id="wBall_3"> <div class="wInnerBall"></div></div><div class="wBall" id="wBall_4"> <div class="wInnerBall"></div></div><div class="wBall" id="wBall_5"> <div class="wInnerBall"></div></div></div><br>');
+                },
                 success: function (response) {
                     
                     if(response==""){
+                        $("#productos-carrito").html("");
                         $("#ventana-emergente-exito").show();
                         vaciarCarrito();
                         //ir hacia arriba en el scrollTop

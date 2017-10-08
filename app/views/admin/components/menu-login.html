@@ -1,6 +1,9 @@
 <div class="navigation">
-    <a class="toggleMenu" href="#"><img src="public/images/nav_icon.png" alt="" /> </a>
+    <a class="toggleMenu" href="#"><img src="public/images/nav_icon.png" alt=""/> </a>
     <ul class="navig">
+        <li><a href="#" title="Comprobantes de pago subidos" id="popoverNotificacion" data-toggle="popover" data-placement="bottom"
+               data-html="true"  data-content='<div class="list-group">{{HTML_NOTIFICACIONES}}</div>'><i class="fa fa-bell" aria-hidden="true"></i></a>{{BADGE NOTIFICACION}}</li>
+
         <li class="plan"><a href="#">Productos</a>
             <ul class="sub-nav">
                 <li><a href="admin.php?mode=agregar-producto">Agregar</a></li>
@@ -19,6 +22,7 @@
                 <li><a href="admin.php?mode=ventas-progreso">En Progreso</a></li>
             </ul>
         </li>
+
         <li><a href="admin.php?mode=cerrarSesion"><img src="public/images/salir.png"/></a></li>
     </ul>
     <script type="text/javascript" src="public/js/responsive-nav.js"></script>

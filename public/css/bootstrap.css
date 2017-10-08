@@ -6112,10 +6112,10 @@ button.close {
   left: 0;
   z-index: 1060;
   display: none;
-  max-width: 276px;
+  width: 200%;
   padding: 1px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
   font-weight: normal;
   line-height: 1.42857143;
@@ -6161,7 +6161,9 @@ button.close {
   border-radius: 5px 5px 0 0;
 }
 .popover-content {
+  /*
   padding: 9px 14px;
+  */
 }
 .popover > .arrow,
 .popover > .arrow:after {
@@ -6759,4 +6761,5 @@ button.close {
     display: none !important;
   }
 }
+
 /*# sourceMappingURL=bootstrap.css.map */
