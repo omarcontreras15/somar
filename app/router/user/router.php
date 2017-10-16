@@ -9,6 +9,9 @@ class Router
 {
 
     private $user;
+    private $compra;
+    private $producto;
+    private $carrito;
 
     public function __construct()
     {
