@@ -216,6 +216,10 @@ class User extends Controller {
         echo $this->enviarEmail($emailEnviar, $asunto, $msj);
 
     }
+
+    public function abrirNotificacion(){
+        $this->userModel->abrirNotificacion($_SESSION["user_id"]);
+    }
 }
 
 ?>

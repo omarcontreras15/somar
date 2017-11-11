@@ -131,6 +131,26 @@ class UserModel extends Model {
         }
         return false;
     }
+
+    public function abrirNotificacion($user){
+        $this->connect();
+        $update="UPDATE notificacion_user set visto='Si' where nick_user='$user'";
+        $query = $this->query($update);
+        $this->terminate();
+        return $query;
+    }
+
+    public function listarNotificacionesUser($nick_user){
+        $array= array();
+        $this->connect();
+        $consulta="SELECT * from notificacion_user where nick_user='$nick_user'";
+        $consulta=$this->query($consulta);
+         while($row = mysqli_fetch_array($consulta)){
+            array_unshift($array, $row);
+        }
+        $this->terminate();
+        return $array;
+    }
 }
 
 ?>

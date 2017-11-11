@@ -67,6 +67,14 @@ class VentaModel extends Model{
         $this->terminate();
     }
 
+    public function agregarNotificacionUser($id_pedido,$nick_user, $estado){
+        $this->connect();
+        $insert="INSERT INTO notificacion_user (id_pedido,nick_user,estado) values ($id_pedido, '$nick_user', '$estado')";
+        echo $insert;
+        $query=$this->query($insert);
+        $this->terminate();
+    }
+
     public function borrarComprobantePago($id){
         $this->connect();
         $consulta="SELECT url_comprobante_pago from pedido where id_pedido=$id";
@@ -77,5 +85,6 @@ class VentaModel extends Model{
         $this->terminate();
         return $url;
     }
+
 }
 ?>

@@ -121,5 +121,28 @@
 <script type="text/javascript" src="public/js/jquery.dataTables.min.js"></script>
 <!-- importo el archivo js con toda la configuracion del datatable -->
 <script type="text/javascript" src="public/js/dataTable.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover();
+    });
+
+	function abrirNotificacion(){
+		var datos = {
+            "mode": "abrir-notificacion"
+        };
+        $.ajax({
+            data: datos,
+            url: "index.php",
+            type: 'POST',
+            
+            //esta funncion se ejecuta cuando el php a terminado de procesar
+            //con el resultado e inserta el resultado en algun elemento html
+            success: function (response) {
+					$('#bg-notificacion').remove();
+					console.log(response);
+            }
+        });
+	}
+</script>
 </body>
 </html>

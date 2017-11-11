@@ -122,10 +122,14 @@ public function cargarVistaDetallePedido($id_pedido){
       $html="";
     if($accion=="check"){
         $this->ventaModel->cambiarEstadoPedido($id_pedido);
+        //insertamos un registro en la tabla notificaciones
+        $this->ventaModel->agregarNotificacionUser($id_pedido,$datosU['nick'],"Aprobado");
         //contenido del email que se enviara
         $html="<img src='http://gidis.ufps.edu.co/somar/public/images/logo.png'><h3>El comprobante de pago del pedido #$id_pedido fue aprobado por el administrador</h3>";      
     }else{
        $url=$this->ventaModel->borrarComprobantePago($id_pedido);
+       //insertamos un registro en la tabla notificaciones
+       $this->ventaModel->agregarNotificacionUser($id_pedido,$datosU['nick'],"Rechazado");
        //contenido del email que se enviara
        $html="<img src='http://gidis.ufps.edu.co/somar/public/images/logo.png'><h3>El comprobante de pago del pedido #$id_pedido fue rechazado por el administrador, Por favor verifique su comprobante e intente subir al aplivativo un nuevo comprobante de pago.</h3>";    
        $this->eliminarArchivo($url);

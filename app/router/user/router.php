@@ -175,6 +175,10 @@ class Router
                         $this->carrito->agregarProducto($_POST['id_producto'], $_POST['cantidad-productos']);
                         break;
                 
+                case "abrir-notificacion":
+                        $this->user->abrirNotificacion();
+                        break;
+                
                 default:
                     $this->user->cargarError404();
                     break;

@@ -753,7 +753,6 @@ h2.title:before{
   padding-left: 20px;
 }
 
-
 .panel-body ul li a {
   color: #696763;
   font-family: 'Roboto', sans-serif;
@@ -797,13 +796,11 @@ h2.title:before{
 }
 
 .well {
-  background-color: #FFFFFF;
   border: 1px solid #F7F7F0;
   border-radius: 4px;
   box-shadow: none;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   min-height: 20px;
-  padding: 35px;
 }
 
 
@@ -2962,4 +2959,12 @@ h2.title {
     opacity: 0;
     -moz-transform: rotate(900deg);
   }
+
+}
+
+.badge-notificacion{
+	background:red;
+	position:relative;
+	top: -33px;
+	left: 10px;
 }

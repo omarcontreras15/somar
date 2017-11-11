@@ -140,7 +140,7 @@ class Router
                     $this->venta->validarComprobante($_POST['accion'],$_POST['id']);
                     break;
 
-
+                
                 default:
                     header("Location:admin.php");
                     break;

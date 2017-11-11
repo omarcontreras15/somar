@@ -2,7 +2,7 @@
 require './public/lib/PHPMailer/PHPMailerAutoload.php';
 require './app/model/categoria.php';
 require './app/model/admin/venta.php';
-
+require './app/model/user.php';
 
 class Controller
 {
@@ -77,6 +77,46 @@ class Controller
         $menu = null;
         if ($this->sesionIniciadaUser()) {
             $menu = $this->getTemplate("./app/views/user/components/menu1/menu-login.html");
+            $userModel = new userModel();
+            $array = $userModel->listarNotificacionesUser($_SESSION["user_id"]);
+            //inicializamos un contador para contar el numero de ventas que estan en progreso y que ya subieron comprobante de pago
+            $cont = 0;
+            $notificacion=0;
+            $contenido = "<br>";
+            foreach ($array as $element) {
+                if ($element['visto']=="No") {
+                    //contamos el numero de comprobantes subidos
+                    $cont++;
+                    $notificacion++;
+                    //solo mostramos los 5 primeros comprobantes
+                    if ($cont < 5) {
+                        $contenido .= '<a href="index.php?mode=mis-compras"><p class="bg-warning well">Pedido #' . $element['id_pedido'] . ' - ' . $element['estado'] .'<br>'.$element['fecha']. '</p></a>';
+                    }
+                }else{
+                    //contamos el numero de comprobantes subidos
+                    $cont++;
+                    //solo mostramos los 5 primeros comprobantes
+                    if ($cont < 5) {
+                        $contenido .= '<a href="index.php?mode=mis-compras"><p class="well">Pedido #' . $element['id_pedido'] . ' - ' . $element['estado'] .'<br>'.$element['fecha']. '</p></a>';
+                    }
+                }
+            }
+            if ($cont > 0) {
+                if ($cont > 5) {
+                    $contenido .= '<a href="index.php?mode=mis-compras" class="list-group-item text-center">Ver Más...</a>';
+                }
+                $badge = "<span id='bg-notificacion' class='badge badge-notificacion'>$notificacion</span>";
+                if($notificacion>0){
+                    $menu = $this->renderView($menu, "{{BADGE NOTIFICACION}}", $badge);
+                }else{
+                    $menu = $this->renderView($menu, "{{BADGE NOTIFICACION}}", "");
+                }
+                
+                $menu = $this->renderView($menu, "{{HTML_NOTIFICACIONES}}", $contenido);
+            } else {
+                $menu = $this->renderView($menu, "{{BADGE NOTIFICACION}}", "");
+                $menu = $this->renderView($menu, "{{HTML_NOTIFICACIONES}}", "No hay nuevos comprobantes de pago a verficar.");
+            }
         } else {
             $menu = $this->getTemplate("./app/views/user/components/menu1/menu-logout.html");
         }
@@ -122,8 +162,8 @@ class Controller
         return $htmlcategorias;
     }
 
-    public function cargarContenidoPlantilla($view)
-    {
+    public function cargarContenidoPlantilla($view){
+        
         //varifica si hay o no una sesion iniciado, dependiendo del caso cargar el menuBar
         $menu1 = $this->cargarMenuBarFront1();
         $menu2 = $this->cargarMenuBarFront2();
