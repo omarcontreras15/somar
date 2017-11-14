@@ -3,7 +3,7 @@ include_once  "./app/controller/controller.php";
 include_once  "./app/model/producto.php";
 include_once  "./app/model/categoria.php";
 
-class producto extends Controller{
+class Producto extends Controller{
     
     private $view;
     private $productoModel;
@@ -19,6 +19,8 @@ class producto extends Controller{
     
 
     public function cargarVistaDetalleProducto($id_producto){
+        //almacenamos en la base de datos la ip de usuario que visito el producto
+        $this->productoModel->visualizacionProducto($id_producto, $this->getRealIP());
         $contenido= $this->getTemplate("./app/views/user/producto/ver-producto.html");
         $formCarrito= $this->getTemplate("./app/views/user/producto/components/form-carrito.html");
         //aca llamamos al metodo cargarCategoriasMenuLeft que se encargara de crear el html para las categorias
@@ -173,6 +175,15 @@ class producto extends Controller{
         $this->view = $this->renderView($this->view, "{{CONTENT}}", $contenido);
         $this->showView($this->view); 
     }
-    
+
+    public function cargarEstadisticas(){
+
+        $contenido= $this->getTemplate("./app/views/user/estadisticas/estadisticas.html");
+        $this->view=$this->cargarContenidoPlantilla($this->view);
+        $this->view = $this->renderView($this->view, "{{TITULO}}","Estadistica");
+        $this->view = $this->renderView($this->view, "{{CONTENT}}", $contenido);
+        $this->showView($this->view);
+    }
+
 }
 ?>

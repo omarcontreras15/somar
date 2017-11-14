@@ -238,5 +238,12 @@ class ProductoModel extends Model{
         return $array;
     }
 
+    public function visualizacionProducto($id_producto, $ip){
+        $this->connect();
+        $insert="INSERT INTO producto_visualizado (ip,id_producto) values('$ip', $id_producto)"; 
+        $this->query($insert);
+        $this->terminate();
+    }
+
 }
 ?>

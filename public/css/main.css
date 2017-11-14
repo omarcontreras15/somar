@@ -842,6 +842,15 @@ h2.title {
   margin-bottom: 30px;
   position: relative;
 }
+h1.title {
+  color: #FE980F;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  margin: 0 15px;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  position: relative;
+}
 
 .product-image-wrapper{
 	border:1px solid #F7F7F5;

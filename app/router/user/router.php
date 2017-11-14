@@ -1,28 +1,27 @@
 <?php
-
 include_once "./app/controller/user/user.php";
 include_once "./app/controller/user/compra.php";
 include_once "./app/controller/user/producto.php";
 include_once "./app/controller/user/carrito.php";
+include_once "./app/controller/user/estadistica.php";
 
-class Router
-{
+class Router{
 
     private $user;
     private $compra;
     private $producto;
     private $carrito;
+    private $estadistica;
 
-    public function __construct()
-    {
+    public function __construct(){
         $this->user = new User();
         $this->compra=new Compra();
         $this->producto=new Producto();
         $this->carrito=new Carrito();
+        $this->estadistica=new Estadistica();
     }
 
-    public function router()
-    {
+    public function router(){
 
         if (isset($_GET["mode"])) {
             if (isset($_SESSION["user_id"])) {
@@ -74,6 +73,10 @@ class Router
                         break;
                     case "contactanos":
                         $this->user->cargarContactanos();
+                        break;
+
+                    case "estadisticas":
+                        $this->estadistica->cargarEstadisticas();
                         break;
                     
                     

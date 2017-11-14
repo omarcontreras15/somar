@@ -1,0 +1,130 @@
+<div class="container banner">
+    <section class="title-section">
+        <h1 class="title-header">
+            Estadisticas </h1>
+        <ul class="breadcrumb breadcrumb__t">
+            <li><a href="admin.php">Inicio</a></li>
+            <li class="active">Estadisticas </li>
+        </ul>
+    </section>
+</div>
+<div class='container contact'>
+        <hr>
+        <h1 class="title text-center">Valor Ventas Realizadas Por Mes</h1>
+        <hr>
+        <br><br>
+        <div id="grafica-ventas"></div>
+        <br><br>
+        <hr>
+        <h1 class="title text-center">Top 10 de los mejores clientes</h1>
+        <hr>
+        <br><br>
+        <div id="grafica-clientes"></div>
+        <br><br>
+        <hr>
+        <h1 class="title text-center"> Top 10 de los Productos más vendidos</h1>
+        <hr>
+        <br><br>
+        <div id="grafica-mas-vendidos"></div>
+        <br><br>
+        <hr>
+        <h1 class="title text-center">Top 10 de los productos más vistos</h1>
+        <hr>
+        <br><br>
+        <div id="grafica-mas-vistos"></div>
+        <br><br>
+</div>
+<!-- -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+   google.charts.load('current', {'packages':['bar']});
+   google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawMasVistos);
+      google.charts.setOnLoadCallback(drawMasVendidos);
+      google.charts.setOnLoadCallback(drawVentas);
+      google.charts.setOnLoadCallback(drawMejoresClientes);
+      function drawMasVistos() {
+          
+        var data = google.visualization.arrayToDataTable([
+          ['Producto', 'Cantidad'],
+          {{MAS_VISTOS}}
+        ]);
+
+        var options = {
+          chart: {
+            title: 'Grafica productos más visualizados',
+            subtitle: 'Se detalla las productos más visualizados por los usuarios',
+          },
+          bars: 'horizontal',
+          vAxis: {format: 'number'},
+          height: 400,
+          colors: ['#FE980F']
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('grafica-mas-vistos'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+
+        var btns = document.getElementById('btn-group');
+
+      }
+
+      function drawMasVendidos() {
+        var data = google.visualization.arrayToDataTable([
+          ['Producto', 'Cantidad'],
+          {{MAS_VENDIDOS}}
+        ]);
+
+        var options = {
+          is3D: true,
+          height: 400
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('grafica-mas-vendidos'));
+        chart.draw(data, options);
+      }
+
+      function drawVentas() {
+          
+        var data = google.visualization.arrayToDataTable([
+          ['Mes', 'Valor Ventas'],
+          {{VENTAS_MES}}
+        ]);
+
+        var options = {
+          chart: {
+            subtitle: 'Se detalla el valor de las ventas aprobadas en cada uno de los meses del año actual',
+          },
+          bars: 'vertical',
+          vAxis: {format: 'decimal'},
+          height: 400,
+          colors: ['#FE980F']
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('grafica-ventas'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+
+      function drawMejoresClientes() {
+          
+        var data = google.visualization.arrayToDataTable([
+          ['Cliente', 'Cantidad de productos'],
+          {{MEJORES_CLIENTES}}
+        ]);
+
+        var options = {
+          chart: {
+            subtitle: 'Se detalla el numero de productos comprados por los mejores 10 clientes',
+          },
+          bars: 'vertical',
+          vAxis: {format: 'decimal'},
+          height: 400,
+          colors: ['#FE980F']
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('grafica-clientes'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+</script>

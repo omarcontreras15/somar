@@ -4,21 +4,23 @@ include_once "./app/controller/admin/user.php";
 include_once "./app/controller/admin/producto.php";
 include_once "./app/controller/admin/categoria.php";
 include_once "./app/controller/admin/venta.php";
+include_once "./app/controller/admin/estadistica.php";
 
-class Router
-{
+class Router{
 
     private $user;
     private $producto;
     private $categoria;
     private $venta;
+    private $estadistica;
 
     public function __construct()
     {
         $this->user = new User();
         $this->producto = new Producto();
         $this->categoria = new Categoria();
-        $this->venta = new Venta();
+        $this->venta = new Venta();  
+        $this->estadistica=new Estadistica();
     }
 
     public function router()
@@ -72,6 +74,10 @@ class Router
                     
                     case "restablecer-clave":
                         $this->user->restablecerClave($_GET['id']);
+                        break;
+                        
+                    case "estadisticas":
+                        $this->estadistica->cargarEstadisticas();
                         break;
 
                     default:
@@ -139,7 +145,6 @@ class Router
                 case "validar-comprobante":
                     $this->venta->validarComprobante($_POST['accion'],$_POST['id']);
                     break;
-
                 
                 default:
                     header("Location:admin.php");

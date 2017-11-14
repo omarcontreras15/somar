@@ -1,0 +1,69 @@
+<section class="contenido">
+    <!--form-->
+    <div class="container">
+        <div class="breadcrumbs">
+            <ol class="breadcrumb">
+                <li><a href="index.php">Inicio</a></li>
+                <li class="active">Estadisiticas</li>
+            </ol>
+        </div>
+        <hr>
+        <h1 class="title text-center">Top 10 de los productos más vistos</h1>
+        <hr>
+        <br><br>
+        <div id="grafica-mas-vistos"></div>
+        <br><br>
+        <hr>
+        <h1 class="title text-center"> Top 10 de los Productos más vendidos</h1>
+        <hr>
+        <br><br>
+        <div id="grafica-mas-vendidos"></div>
+        <br><br>
+</section>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+   google.charts.load('current', {'packages':['bar']});
+   google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawMasVistos);
+      google.charts.setOnLoadCallback(drawMasVendidos);
+      function drawMasVistos() {
+          
+        var data = google.visualization.arrayToDataTable([
+          ['Producto', 'Cantidad'],
+          {{MAS_VISTOS}}
+        ]);
+
+        var options = {
+          chart: {
+            title: 'Grafica productos más visualizados',
+            subtitle: 'Se detalla las productos más visualizados por los usuarios',
+          },
+          bars: 'horizontal',
+          vAxis: {format: 'number'},
+          height: 400,
+          colors: ['#FE980F']
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('grafica-mas-vistos'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+
+        var btns = document.getElementById('btn-group');
+
+      }
+
+      function drawMasVendidos() {
+        var data = google.visualization.arrayToDataTable([
+          ['Producto', 'Cantidad'],
+          {{MAS_VENDIDOS}}
+        ]);
+
+        var options = {
+          is3D: true,
+          height: 400
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('grafica-mas-vendidos'));
+        chart.draw(data, options);
+      }
+</script>
