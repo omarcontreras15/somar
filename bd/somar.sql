@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-11-2017 a las 05:53:34
+-- Tiempo de generación: 14-11-2017 a las 02:22:41
 -- Versión del servidor: 10.1.13-MariaDB
 -- Versión de PHP: 5.6.21
 
@@ -69,18 +69,6 @@ CREATE TABLE `detalle_pedido` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `detalle_pedido`
---
-
-INSERT INTO `detalle_pedido` (`id_pedido`, `id_producto`, `cantidad`) VALUES
-(41, 10, 2),
-(41, 19, 1),
-(42, 10, 1),
-(44, 10, 1),
-(54, 10, 1),
-(54, 19, 3);
-
---
 -- Disparadores `detalle_pedido`
 --
 DELIMITER $$
@@ -114,6 +102,21 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `notificacion_user`
+--
+
+CREATE TABLE `notificacion_user` (
+  `id_notificacion` bigint(20) NOT NULL,
+  `id_pedido` bigint(20) NOT NULL,
+  `nick_user` varchar(50) NOT NULL,
+  `estado` varchar(50) NOT NULL,
+  `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `visto` varchar(2) NOT NULL DEFAULT 'No'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `pedido`
 --
 
@@ -125,16 +128,6 @@ CREATE TABLE `pedido` (
   `url_comprobante_pago` varchar(255) DEFAULT NULL,
   `valor_pedido` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `pedido`
---
-
-INSERT INTO `pedido` (`id_pedido`, `nick_usuario`, `fecha_pedido`, `status`, `url_comprobante_pago`, `valor_pedido`) VALUES
-(41, 'nathalia', '2017-10-08 00:17:20', 'aprobado', 'public/upload/comprobante-pago-1507421480.jpeg', 2321900),
-(42, 'nathalia', '2017-10-07 02:56:18', 'aprobado', 'public/upload/comprobante-pago-1507344958.jpeg', 861000),
-(44, 'nathalia', '2017-10-08 00:29:49', 'aprobado', 'public/upload/comprobante-pago-1507422560.jpeg', 861000),
-(54, 'nathalia', '2017-10-10 11:46:50', 'aprobado', 'public/upload/comprobante-pago-1507635976.jpeg', 2660700);
 
 -- --------------------------------------------------------
 
@@ -162,10 +155,10 @@ CREATE TABLE `producto` (
 
 INSERT INTO `producto` (`id_producto`, `referencia`, `nombre_producto`, `precio`, `cant_disponibles`, `descripcion`, `disponibilidad`, `url_img1`, `url_img2`, `url_img3`, `fecha_registro`) VALUES
 (6, 'H998NHJ8778N', 'Celular Samsung Galaxy J2 Prime (2016) ', 349900, 51, 'Â·         Pantalla sÃºper AMOLED de 5 pulgadas.\r\nÂ·         CÃ¡mara frontal de 5MP.\r\nÂ·         CÃ¡mara posterior de 8MP con flash LED.\r\nÂ·         Conectividad Wi-Fi y recibe redes 4G LTE.\r\nÂ·         Capacidad para doble SIM Card.\r\nÂ·         Sintonizador de radio FM.\r\nÂ·         Memoria interna de 8GB, expandible hasta 128GB .\r\nÂ·         Memoria RAM de 1.5GB.\r\nÂ·         Procesador Quad Core de 1,5GHz.\r\nÂ·         Sistema operativo Android OS, v6.0.1 (Marshmallow)', 'disponible', 'public/upload/imagen1-1496617338.jpeg', 'public/upload/imagen2-1496617338.jpeg', '', '2017-06-14 13:19:04'),
-(7, 'UUI449NJH', 'Chaqueta Azar Beisbolera CH001-Azul', 49000, 15, '70% AlgodÃ³n 30% PoliÃ©ster\r\nEstilo Casual\r\nDespachamos en menos de 24 horas\r\nEl modelo mide 1,75 cms y esta usando una chaqueta talla M\r\nHecho en Colombia.', 'disponible', 'public/upload/imagen1-1496617434.jpeg', 'public/upload/imagen2-1496617434.jpeg', 'public/upload/imagen3-1496617434.jpeg', '2017-10-10 12:00:30'),
-(8, 'IUI9898GG', 'Cepillo Alisador Electrico', 43700, 27, 'Pelo aplicable en seco\r\nControlador de temperatura: Digital.\r\nFuente de energÃ­a: ElÃ©ctrico.\r\nVoltaje: 110 V.\r\nOperaciÃ³n simple y mÃ¡s rÃ¡pido\r\nEste producto no harÃ¡ daÃ±o a su pelo.\r\nUna combinaciÃ³n perfecta de peine y plancha de pelo.\r\nPotencia: 25W-39W.\r\nLa vida Ãºtil de la placa tÃ©rmica / barra: MÃ¡s de 50.000 veces.', 'disponible', 'public/upload/imagen1-1496617622.jpeg', 'public/upload/imagen2-1496617622.png', '', '2017-10-10 12:00:40'),
-(9, 'UI9898JHJH', 'Fajas Mujer De Cinturilla Termica Neopreno', 86400, 29, 'aumenta el calor corporal.\r\nmaximina tus rutinas diarias.\r\nesta prenda es excelente para hacer cualquier tipo de deporte.\r\nse puede utilizar debajo de tu ropa diaria.\r\najusta lo necesario en la parte abdominal.\r\nlavar con agua fria .\r\nno retorcer .\r\nno planchar.\r\nno utilizar blanqueador.', 'disponible', 'public/upload/imagen1-1496618500.jpeg', '', 'public/upload/imagen3-1496618500.jpeg', '2017-06-14 13:19:04'),
-(10, 'CCN230FXAX', 'Nevera No Frost Centrales', 861000, 222, 'Capacidad 230 litros.\r\n1 puerta refrigerador.\r\n1 puerta congelador.\r\nColor: Plata.\r\nDispensador de agua removible de 2 litros.\r\nBandejas de vidrio templado anti-derrame.\r\nModo de ahorro de energia.\r\nEnfriamiento rapido.', 'disponible', 'public/upload/imagen1-1496618596.jpeg', 'public/upload/imagen2-1496618596.jpeg', '', '2017-10-10 12:00:45'),
+(7, 'UUI449NJH', 'Chaqueta Azar Beisbolera CH001-Azul', 49000, 14, '70% AlgodÃ³n 30% PoliÃ©ster\r\nEstilo Casual\r\nDespachamos en menos de 24 horas\r\nEl modelo mide 1,75 cms y esta usando una chaqueta talla M\r\nHecho en Colombia.', 'disponible', 'public/upload/imagen1-1496617434.jpeg', 'public/upload/imagen2-1496617434.jpeg', 'public/upload/imagen3-1496617434.jpeg', '2017-11-10 20:22:27'),
+(8, 'IUI9898GG', 'Cepillo Alisador Electrico', 43700, 24, 'Pelo aplicable en seco\r\nControlador de temperatura: Digital.\r\nFuente de energÃ­a: ElÃ©ctrico.\r\nVoltaje: 110 V.\r\nOperaciÃ³n simple y mÃ¡s rÃ¡pido\r\nEste producto no harÃ¡ daÃ±o a su pelo.\r\nUna combinaciÃ³n perfecta de peine y plancha de pelo.\r\nPotencia: 25W-39W.\r\nLa vida Ãºtil de la placa tÃ©rmica / barra: MÃ¡s de 50.000 veces.', 'disponible', 'public/upload/imagen1-1496617622.jpeg', 'public/upload/imagen2-1496617622.png', '', '2017-11-13 17:24:58'),
+(9, 'UI9898JHJH', 'Fajas Mujer De Cinturilla Termica Neopreno', 86400, 26, 'aumenta el calor corporal.\r\nmaximina tus rutinas diarias.\r\nesta prenda es excelente para hacer cualquier tipo de deporte.\r\nse puede utilizar debajo de tu ropa diaria.\r\najusta lo necesario en la parte abdominal.\r\nlavar con agua fria .\r\nno retorcer .\r\nno planchar.\r\nno utilizar blanqueador.', 'disponible', 'public/upload/imagen1-1496618500.jpeg', '', 'public/upload/imagen3-1496618500.jpeg', '2017-11-13 17:24:58'),
+(10, 'CCN230FXAX', 'Nevera No Frost Centrales', 861000, 221, 'Capacidad 230 litros.\r\n1 puerta refrigerador.\r\n1 puerta congelador.\r\nColor: Plata.\r\nDispensador de agua removible de 2 litros.\r\nBandejas de vidrio templado anti-derrame.\r\nModo de ahorro de energia.\r\nEnfriamiento rapido.', 'disponible', 'public/upload/imagen1-1496618596.jpeg', 'public/upload/imagen2-1496618596.jpeg', '', '2017-11-11 15:26:19'),
 (11, 'IUIU9983KKJFK', 'Comedor Milan 4 Puestos - Chocolate', 749900, 50, 'Material: Tapa en Vidrio Templado de Seguridad de 8mm. Dos bases en Madera MDP madecor , cada una de 20 cm de ancho y 36 mm de espesor\r\nCon recubrimiento melamÃ­nico.\r\nEstructura madera madecor.\r\nColor: Chocolate\r\nMedidas: 120 x 76 x 75 (cm)\r\nPatas de 20 cm de ancho y 36 mm de espesor', 'disponible', 'public/upload/imagen1-1496618707.jpeg', 'public/upload/imagen2-1496618707.jpeg', '', '2017-09-24 21:48:48'),
 (12, '9IUI9897887', 'Puff Pera Silla Precio De Lanzamiento', 45000, 19, 'Puff tipo pera.\r\nTela lona.\r\nTamaÃ±o: Mediano.\r\nDoble Costura.\r\nDoble Cremallera.', 'disponible', 'public/upload/imagen1-1496620950.jpeg', 'public/upload/imagen2-1496620950.jpeg', '', '2017-06-05 00:02:30'),
 (13, '98JJOIO6776', 'Water Zoom Manguera Hidrolavadora', 59900, 2, 'La mejor herramienta para su manguera transformandola fuerza del agua en un chorro de presion  WATER ZOOM -POWER CLEAN Facilita el lavado de limpiezay remocion de moho pegado, muroa, ladrillos, paredes y autos.Solo conectelo a la manguera y listo.WATER ZOOM-POWER CLEAN utiliza la tecnologia compresora creando una maquina de lavado en uina manguera.', 'disponible', 'public/upload/imagen1-1496621472.jpeg', 'public/upload/imagen2-1496621472.jpeg', '', '2017-06-05 00:11:12'),
@@ -213,6 +206,18 @@ INSERT INTO `productos_categoria` (`id_producto`, `id_categoria`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `producto_visualizado`
+--
+
+CREATE TABLE `producto_visualizado` (
+  `ip` varchar(25) NOT NULL,
+  `id_producto` bigint(20) NOT NULL,
+  `fecha_ingreso` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `recuperar_claves`
 --
 
@@ -221,13 +226,6 @@ CREATE TABLE `recuperar_claves` (
   `id_seguridad` varchar(100) DEFAULT NULL,
   `fecha_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `recuperar_claves`
---
-
-INSERT INTO `recuperar_claves` (`email`, `id_seguridad`, `fecha_registro`) VALUES
-('omararturo15@hotmail.com', '7499752c84eda472e7800cb16dfdb1eb393cefca', '2017-06-14 04:22:01');
 
 -- --------------------------------------------------------
 
@@ -285,6 +283,14 @@ ALTER TABLE `detalle_pedido`
   ADD KEY `id_producto` (`id_producto`);
 
 --
+-- Indices de la tabla `notificacion_user`
+--
+ALTER TABLE `notificacion_user`
+  ADD PRIMARY KEY (`id_notificacion`),
+  ADD KEY `id_pedido` (`id_pedido`),
+  ADD KEY `nick_user` (`nick_user`);
+
+--
 -- Indices de la tabla `pedido`
 --
 ALTER TABLE `pedido`
@@ -303,6 +309,13 @@ ALTER TABLE `producto`
 ALTER TABLE `productos_categoria`
   ADD PRIMARY KEY (`id_producto`,`id_categoria`),
   ADD KEY `id_categoria` (`id_categoria`),
+  ADD KEY `id_producto` (`id_producto`);
+
+--
+-- Indices de la tabla `producto_visualizado`
+--
+ALTER TABLE `producto_visualizado`
+  ADD PRIMARY KEY (`ip`,`id_producto`),
   ADD KEY `id_producto` (`id_producto`);
 
 --
@@ -328,10 +341,15 @@ ALTER TABLE `usuario`
 ALTER TABLE `categoria`
   MODIFY `id_categoria` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
+-- AUTO_INCREMENT de la tabla `notificacion_user`
+--
+ALTER TABLE `notificacion_user`
+  MODIFY `id_notificacion` bigint(20) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `id_pedido` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id_pedido` bigint(20) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
@@ -349,6 +367,13 @@ ALTER TABLE `detalle_pedido`
   ADD CONSTRAINT `FK_Detalle_Pedido_Producto` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`) ON DELETE CASCADE;
 
 --
+-- Filtros para la tabla `notificacion_user`
+--
+ALTER TABLE `notificacion_user`
+  ADD CONSTRAINT `notificacion_user_ibfk_1` FOREIGN KEY (`nick_user`) REFERENCES `usuario` (`nick`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `notificacion_user_ibfk_2` FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id_pedido`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `pedido`
 --
 ALTER TABLE `pedido`
@@ -360,6 +385,12 @@ ALTER TABLE `pedido`
 ALTER TABLE `productos_categoria`
   ADD CONSTRAINT `FK_Productos_Categoria_Categoria` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`),
   ADD CONSTRAINT `FK_Productos_Categoria_Producto` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `producto_visualizado`
+--
+ALTER TABLE `producto_visualizado`
+  ADD CONSTRAINT `producto_visualizado_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
