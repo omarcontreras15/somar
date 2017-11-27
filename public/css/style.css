@@ -60,7 +60,7 @@ body a{
 
 #nav .current a {
    color:#fff;
-   background:#ff9801;
+   background:#c08dc7;
    -webkit-transition: all 0.3s ease;
 	-moz-transition: all 0.3s ease;
 	-o-transition: all 0.3s ease;
@@ -68,7 +68,7 @@ body a{
 }
 .menu li a:hover ,.menu li.active a{
    color:#fff;
-   background:#f5ac35 !important;
+   background:#ccb4d0 !important;
 } 
 .toggleMenu {
 	display:  none;
@@ -315,7 +315,7 @@ body{margin-top:20px;}
 	font-size: 1.1em;
 	cursor: pointer;
 	border: none;
-	background: #f5ac35;
+	background: #ccb4d0;
 	color: #fff;
 	text-transform: uppercase;
 	text-decoration: none;
@@ -334,12 +334,12 @@ body{margin-top:20px;}
 .banner_btn:hover {
 	text-decoration:none;
 	color:#fff;
-	background:#ff9801;
+	background:#c08dc7;
 }
 /*--content--*/
 .content_top{
 	padding:3em 2em 4em;
-	background:#ff9801;
+	background:#c08dc7;
 }
 i.flag{
 	width: 80px;
@@ -372,7 +372,7 @@ i.home{
 }
 .flag_desc h3 a:hover{
 	text-decoration:none;
-	color:#f5ac35;
+	color:#ccb4d0;
 }
 div.flag_desc {
 	float: left;
@@ -398,7 +398,7 @@ div.flag_desc {
 }
 .link:hover{
 	text-decoration:none;
-	color: #f5ac35;
+	color: #ccb4d0;
 }
 .content_middle{
 	background:#fff;
@@ -427,7 +427,7 @@ ul.test_box li.test_desc h4 a {
 	text-decoration: none;
 }
 ul.test_box li.test_desc h4 a:hover {
-	color:#f5ac35;
+	color:#ccb4d0;
 }
 ul.test_box li.test_desc p {
 	color: #999;
@@ -440,7 +440,7 @@ ul.test_box li.test_desc p {
 	font-size: 1em;
 	cursor: pointer;
 	border: none;
-	background: #f5ac35;
+	background: #ccb4d0;
 	color: #fff;
 	text-transform: uppercase;
 	text-decoration: none;
@@ -456,7 +456,7 @@ ul.test_box li.test_desc p {
 	font-weight: 400;
 }
 .content_btn:hover{
-	background: #ff9801;
+	background: #c08dc7;
 	text-decoration:none;
 	color:#fff;
 }
@@ -530,7 +530,7 @@ h2.resp-accordion {
 	font-size:1em;
 	margin: 0px;
 	padding: 10px 15px;
-	background:#f5ac35;
+	background:#ccb4d0;
 	margin:10px 0;
 	color:#fff;
 }
@@ -567,13 +567,13 @@ h2.resp-accordion {
 }
 }
 .facts h4 a{
-	color:#ff9801;
+	color:#c08dc7;
 	text-decoration: none;
 	font-weight: 600;
 	font-size: 1.2em;
 }
 .facts h4 a:hover{
-	color: #f5ac35;
+	color: #ccb4d0;
 }
 .facts p{
 	color: #fff;
@@ -601,7 +601,7 @@ ul.tab_list li a:hover {
 .section_aligncenter{
 	text-align:center;
 	padding:4em 0;
-	background:#f5ac35;
+	background:#ccb4d0;
 }
 .section_aligncenter h3{
 	color: #fff;
@@ -634,7 +634,7 @@ p.m_1{
 	text-align: center;
 	font-size: 1.4em;
 	font-weight: 300;
-	color:#ff9801;
+	color:#c08dc7;
 	margin-bottom: 2em;
 }
 ul.project_box {
@@ -646,7 +646,7 @@ ul.project_box li.mini-post-meta {
 	display: block;
 	float: left;
 	width: 70px;
-	background:#ff9801;
+	background:#c08dc7;
 	text-align: center;
 	margin: 3px 30px 0 0;
 	position: relative;
@@ -691,7 +691,7 @@ ul.project_box li.desc p {
 	margin-bottom:2em;
 }
 span.comment{
-	color:#f5ac35;
+	color:#ccb4d0;
 	font-size:0.95em;
 }
 ul.comment_section{
@@ -718,11 +718,11 @@ i.comment {
 span.m_2 a{
 	font-size:1em;
 	font-weight:bold;
-	color:#f5ac35;
+	color:#ccb4d0;
 }
 /*--footer--*/
 .footer{
-	background:#f5ac35;
+	background:#ccb4d0;
 	padding:0 2em;
 }
 .footer_top{
@@ -782,7 +782,7 @@ ul.social li a i.tw{
 }
 /*--about--*/
 h1.title-header {
-	background: #f5ac35;
+	background: #ccb4d0;
 	display: -webkit-inline-box;
 	color: #fff;
 	font-size: 1.5em;
@@ -889,7 +889,7 @@ div.list.custom-list ul li p{
 /*--services--*/
 .services_top{
 	padding:3em 2em;
-	background: #ff9801
+	background: #c08dc7
 }
 .col_1_of_portfolio:first-child {
 	margin-left: 0;
@@ -1152,7 +1152,7 @@ i.msg{
 	font-size:1em;
 	font-weight: normal;
 	padding: 10px 30px;
-	background:#ff9801;
+	background:#c08dc7;
 	float: right;
 	display: inline-block;
 	-webkit-transition: all 0.3s ease-out;
@@ -1166,7 +1166,7 @@ i.msg{
 }
 
 .contact_btn input[type="submit"]:hover{
-	background: #f5ac35;
+	background: #ccb4d0;
 	text-decoration:none;
 	color:#fff;
 }
@@ -1174,7 +1174,7 @@ i.msg{
   		font:inherit;
  		vertical-align:baseline;
 		margin: 0 .5em;
-		background: #ff9801;
+		background: #c08dc7;
 		color: #FFFFFF;
 		padding: .2em.5em;
 		font-size: 1.1em;
@@ -1524,7 +1524,7 @@ table{
 
 #titulo{
 	text-align:center;
-    color:#ff9801;
+    color:#c08dc7;
 }
 	
 	
@@ -1617,7 +1617,7 @@ tr.active, tr.active td {
 }
 .titulo-ventana-consultar{
 	padding:20px;
-	background-color:#ff9801;
+	background-color:#c08dc7;
 	color:white;
 	padding-left:55px;
 	font-size:35px;
@@ -1626,7 +1626,7 @@ tr.active, tr.active td {
 }
 
 h1.title {
-	color: #FE980F;
+	color: #c08dc7;
 	font-family: 'Roboto', sans-serif;
 	font-weight: 700;
 	margin: 0 15px;
@@ -1645,7 +1645,7 @@ h1.title {
 	letter-spacing: 2px;
 	font-weight: 600;
 	color: #fff;
-	background-color: #f5ac35;
+	background-color: #ccb4d0;
 	border-radius:3px;
 	transition: 0.5s all;
 	cursor:pointer;
@@ -1655,7 +1655,7 @@ h1.title {
 	-ms-transition: 0.5s all;
 }
 .subtmit-consultar:hover {
-	background-color:#ff9801;
+	background-color:#c08dc7;
 }
 
 .contentStyle{
@@ -1667,7 +1667,7 @@ h1.title {
 .titleStyle{
    border-radius: 20px;
    border: 1px solid #f4fff7;
-   border-color: #ad6a0a;
+   border-color: #ad3bbd;
     
 }
 .iconos-add-delete{

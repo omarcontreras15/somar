@@ -18,7 +18,7 @@ h2 {
     font-size: 1.1em;
     text-align: center;
     padding: 1.2em;
-    background: #ff9801;
+    background: #c08dc7;
     color: #fff;
     font-weight: 200;
     letter-spacing: 10px;
@@ -40,7 +40,7 @@ h2 {
 }
 .login-form input[type="text"], .login-form input[type="password"] {
     font-size: 1em;
-    color: #f5ac35;
+    color: #ccb4d0;
     padding: 0.8em 1em;
     border: 0;
     width: 93%;
@@ -51,7 +51,7 @@ h2 {
 /*-- input-effect --*/
 .styled-input input:focus ~ label, .styled-input input:valid ~ label {
     font-size: 1.1em;
-    color: #ff9801;
+    color: #c08dc7;
     top: -2em;
     -webkit-transition: all 0.125s ease;
     transition: all 0.125s ease;
@@ -63,7 +63,7 @@ h2 {
 }
 
 .styled-input label {
-    color: #f5ac35;
+    color: #ccb4d0;
     padding: 0.8em 1em;
     position: absolute;
     top: 0;
@@ -151,7 +151,7 @@ h2 {
     color: #fff;
 }
 .wthree-text ul li a:hover{
-    color: #ff9801;
+    color: #c08dc7;
 }
 .agileits-bottom{
 	position:relative;
@@ -164,7 +164,7 @@ h2 {
     width: 0;
     height: 0;
     border-top: 17px solid transparent;
-    border-right: 18px solid #f5ac35;
+    border-right: 18px solid #ccb4d0;
 	transition:.5s all ease;
 }
 .agileits-bottom:after {
@@ -174,14 +174,14 @@ h2 {
     right: -17px;
     width: 0;
     height: 0;
-    border-left: 17px solid#f5ac35;
+    border-left: 17px solid#ccb4d0;
     border-top: 17px solid transparent;
 	transition:.5s all ease;
 }
 .agileits-bottom input[type="submit"] {
     font-size: 1.5em;
     color: #fff;
-    background:#f5ac35;
+    background:#ccb4d0;
     outline: none;
     cursor: pointer;
     padding: 1em 0;
@@ -193,14 +193,14 @@ h2 {
 }
 .agileits-bottom input[type="submit"]:hover {
     color: #FFF;
-    background: #ff9801;
+    background: #c08dc7;
 	transition:.5s all ease;
 }
 .agileits-bottom:hover:before {
-    border-right-color:#ff9801;
+    border-right-color:#c08dc7;
 }
 .agileits-bottom:hover:after {
-	border-left-color:#ff9801;
+	border-left-color:#c08dc7;
 }
 /*-- //main --*/
 
